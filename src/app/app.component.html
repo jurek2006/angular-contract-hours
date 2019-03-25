@@ -1,10 +1,12 @@
-<button (click)="exportAsXLSX()">
+<!-- <button (click)="exportAsXLSX()">
   <i class="fa fa-file-excel-o" style="font-size:48px;color:blue">Export</i>
-</button>
+</button> -->
 
 <table>
-  <tr *ngFor="let day of days">
+  <tr *ngFor="let day of schedule">
     <td>{{ day.date }}</td>
-    <td>{{ day.hours }}</td>
+    <td [ngClass]="{ disabled: day.disabled === true }">{{ day.hours }}</td>
   </tr>
 </table>
+
+<!-- <button (click)="generate()">Generate</button> -->
