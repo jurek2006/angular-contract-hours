@@ -48,29 +48,4 @@ export class AppComponent implements OnInit {
   // exportAsXLSX(): void {
   //   this.excelService.exportAsExcelFile(this.days, "sample");
   // }
-
-  // generate(): void {
-  //   // create array with id of "empty" and not disabled days from days array
-  //   let allowedDays = this.days.filter(day => {
-  //     return !day.disabled && day.hours === 0;
-  //   });
-
-  //   let daysHours = [];
-  //   // while still remain hours to plan
-  //   let remainingHours = this.hoursPerMonth;
-  //   while (remainingHours > 0) {
-  //     let currHours = remainingHours;
-  //     if (remainingHours > this.maxHours) {
-  //       // random amount of hours between min and max
-  //       // 4+Math.floor(Math.random()*(5-2))
-  //       currHours =
-  //         this.minHours +
-  //         Math.floor(Math.random() * (this.maxHours - this.minHours + 1));
-  //     }
-
-  //     daysHours = [...daysHours, currHours];
-  //     remainingHours = remainingHours - currHours;
-  //   }
-  //   console.log(daysHours);
-  // }
 }

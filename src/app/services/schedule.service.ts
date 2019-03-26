@@ -43,22 +43,6 @@ export class ScheduleService {
     } else {
       console.log("ok");
     }
-    // const availableDays = this.getAvailableDays();
-    // this.setHoursForDay(6, 3, availableDays);
-    // this.setHoursForDay(8, 4, availableDays);
-    // this.sumHoursInSchedule();
-    // console.log(`Needed days ${daysNeeded}`);
-    // console.log(`Available days:`, this.getAvailableDays());
-
-    // fill random
-    // while (hoursPerMonth - this.sumHoursInSchedule() > 0) {
-    //   if (hoursPerMonth - this.sumHoursInSchedule() >= maxHoursDaily) {
-    //     // get random available day
-    //     const availableDays = this.getAvailableDays();
-    //     const randomDayIndex = Math.floor(Math.random() * availableDays.length);
-    //     this.setHoursForDay(maxHoursDaily, randomDayIndex, availableDays);
-    //   }
-    // }
 
     while (hoursPerMonth - this.sumHoursInSchedule() > 0) {
       let hours;
