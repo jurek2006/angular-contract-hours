@@ -2,11 +2,13 @@
   <i class="fa fa-file-excel-o" style="font-size:48px;color:blue">Export</i>
 </button> -->
 
-<table>
+<table id="contentToConvert">
   <tr *ngFor="let day of schedule">
     <td>{{ day.date }}</td>
-    <td [ngClass]="{ disabled: day.disabled === true }">{{ day.hours }}</td>
+    <td [ngClass]="{ disabled: day.disabled === true }">
+      {{ day.hours }} dkjhgkjhgfdgfgjkhdsg
+    </td>
   </tr>
 </table>
 
-<!-- <button (click)="generate()">Generate</button> -->
+<button (click)="generatePdf()">Generate</button>

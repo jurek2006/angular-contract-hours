@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import * as moment from "moment";
 import { ExcelService } from "./services/excel.service";
 import { ScheduleService } from "./services/schedule.service";
+import * as jspdf from "jspdf";
+import html2canvas from "html2canvas";
 
 @Component({
   selector: "app-root",
@@ -43,6 +45,21 @@ export class AppComponent implements OnInit {
     this.schedule = this.scheduleService.getSchedule();
 
     console.log(this.schedule);
+  }
+
+  public generatePdf() {
+    var data = document.getElementById("contentToConvert");
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = canvas.size / 5;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      const contentDataURL = canvas.toDataURL("image/png");
+      let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+      pdf.save("MYPdf.pdf"); // Generated PDF
+    });
   }
 
   // exportAsXLSX(): void {
