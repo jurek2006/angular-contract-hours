@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
       const imgWidth = aspect * canvas.width;
       const marginLeft = (page.width - imgWidth) / 2;
 
-      const contentDataURL = canvas.toDataURL("image/png");
+      const contentDataURL = canvas.toDataURL("image/jpeg", 0.5);
       let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
       var position = 0;
       pdf.addImage(contentDataURL, "PNG", marginLeft, 0, imgWidth, page.height);
