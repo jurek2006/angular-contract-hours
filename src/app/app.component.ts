@@ -51,13 +51,21 @@ export class AppComponent implements OnInit {
     var data = document.getElementById("contentToConvert");
     html2canvas(data).then(canvas => {
       // Few necessary setting options
-      var imgWidth = canvas.size / 5;
-      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      // var imgWidth = canvas.height / 20;
+      // var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      console.log("canvas.height", canvas.height);
+      console.log("canvas.width", canvas.width);
+      const imgHeight = 290;
+
+      const page = { height: 297, width: 210 };
+      const aspect = page.height / canvas.height;
+      const imgWidth = aspect * canvas.width;
+      const marginLeft = (page.width - imgWidth) / 2;
 
       const contentDataURL = canvas.toDataURL("image/png");
       let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
       var position = 0;
-      pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+      pdf.addImage(contentDataURL, "PNG", marginLeft, 0, imgWidth, page.height);
       pdf.save("MYPdf.pdf"); // Generated PDF
     });
   }

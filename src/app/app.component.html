@@ -1,14 +1,24 @@
 <!-- <button (click)="exportAsXLSX()">
   <i class="fa fa-file-excel-o" style="font-size:48px;color:blue">Export</i>
 </button> -->
+<div id="contentToConvert">
+  <p>Miesiąc: kwiecień 2019</p>
+  <p>Jurek Skowron</p>
 
-<table id="contentToConvert">
-  <tr *ngFor="let day of schedule">
-    <td>{{ day.date }}</td>
-    <td [ngClass]="{ disabled: day.disabled === true }">
-      {{ day.hours }} dkjhgkjhgfdgfgjkhdsg
-    </td>
-  </tr>
-</table>
+  <table>
+    <tr>
+      <th>Dzień</th>
+      <th>Liczba godzin</th>
+    </tr>
+    <tr *ngFor="let day of schedule">
+      <td>{{ day.date }}</td>
+      <td [ngClass]="{ disabled: day.disabled === true }">
+        {{ day.hours }}
+      </td>
+    </tr>
+  </table>
+
+  <p>Podpis zleceniobiorcy:</p>
+</div>
 
 <button (click)="generatePdf()">Generate</button>
