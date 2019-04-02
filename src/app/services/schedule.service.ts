@@ -16,7 +16,7 @@ export class ScheduleService {
       this.schedule = [
         ...this.schedule,
         {
-          date: day.format("D-MM"),
+          date: day.format("D.MM"),
           disabled: day.day() === 6 || day.day() === 0 ? true : false,
           hours: 0
         }

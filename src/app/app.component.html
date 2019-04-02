@@ -2,20 +2,30 @@
   <i class="fa fa-file-excel-o" style="font-size:48px;color:blue">Export</i>
 </button> -->
 <div id="contentToConvert">
-  <p>Miesiąc: kwiecień 2019</p>
+  <p>Miesiąc: marzec 2019</p>
   <p>Jurek Skowron</p>
 
   <table>
-    <tr>
-      <th>Dzień</th>
-      <th>Liczba godzin</th>
-    </tr>
-    <tr *ngFor="let day of schedule">
-      <td>{{ day.date }}</td>
-      <td [ngClass]="{ disabled: day.disabled === true }">
-        {{ day.hours }}
-      </td>
-    </tr>
+    <thead>
+      <tr>
+        <th>Dzień</th>
+        <th>Liczba godzin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let day of schedule" [ngClass]="{ disabled: day.disabled }">
+        <td>{{ day.date }}</td>
+        <td [ngClass]="{ disabled: day.disabled }">
+          {{ day.hours | hoursDisplay }}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Suma godzin:</th>
+        <th>67</th>
+      </tr>
+    </tfoot>
   </table>
 
   <p>Podpis zleceniobiorcy:</p>
