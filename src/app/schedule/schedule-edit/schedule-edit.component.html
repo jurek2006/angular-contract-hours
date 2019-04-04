@@ -1,0 +1,38 @@
+<div *ngIf="schedule">
+  <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+    <table>
+      <tbody formArrayName="days">
+        <tr
+          *ngFor="let dayControl of getControls(); let i = index"
+          [formGroupName]="i"
+          [ngClass]="{
+            disabledDay: dayControl.value.disabled === true,
+            enabledDay: dayControl.value.disabled === false
+          }"
+        >
+          <td>
+            {{ dayControl.value.date }}
+          </td>
+          <td>
+            {{ dayControl.value.weekday }}
+          </td>
+          <td>
+            <select formControlName="disabled" name="disabled" id="disabled">
+              <option [ngValue]="true">disabled</option>
+              <option [ngValue]="false">enabled</option>
+            </select>
+          </td>
+          <td>
+            <input type="number" formControlName="hours" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <label for="totalHours">Suma godzin: </label>
+    <input formControlName="totalHours" id="totalHours" type="number" />
+
+    <p>Suma godzin:</p>
+    <button>Submit</button>
+  </form>
+</div>

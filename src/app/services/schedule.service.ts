@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Moment } from "moment";
+import * as moment from "moment";
+import { ScheduleDay } from "../schedule/scheduleDay.model";
 
 @Injectable({
   providedIn: "root"
@@ -9,22 +11,35 @@ export class ScheduleService {
 
   constructor() {}
 
-  public initSchedule(startDate: Moment) {
-    for (let i = 0; i < startDate.daysInMonth(); i++) {
-      const day = startDate.clone().add(i, "days");
+  public setMomentLocale(locale: string = "pl") {
+    /* sets locale for moment used in schedule */
+    moment.locale(locale);
+  }
+
+  public initSchedule(startDateString: string): ScheduleDay[] {
+    /* generates empty schedule for given month */
+
+    const start: Moment = moment(startDateString); // converts first day to moment
+
+    this.schedule = [];
+    for (let i = 0; i < start.daysInMonth(); i++) {
+      const day = start.clone().add(i, "days");
 
       this.schedule = [
         ...this.schedule,
-        {
-          date: day.format("D.MM"),
-          disabled: day.day() === 6 || day.day() === 0 ? true : false,
-          hours: 0
-        }
+        new ScheduleDay(
+          day.format("D.MM"),
+          day.format("dd"),
+          day.day() === 6 || day.day() === 0 ? true : false,
+          0
+        )
       ];
     }
+
+    return this.getSchedule();
   }
 
-  public getSchedule() {
+  public getSchedule(): ScheduleDay[] {
     return JSON.parse(JSON.stringify(this.schedule));
   }
 
@@ -75,5 +90,35 @@ export class ScheduleService {
       (previous, currentDay) => previous + currentDay.hours,
       0
     );
+  }
+
+  public getMonths(
+    amount: number = 6
+  ): { firstDay: string; monthLabel: string }[] {
+    /* * generates and returns months for select options
+        each element contains monthLabel (seen by user)
+        and firstDay string which will be easly converted to moment's day
+    */
+    let months: { firstDay: string; monthLabel: string }[] = [];
+
+    const today = moment().startOf("month");
+
+    for (let i = 0; i < amount; i++) {
+      months = [
+        ...months,
+        {
+          firstDay: today
+            .clone()
+            .subtract(i, "months")
+            .format(),
+          monthLabel: today
+            .clone()
+            .subtract(i, "months")
+            .format("MMMM YYYY")
+        }
+      ];
+    }
+
+    return months;
   }
 }

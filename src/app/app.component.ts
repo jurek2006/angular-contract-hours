@@ -38,13 +38,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const startDay = moment("2019-03-01");
-
-    this.scheduleService.initSchedule(startDay);
-    this.scheduleService.fillSchedule(67, 6, 2);
-    this.schedule = this.scheduleService.getSchedule();
-
-    console.log(this.schedule);
+    this.scheduleService.setMomentLocale();
+    // const startDay = moment("2019-03-01");
+    // this.scheduleService.initSchedule(startDay);
+    // this.scheduleService.fillSchedule(67, 6, 2);
+    // this.schedule = this.scheduleService.getSchedule();
+    // console.log(this.schedule);
   }
 
   public generatePdf() {
