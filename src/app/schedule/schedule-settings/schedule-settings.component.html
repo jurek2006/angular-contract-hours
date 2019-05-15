@@ -8,4 +8,8 @@
   <button>Submit</button>
 </form>
 
-<app-schedule-edit [schedule]="schedule"></app-schedule-edit>
+<app-schedule-edit
+  [schedule]="schedule"
+  (openPrint)="openPrint()"
+></app-schedule-edit>
+<app-schedule-print *ngIf="print"></app-schedule-print>

@@ -3,7 +3,9 @@ import {
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { FormArray, FormGroup, FormControl } from "@angular/forms";
 import { ScheduleDay } from "../scheduleDay.model";
@@ -16,6 +18,7 @@ import { Subscription } from "rxjs";
 })
 export class ScheduleEditComponent implements OnInit, OnChanges {
   @Input() schedule: ScheduleDay[];
+  @Output() openPrint = new EventEmitter<boolean>();
   scheduleForm: FormGroup;
   formWatchSubscription: Subscription;
   formDaysSubscriptions: Subscription[] = [];
@@ -107,9 +110,12 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
     });
   }
 
-  public onSubmit() {}
-
   public getControls() {
     return (<FormArray>this.scheduleForm.get("days")).controls;
+  }
+
+  public onSubmit() {
+    console.log("print schedule");
+    // this.openPrint.emit(true);
   }
 }
