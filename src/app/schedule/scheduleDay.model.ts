@@ -3,6 +3,6 @@ export class ScheduleDay {
     public date: string,
     public weekday: string,
     public disabled: boolean,
-    public hours: number
+    public hours?: number
   ) {}
 }

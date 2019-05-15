@@ -18,7 +18,7 @@ import { Subscription } from "rxjs";
 })
 export class ScheduleEditComponent implements OnInit, OnChanges {
   @Input() schedule: ScheduleDay[];
-  @Output() openPrint = new EventEmitter<boolean>();
+  @Output() submitSchedule = new EventEmitter<ScheduleDay[]>();
   scheduleForm: FormGroup;
   formWatchSubscription: Subscription;
   formDaysSubscriptions: Subscription[] = [];
@@ -115,7 +115,9 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
   }
 
   public onSubmit() {
-    console.log("print schedule");
-    // this.openPrint.emit(true);
+    // console.log("print schedule");
+    // console.log(this.schedule, this.scheduleForm.value.days);
+
+    this.submitSchedule.emit(this.scheduleForm.value.days);
   }
 }

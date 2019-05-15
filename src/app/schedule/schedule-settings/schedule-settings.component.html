@@ -9,7 +9,12 @@
 </form>
 
 <app-schedule-edit
+  *ngIf="!printMode"
   [schedule]="schedule"
-  (openPrint)="openPrint()"
+  (submitSchedule)="submitSchedule($event)"
 ></app-schedule-edit>
-<app-schedule-print *ngIf="print"></app-schedule-print>
+<app-schedule-print
+  *ngIf="printMode"
+  [schedule]="schedule"
+  (closePrint)="this.printMode = false"
+></app-schedule-print>

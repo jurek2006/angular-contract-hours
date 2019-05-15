@@ -14,7 +14,7 @@ export class ScheduleSettingsComponent implements OnInit {
   settingsForm: FormGroup;
   months: { firstDay: string; monthLabel: string }[]; // array of months to choose one //STOP - przenieść do interfejsu lub modelu
   schedule: ScheduleDay[];
-  print = false;
+  printMode = false;
 
   constructor(private scheduleService: ScheduleService) {}
 
@@ -34,7 +34,8 @@ export class ScheduleSettingsComponent implements OnInit {
     this.schedule = this.scheduleService.initSchedule(startDay);
   }
 
-  openPrint() {
-    this.print = true;
+  submitSchedule(newSchedule: ScheduleDay[]) {
+    this.schedule = newSchedule;
+    this.printMode = true;
   }
 }
