@@ -10,6 +10,7 @@ import html2canvas from "html2canvas";
 })
 export class SchedulePrintComponent implements OnInit {
   @Input() schedule: ScheduleDay[];
+  @Input() scheduleMonth: string;
   @Output() closePrint = new EventEmitter<void>();
   private totalHours: number;
 

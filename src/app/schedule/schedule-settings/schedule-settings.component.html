@@ -16,5 +16,6 @@
 <app-schedule-print
   *ngIf="printMode"
   [schedule]="schedule"
+  [scheduleMonth]="scheduleMonth"
   (closePrint)="this.printMode = false"
 ></app-schedule-print>
