@@ -1,26 +1,28 @@
 <div id="contentToConvert">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur pariatur
-  nostrum dignissimos esse nam possimus reiciendis sunt repellat repellendus
-  tempore, rem, sint fugit? Hic eos commodi rerum, repellendus sint fuga unde
-  quod consectetur magnam amet accusamus aliquam autem pariatur praesentium
-  eaque suscipit cum animi quae? Natus nesciunt hic cupiditate, quo facere in
-  velit sed quam dolor unde! Porro architecto libero dolorem amet delectus nihil
-  iusto non nemo! Libero nihil doloremque illo accusantium suscipit delectus,
-  nobis laudantium, repudiandae, quia voluptatum minima rerum ea? Voluptates
-  voluptatibus repellat quo voluptate quasi consectetur veritatis quidem libero
-  atque numquam dolor velit odio, dolorem commodi, unde blanditiis, quos nobis
-  perspiciatis sunt optio eveniet officia amet? Eum aliquid soluta quod in
-  similique voluptates corrupti culpa eveniet facilis delectus hic, repellendus
-  natus neque odio harum rem laboriosam ab quos? Odio cupiditate in voluptatem
-  accusamus, nulla hic sed perspiciatis impedit temporibus, molestiae beatae
-  voluptate similique, dolores natus tempora itaque rem quaerat. Deserunt at
-  provident excepturi sunt consequuntur veniam expedita vel illum, distinctio id
-  aspernatur voluptas nihil modi aliquid cumque dolorem architecto? Doloribus,
-  perspiciatis aperiam nemo illum eos esse? Perferendis sit veniam error quos
-  voluptates aliquid quia sint minima voluptate neque ducimus alias velit
-  inventore aspernatur fugit, rerum aut modi! Omnis impedit atque dicta soluta
-  alias consequatur nemo ut quas consequuntur, ullam ducimus vero? Minus at?
-  Aut, voluptatibus?
+  <p>Miesiąc: x 2019</p>
+  <p>Jerzy Skowron</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Dzień</th>
+        <th>Liczba godzin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let day of schedule"
+        [ngClass]="{ disabled: day.disabled === true }"
+      >
+        <td>{{ day.date }}</td>
+        <td>
+          {{ day.hours }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Podpis zleceniobiorcy:</p>
 </div>
 <button (click)="onClose()">Close</button>
 <button (click)="generatePdf()">Pobierz PDF</button>
