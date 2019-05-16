@@ -1,10 +1,19 @@
 #contentToConvert {
   border: 1px solid red;
   font-size: 3em;
+  width: calc(2480px * 0.7);
+  height: calc(3508px * 0.7);
+  padding: 100px;
 }
 
-#contentToConvert p {
+p {
   text-align: center;
+}
+
+p.sign {
+  text-align: right;
+  margin-right: 3em;
+  margin-bottom: 200px;
 }
 
 table {
