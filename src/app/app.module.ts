@@ -8,6 +8,7 @@ import { ScheduleComponent } from "./schedule/schedule.component";
 import { ScheduleSettingsComponent } from "./schedule/schedule-settings/schedule-settings.component";
 import { ScheduleEditComponent } from './schedule/schedule-edit/schedule-edit.component';
 import { SchedulePrintComponent } from './schedule/schedule-print/schedule-print.component';
+import { DisplayHoursPipe } from './schedule/schedule-print/display-hours.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SchedulePrintComponent } from './schedule/schedule-print/schedule-print
     ScheduleComponent,
     ScheduleSettingsComponent,
     ScheduleEditComponent,
-    SchedulePrintComponent
+    SchedulePrintComponent,
+    DisplayHoursPipe
   ],
   imports: [BrowserModule, ReactiveFormsModule],
   providers: [],
