@@ -1,3 +1,20 @@
+#contentToConvert {
+  border: 1px solid red;
+  font-size: 3em;
+}
+
+#contentToConvert p {
+  text-align: center;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  border-collapse: collapse;
+  border: 5px solid black;
+}
+
 td,
 th {
   border: 2px solid black;
@@ -9,18 +26,7 @@ tr.disabled {
   background-color: #bbbbbb;
 }
 
-#contentToConvert {
-  border: 1px solid red;
-  font-size: 3em;
-}
-
-#contentToConvert p {
-  text-align: center;
-}
-#contentToConvert table {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  border-collapse: collapse;
-  border: 5px solid black;
+tfoot {
+  background-color: black;
+  color: white;
 }

@@ -11,6 +11,7 @@ import html2canvas from "html2canvas";
 export class SchedulePrintComponent implements OnInit {
   @Input() schedule: ScheduleDay[];
   @Output() closePrint = new EventEmitter<void>();
+  private totalHours: number;
 
   constructor() {}
 
@@ -20,6 +21,12 @@ export class SchedulePrintComponent implements OnInit {
 
   onClose() {
     this.closePrint.emit();
+  }
+
+  private countTotalHours() {
+    return this.schedule
+      .map(day => (day.hours > 0 ? day.hours : 0))
+      .reduce((a, b) => a + b);
   }
 
   public generatePdf() {
