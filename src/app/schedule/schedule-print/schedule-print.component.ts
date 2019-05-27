@@ -21,7 +21,7 @@ export class SchedulePrintComponent implements OnInit {
   @Input() scheduleMonth: string;
   @Output() closePrint = new EventEmitter<void>();
 
-  @ViewChild("contentToConvert") contentToConvert: ElementRef;
+  @ViewChild("contentToConvert") pdfRenderView: ElementRef;
   private totalHours: number;
 
   constructor() {}
@@ -41,27 +41,15 @@ export class SchedulePrintComponent implements OnInit {
   }
 
   public generatePdf() {
-    let data = this.contentToConvert.nativeElement;
-    console.log("data", data);
-    html2canvas(data).then(canvas => {
-      // Few necessary setting options
-      // var imgWidth = canvas.height / 20;
-      // var imgHeight = (canvas.height * imgWidth) / canvas.width;
-      console.log("canvas.height", canvas.height);
-      console.log("canvas.width", canvas.width);
-      const imgHeight = 290;
-
-      const page = { height: 297, width: 210 };
-      const aspect = page.height / canvas.height;
-      const imgWidth = aspect * canvas.width;
-      const marginLeft = (page.width - imgWidth) / 2;
+    // converts schedule HTML (nativeElement) to image and put it to generated pdf
+    let scheduleImage = this.pdfRenderView.nativeElement; //
+    html2canvas(scheduleImage).then(canvas => {
+      const page = { height: 297, width: 210 }; // a4 page size in mm
 
       const contentDataURL = canvas.toDataURL("image/jpeg", 0.5);
-      let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
-      const position = 0;
-      console.log("contentDataURL", contentDataURL);
-      pdf.addImage(contentDataURL, "PNG", marginLeft, 0, imgWidth, page.height);
-      pdf.save("MYPdf.pdf"); // Generated PDF
+      const pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
+      pdf.addImage(contentDataURL, "PNG", 0, 0, page.width, page.height); // converted image occupies full A4 page
+      pdf.save(`${this.scheduleMonth}.pdf`); // generate pdf for downloading
     });
   }
 }

@@ -1,21 +1,34 @@
 .wrapper {
+  /*
+    hiding element which is source to generate PDF
+    it's to big to be displayed on screen
+  */
   width: 0;
   height: 0;
   overflow: hidden;
 }
 
 .preview {
+  /* scale down to get PDF preview */
+  margin-top: 2em;
   transform-origin: top left;
-  transform: scale(0.35);
+  transform: scale(0.25);
   position: absolute;
+  z-index: -1;
 }
 
 #contentToConvert {
+  /* content is scaled up to get good print resolution
+    html2canvas renders only 72DPI
+    forced to have A4 page ratio
+  */
+  width: 2480px;
+  height: 3508px;
+  font-size: 65px;
+  padding: 200px; /* PDF page margin */
   border: 1px solid red;
-  font-size: 3em;
-  width: calc(2480px * 0.7);
-  height: calc(3508px * 0.7);
-  padding: 100px;
+
+  font-family: Arial, Helvetica, sans-serif; /* use safe font to render similar PDF */
 }
 
 p {
