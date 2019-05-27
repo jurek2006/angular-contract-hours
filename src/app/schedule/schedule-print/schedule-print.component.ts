@@ -1,4 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild,
+  ElementRef
+} from "@angular/core";
 import { ScheduleDay } from "../scheduleDay.model";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
@@ -12,6 +20,8 @@ export class SchedulePrintComponent implements OnInit {
   @Input() schedule: ScheduleDay[];
   @Input() scheduleMonth: string;
   @Output() closePrint = new EventEmitter<void>();
+
+  @ViewChild("contentToConvert") contentToConvert: ElementRef;
   private totalHours: number;
 
   constructor() {}
@@ -31,7 +41,7 @@ export class SchedulePrintComponent implements OnInit {
   }
 
   public generatePdf() {
-    let data = document.getElementById("contentToConvert");
+    let data = this.contentToConvert.nativeElement;
     console.log("data", data);
     html2canvas(data).then(canvas => {
       // Few necessary setting options

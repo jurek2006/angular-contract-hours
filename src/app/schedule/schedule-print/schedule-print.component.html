@@ -1,34 +1,36 @@
-<div id="contentToConvert">
-  <p>Miesiąc: {{ scheduleMonth }}</p>
-  <p>Imię i nazwisko: Jerzy Skowron</p>
+<div class="wrapper">
+  <div #contentToConvert id="contentToConvert">
+    <p>Miesiąc: {{ scheduleMonth }}</p>
+    <p>Imię i nazwisko: Jerzy Skowron</p>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Dzień</th>
-        <th>Liczba godzin</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let day of schedule"
-        [ngClass]="{ disabled: day.disabled === true }"
-      >
-        <td>{{ day.date }}</td>
-        <td>
-          {{ day.hours | displayHours }}
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th>Razem</th>
-        <td>{{ countTotalHours() }}</td>
-      </tr>
-    </tfoot>
-  </table>
+    <table>
+      <thead>
+        <tr>
+          <th>Dzień</th>
+          <th>Liczba godzin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let day of schedule"
+          [ngClass]="{ disabled: day.disabled === true }"
+        >
+          <td>{{ day.date }}</td>
+          <td>
+            {{ day.hours | displayHours }}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Razem</th>
+          <td>{{ countTotalHours() }}</td>
+        </tr>
+      </tfoot>
+    </table>
 
-  <p class="sign">Podpis zleceniobiorcy:</p>
+    <p class="sign">Podpis zleceniobiorcy:</p>
+  </div>
 </div>
 <button (click)="onClose()">Close</button>
 <button (click)="generatePdf()">Pobierz PDF</button>
