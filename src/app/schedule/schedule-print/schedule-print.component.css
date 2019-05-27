@@ -4,6 +4,12 @@
   overflow: hidden;
 }
 
+.preview {
+  transform-origin: top left;
+  transform: scale(0.35);
+  position: absolute;
+}
+
 #contentToConvert {
   border: 1px solid red;
   font-size: 3em;
