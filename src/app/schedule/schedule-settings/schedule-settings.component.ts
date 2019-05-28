@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ScheduleService } from "src/app/services/schedule.service";
 import { Moment } from "moment";
@@ -13,9 +13,10 @@ import { ScheduleDay } from "../scheduleDay.model";
 export class ScheduleSettingsComponent implements OnInit {
   settingsForm: FormGroup;
   months: { firstDay: string; monthLabel: string }[]; // array of months to choose one //STOP - przenieść do interfejsu lub modelu
-  schedule: ScheduleDay[];
+  // schedule: ScheduleDay[];
   scheduleMonth: string; // stores chosen month & year for printing on schedule
-  printMode = false;
+
+  @Output() selectedMonth = new EventEmitter<string>();
 
   constructor(private scheduleService: ScheduleService) {}
 
@@ -32,12 +33,13 @@ export class ScheduleSettingsComponent implements OnInit {
 
   onSubmit() {
     const startDay = this.settingsForm.value.month; // get choosen month from selected option
+    console.log(startDay);
     this.scheduleMonth = moment(startDay).format("MMMM YYYY"); // store selected month as string (for displaying)
-    this.schedule = this.scheduleService.initSchedule(startDay);
+    this.selectedMonth.emit(startDay);
   }
 
   submitSchedule(newSchedule: ScheduleDay[]) {
-    this.schedule = newSchedule;
-    this.printMode = true;
+    // this.schedule = newSchedule;
+    // this.printMode = true;
   }
 }

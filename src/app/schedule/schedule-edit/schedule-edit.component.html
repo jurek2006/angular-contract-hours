@@ -1,5 +1,9 @@
 <div *ngIf="schedule">
-  <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+  <form
+    *ngIf="!printMode; else showPrint"
+    [formGroup]="scheduleForm"
+    (ngSubmit)="onSubmit()"
+  >
     <table>
       <tbody formArrayName="days">
         <tr
@@ -35,4 +39,12 @@
     <p>Suma godzin:</p>
     <button>Print schedule</button>
   </form>
+  <ng-template #showPrint>
+    <app-schedule-print
+      *ngIf="printMode"
+      [schedule]="schedule"
+      [scheduleMonth]="scheduleMonth"
+      (closePrint)="this.printMode = false"
+    ></app-schedule-print>
+  </ng-template>
 </div>

@@ -1,1 +1,9 @@
-<app-schedule-settings></app-schedule-settings>
+<app-schedule-settings
+  (selectedMonth)="onSelectedMonth($event)"
+></app-schedule-settings>
+
+<app-schedule-edit
+  *ngIf="!printMode"
+  [selectedMonth]="selectedMonth"
+  (submitSchedule)="submitSchedule($event)"
+></app-schedule-edit>

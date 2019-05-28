@@ -10,6 +10,7 @@ import {
 import { FormArray, FormGroup, FormControl } from "@angular/forms";
 import { ScheduleDay } from "../scheduleDay.model";
 import { Subscription } from "rxjs";
+import { ScheduleService } from "src/app/services/schedule.service";
 
 @Component({
   selector: "app-schedule-edit",
@@ -17,17 +18,22 @@ import { Subscription } from "rxjs";
   styleUrls: ["./schedule-edit.component.css"]
 })
 export class ScheduleEditComponent implements OnInit, OnChanges {
-  @Input() schedule: ScheduleDay[];
-  @Output() submitSchedule = new EventEmitter<ScheduleDay[]>();
+  schedule: ScheduleDay[];
+
+  @Input() selectedMonth: string;
+  // @Output() submitSchedule = new EventEmitter<ScheduleDay[]>();
+
+  printMode = false;
   scheduleForm: FormGroup;
   formWatchSubscription: Subscription;
   formDaysSubscriptions: Subscription[] = [];
 
-  constructor() {}
+  constructor(private scheduleService: ScheduleService) {}
 
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
+    this.schedule = this.scheduleService.initSchedule(this.selectedMonth);
     this.initScheduleForm();
   }
 
@@ -117,7 +123,8 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
   public onSubmit() {
     // console.log("print schedule");
     // console.log(this.schedule, this.scheduleForm.value.days);
-
-    this.submitSchedule.emit(this.scheduleForm.value.days);
+    // this.submitSchedule.emit(this.scheduleForm.value.days);
+    this.printMode = true;
+    this.schedule = this.scheduleForm.value.days;
   }
 }

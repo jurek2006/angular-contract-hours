@@ -7,15 +7,3 @@
 
   <button>Submit</button>
 </form>
-
-<app-schedule-edit
-  *ngIf="!printMode"
-  [schedule]="schedule"
-  (submitSchedule)="submitSchedule($event)"
-></app-schedule-edit>
-<app-schedule-print
-  *ngIf="printMode"
-  [schedule]="schedule"
-  [scheduleMonth]="scheduleMonth"
-  (closePrint)="this.printMode = false"
-></app-schedule-print>
