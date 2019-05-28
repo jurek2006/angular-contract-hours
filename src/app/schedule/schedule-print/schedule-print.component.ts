@@ -42,9 +42,9 @@ export class SchedulePrintComponent implements OnInit {
 
   public generatePdf() {
     // converts schedule HTML (nativeElement) to image and put it to generated pdf
-    let scheduleImage = this.pdfRenderView.nativeElement; //
+    const scheduleImage = this.pdfRenderView.nativeElement; //
     html2canvas(scheduleImage).then(canvas => {
-      const page = { height: 297, width: 210 }; // a4 page size in mm
+      const page = { height: 297, width: 210 }; // a4 page size (in mm) to fit image on pdf page
 
       const contentDataURL = canvas.toDataURL("image/jpeg", 0.5);
       const pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
