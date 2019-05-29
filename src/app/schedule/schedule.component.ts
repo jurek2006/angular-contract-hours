@@ -8,24 +8,11 @@ import { ScheduleService } from "../services/schedule.service";
   styleUrls: ["./schedule.component.css"]
 })
 export class ScheduleComponent implements OnInit {
-  selectedMonth = "";
-  submittedSchedule: ScheduleDay[];
-
-  constructor(private scheduleService: ScheduleService) {}
+  selectedMonth: string;
 
   ngOnInit() {}
 
   onSelectedMonth(selectedMonth: string) {
     this.selectedMonth = selectedMonth;
-  }
-
-  submitSchedule(submittedSchedule: ScheduleDay[]): void {
-    this.submittedSchedule = submittedSchedule;
-    // this.printMode = true;
-    // console.log(this.printMode);
-  }
-
-  closePrintView() {
-    // this.printMode = false;
   }
 }

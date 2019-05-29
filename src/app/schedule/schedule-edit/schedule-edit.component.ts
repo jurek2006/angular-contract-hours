@@ -21,7 +21,6 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
   schedule: ScheduleDay[];
 
   @Input() selectedMonth: string;
-  // @Output() submitSchedule = new EventEmitter<ScheduleDay[]>();
 
   printMode = false;
   scheduleForm: FormGroup;
@@ -126,5 +125,9 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
     // this.submitSchedule.emit(this.scheduleForm.value.days);
     this.printMode = true;
     this.schedule = this.scheduleForm.value.days;
+  }
+
+  public onClosePrint(): void {
+    this.printMode = false;
   }
 }
