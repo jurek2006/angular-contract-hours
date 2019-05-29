@@ -3,7 +3,9 @@ import {
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { FormArray, FormGroup, FormControl } from "@angular/forms";
 import { ScheduleDay } from "../scheduleDay.model";
@@ -20,6 +22,7 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
   schedule: ScheduleDay[];
 
   @Input() selectedMonth: Moment;
+  @Output() printModeChanged = new EventEmitter<boolean>(); // fired when printMode turned on/off
 
   printMode = false;
   scheduleForm: FormGroup;
@@ -122,10 +125,12 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
     // submitting schedule form and going to "printing it" - exportint printable pdf
     this.printMode = true;
     this.schedule = this.scheduleForm.value.days;
+    this.printModeChanged.emit(this.printMode);
   }
 
   public onClosePrint(): void {
     this.printMode = false;
+    this.printModeChanged.emit(this.printMode);
   }
 
   public getSelectedMonthLabel(): string {
