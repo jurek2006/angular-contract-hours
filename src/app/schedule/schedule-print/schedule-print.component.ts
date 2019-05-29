@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Output,
   EventEmitter,
   Input,
@@ -16,19 +15,14 @@ import html2canvas from "html2canvas";
   templateUrl: "./schedule-print.component.html",
   styleUrls: ["./schedule-print.component.css"]
 })
-export class SchedulePrintComponent implements OnInit {
+export class SchedulePrintComponent {
   @Input() schedule: ScheduleDay[];
-  @Input() scheduleMonth: string;
+  @Input() monthLabel: string;
   @Output() closePrint = new EventEmitter<void>();
 
   @ViewChild("contentToConvert") pdfRenderView: ElementRef;
-  private totalHours: number;
 
   constructor() {}
-
-  ngOnInit() {
-    console.log(this.schedule);
-  }
 
   onClose() {
     this.closePrint.emit();
@@ -49,7 +43,7 @@ export class SchedulePrintComponent implements OnInit {
       const contentDataURL = canvas.toDataURL("image/jpeg", 0.5);
       const pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
       pdf.addImage(contentDataURL, "PNG", 0, 0, page.width, page.height); // converted image occupies full A4 page
-      pdf.save(`${this.scheduleMonth}.pdf`); // generate pdf for downloading
+      pdf.save(`${this.monthLabel}.pdf`); // generate pdf for downloading
     });
   }
 }

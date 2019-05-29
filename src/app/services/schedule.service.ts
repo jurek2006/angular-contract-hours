@@ -2,12 +2,14 @@ import { Injectable } from "@angular/core";
 import { Moment } from "moment";
 import * as moment from "moment";
 import { ScheduleDay } from "../schedule/scheduleDay.model";
+import { Month } from "../shared/month";
 
 @Injectable({
   providedIn: "root"
 })
 export class ScheduleService {
   private schedule = [];
+  private monthLabelFormat = "MMMM YYYY"; // moment format to generate month label string
 
   constructor() {}
 
@@ -16,14 +18,12 @@ export class ScheduleService {
     moment.locale(locale);
   }
 
-  public initSchedule(startDateString: string): ScheduleDay[] {
+  public initSchedule(startDateMoment: Moment): ScheduleDay[] {
     /* generates empty schedule for given month */
 
-    const start: Moment = moment(startDateString); // converts first day to moment
-
     this.schedule = [];
-    for (let i = 0; i < start.daysInMonth(); i++) {
-      const day = start.clone().add(i, "days");
+    for (let i = 0; i < startDateMoment.daysInMonth(); i++) {
+      const day = startDateMoment.clone().add(i, "days");
 
       this.schedule = [
         ...this.schedule,
@@ -92,33 +92,32 @@ export class ScheduleService {
     );
   }
 
-  public getMonths(
-    amount: number = 6
-  ): { firstDay: string; monthLabel: string }[] {
+  public getMonths(amount: number = 12): Month[] {
     /* * generates and returns months for select options
         each element contains monthLabel (seen by user)
-        and firstDay string which will be easly converted to moment's day
+        and firstDay which is Moment of first day of given month
     */
-    let months: { firstDay: string; monthLabel: string }[] = [];
+    let months: Month[] = [];
 
-    const today = moment().startOf("month");
+    const currentMonthStart = moment().startOf("month");
 
     for (let i = 0; i < amount; i++) {
+      const firstDayOfMonth = currentMonthStart.clone().subtract(i, "months");
       months = [
         ...months,
         {
-          firstDay: today
-            .clone()
-            .subtract(i, "months")
-            .format(),
-          monthLabel: today
-            .clone()
-            .subtract(i, "months")
-            .format("MMMM YYYY")
+          firstDay: firstDayOfMonth,
+          monthLabel: this.getMonthLabel(firstDayOfMonth)
         }
       ];
     }
 
     return months;
+  }
+
+  public getMonthLabel(day: Moment): string {
+    // returns month string label for given moment day
+    // i.e. for 1.05.2019 returns may 2019 (or maj 2019 ect. depending on defined moment locale and defined label format)
+    return day.format(this.monthLabelFormat);
   }
 }

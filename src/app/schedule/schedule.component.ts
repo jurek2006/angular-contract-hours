@@ -1,18 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { ScheduleDay } from "./scheduleDay.model";
-import { ScheduleService } from "../services/schedule.service";
+import { Component } from "@angular/core";
+import { Moment } from "moment";
 
 @Component({
   selector: "app-schedule",
   templateUrl: "./schedule.component.html",
   styleUrls: ["./schedule.component.css"]
 })
-export class ScheduleComponent implements OnInit {
-  selectedMonth: string;
+export class ScheduleComponent {
+  selectedMonth: Moment; // moment for beginning of selected month
 
-  ngOnInit() {}
-
-  onSelectedMonth(selectedMonth: string) {
+  onSelectedMonth(selectedMonth: Moment) {
     this.selectedMonth = selectedMonth;
   }
 }

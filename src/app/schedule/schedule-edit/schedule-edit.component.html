@@ -2,7 +2,7 @@
   <form
     *ngIf="!printMode; else showPrint"
     [formGroup]="scheduleForm"
-    (ngSubmit)="onSubmit()"
+    (ngSubmit)="onPrint()"
   >
     <table>
       <tbody formArrayName="days">
@@ -43,7 +43,7 @@
     <app-schedule-print
       *ngIf="printMode"
       [schedule]="schedule"
-      [scheduleMonth]="selectedMonth"
+      [monthLabel]="getSelectedMonthLabel()"
       (closePrint)="onClosePrint()"
     ></app-schedule-print>
   </ng-template>

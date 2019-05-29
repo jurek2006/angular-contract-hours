@@ -3,14 +3,13 @@ import {
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges,
-  Output,
-  EventEmitter
+  SimpleChanges
 } from "@angular/core";
 import { FormArray, FormGroup, FormControl } from "@angular/forms";
 import { ScheduleDay } from "../scheduleDay.model";
 import { Subscription } from "rxjs";
 import { ScheduleService } from "src/app/services/schedule.service";
+import { Moment } from "moment";
 
 @Component({
   selector: "app-schedule-edit",
@@ -20,7 +19,7 @@ import { ScheduleService } from "src/app/services/schedule.service";
 export class ScheduleEditComponent implements OnInit, OnChanges {
   schedule: ScheduleDay[];
 
-  @Input() selectedMonth: string;
+  @Input() selectedMonth: Moment;
 
   printMode = false;
   scheduleForm: FormGroup;
@@ -53,10 +52,10 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
     // --- form creation
 
     // create FormArray for each day in given this.schedule
-    let daysFields = new FormArray([]);
+    const daysFields = new FormArray([]);
 
     if (this.schedule) {
-      for (let day of this.schedule) {
+      for (const day of this.schedule) {
         daysFields.push(
           new FormGroup({
             date: new FormControl({ value: day.date, disabled: false }),
@@ -80,7 +79,7 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
       days: daysFields
     });
 
-    // subscribe to watch chenges in form fields values - to sum total hours
+    // subscribe to watch changes in form fields values - to sum total hours
     this.formWatchSubscription = this.scheduleForm.controls.days.valueChanges.subscribe(
       value => {
         const sum = this.scheduleForm.value.days
@@ -95,7 +94,7 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
       const subscription: Subscription = control
         .get("disabled")
         .valueChanges.subscribe(value => {
-          const changedControl = (<FormArray>this.scheduleForm.get("days"))
+          const changedControl = (this.scheduleForm.get("days") as FormArray)
             .controls[index];
 
           // if "day" changed to disabled set hours to 0 and disable hours control
@@ -116,18 +115,20 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
   }
 
   public getControls() {
-    return (<FormArray>this.scheduleForm.get("days")).controls;
+    return (this.scheduleForm.get("days") as FormArray).controls;
   }
 
-  public onSubmit() {
-    // console.log("print schedule");
-    // console.log(this.schedule, this.scheduleForm.value.days);
-    // this.submitSchedule.emit(this.scheduleForm.value.days);
+  public onPrint() {
+    // submitting schedule form and going to "printing it" - exportint printable pdf
     this.printMode = true;
     this.schedule = this.scheduleForm.value.days;
   }
 
   public onClosePrint(): void {
     this.printMode = false;
+  }
+
+  public getSelectedMonthLabel(): string {
+    return this.scheduleService.getMonthLabel(this.selectedMonth);
   }
 }
