@@ -78,7 +78,7 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
 
     // create main form with days FormArray and field totalHours
     this.scheduleForm = new FormGroup({
-      totalHours: new FormControl({ value: 0, disabled: false }),
+      totalHours: new FormControl({ value: 0, disabled: true }),
       days: daysFields
     });
 
