@@ -13,3 +13,15 @@ tr.enabledDay {
 tr.disabledDay {
   background-color: pink;
 }
+
+input.ng-invalid {
+  background-color: red;
+  border: none;
+}
+
+.form-invalid {
+  background-color: pink;
+  border: 1px solid brown;
+  color: brown;
+  padding: 1rem;
+}

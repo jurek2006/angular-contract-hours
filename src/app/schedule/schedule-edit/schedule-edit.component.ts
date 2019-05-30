@@ -7,7 +7,7 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
-import { FormArray, FormGroup, FormControl } from "@angular/forms";
+import { FormArray, FormGroup, FormControl, Validators } from "@angular/forms";
 import { ScheduleDay } from "../scheduleDay.model";
 import { Subscription } from "rxjs";
 import { ScheduleService } from "src/app/services/schedule.service";
@@ -67,10 +67,13 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
               value: day.disabled,
               disabled: false
             }),
-            hours: new FormControl({
-              value: day.hours,
-              disabled: day.disabled
-            })
+            hours: new FormControl(
+              {
+                value: day.hours,
+                disabled: day.disabled
+              },
+              [Validators.min(0), Validators.max(24)]
+            )
           })
         );
       }

@@ -33,10 +33,14 @@
       </tbody>
     </table>
 
-    <label for="totalHours">Suma godzin: </label>
+    <label for="totalHours">Total hours: </label>
     <input formControlName="totalHours" id="totalHours" type="number" />
 
-    <button>Export to printable PDF</button>
+    <p class="form-invalid" *ngIf="!scheduleForm.valid">
+      Correct highlighted cells. For each of days amount of hours has to be
+      between 0 (empty cell is also ok) and 24.
+    </p>
+    <button [disabled]="!scheduleForm.valid">Export to printable PDF</button>
   </form>
   <ng-template #showPrint>
     <app-schedule-print
