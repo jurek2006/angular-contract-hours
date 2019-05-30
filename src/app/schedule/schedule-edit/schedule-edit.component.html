@@ -4,7 +4,13 @@
     [formGroup]="scheduleForm"
     (ngSubmit)="onPrint()"
   >
-    <table>
+    <table class="scheduleTable">
+      <thead class="scheduleTable__head">
+        <tr>
+          <td colspan="3">Day</td>
+          <td>Hours</td>
+        </tr>
+      </thead>
       <tbody formArrayName="days">
         <tr
           *ngFor="let dayControl of getControls(); let i = index"
@@ -21,20 +27,43 @@
             {{ dayControl.value.weekday }}
           </td>
           <td>
-            <select formControlName="disabled" name="disabled" id="disabled">
+            <select
+              class="scheduleTable__input"
+              formControlName="disabled"
+              name="disabled"
+              id="disabled"
+            >
               <option [ngValue]="true">disabled</option>
               <option [ngValue]="false">enabled</option>
             </select>
           </td>
           <td>
-            <input type="number" formControlName="hours" min="0" max="24" />
+            <input
+              class="scheduleTable__input"
+              type="number"
+              formControlName="hours"
+              min="0"
+              max="24"
+            />
           </td>
         </tr>
       </tbody>
+      <tfoot class="scheduleTable__foot">
+        <tr>
+          <td colspan="3">Total hours</td>
+          <td>
+            <input
+              class="scheduleTable__input"
+              formControlName="totalHours"
+              id="totalHours"
+              type="text"
+              maxlength="3"
+              size="3"
+            />
+          </td>
+        </tr>
+      </tfoot>
     </table>
-
-    <label for="totalHours">Total hours: </label>
-    <input formControlName="totalHours" id="totalHours" type="number" />
 
     <p class="form-invalid" *ngIf="!scheduleForm.valid">
       Correct highlighted cells. For each of days amount of hours has to be

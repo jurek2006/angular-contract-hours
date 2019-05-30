@@ -1,27 +1,67 @@
-table {
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  --error-background-color: pink;
+  --error-color: brown;
+  --primary-color: #e5f2ff;
+  --darker-color: #b3d9ff;
+  --darkest-color: #1a4d80;
+  --complementary-color: #fff2e5;
+}
+
+.scheduleTable {
+  background-color: var(--primary-color);
   border-collapse: collapse;
+  margin: 2rem;
 }
 
-td {
+.scheduleTable__head,
+.scheduleTable__foot {
+  color: var(--primary-color);
+  background-color: var(--darkest-color);
+  text-align: center;
+}
+
+.scheduleTable td {
   border: 1px solid #999999;
+  padding: 0.2rem;
 }
 
-tr.enabledDay {
-  background-color: green;
+.scheduleTable__input {
+  border: 1px solid;
+  border-color: inherit;
+  background-color: transparent;
+  text-align: right;
+}
+.scheduleTable__input:not([disabled]) {
+  background-color: #fff;
+}
+.scheduleTable__input:not([disabled]):hover {
+  background-color: var(--complementary-color);
+  border-color: var(--darkest-color);
+}
+
+.scheduleTable__foot .scheduleTable__input {
+  color: inherit;
+  border: none;
 }
 
 tr.disabledDay {
-  background-color: pink;
+  background-color: var(--darker-color);
+  color: #999;
 }
 
-input.ng-invalid {
-  background-color: red;
+.scheduleTable__input.ng-invalid {
+  background-color: var(--error-background-color);
+  color: var(--error-color);
   border: none;
 }
 
 .form-invalid {
-  background-color: pink;
-  border: 1px solid brown;
-  color: brown;
+  background-color: var(--error-background-color);
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
   padding: 1rem;
 }
