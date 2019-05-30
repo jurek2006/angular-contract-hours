@@ -10,8 +10,8 @@ import { Month } from "src/app/shared/month";
 })
 export class ScheduleSettingsComponent implements OnInit {
   settingsForm: FormGroup;
-  months: Month[]; // array of months to choose one //STOP - przenieść do interfejsu lub modelu
-  scheduleMonth: string; // stores chosen month & year for printing on schedule
+  isMonthSubmitted: boolean;
+  months: Month[];
 
   @Output() selectedMonth = new EventEmitter<string>();
 
@@ -22,13 +22,21 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   initForm(): void {
-    this.months = this.scheduleService.getMonths(); // generated array of months to populate select's options
+    this.isMonthSubmitted = false;
+    this.months = this.scheduleService.getMonths(); // generates array of months to populate select's options
     this.settingsForm = new FormGroup({
       month: new FormControl(this.months[0].firstDay) // by default selects first element, first month hence
     });
   }
 
   onSubmit() {
+    this.isMonthSubmitted = true;
     this.selectedMonth.emit(this.settingsForm.value.month); // emits choosen month from selected option
+    this.settingsForm.get("month").disable();
+  }
+
+  onUnsubmit() {
+    this.isMonthSubmitted = false;
+    this.settingsForm.get("month").enable();
   }
 }

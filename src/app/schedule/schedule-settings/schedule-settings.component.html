@@ -5,5 +5,9 @@
     }}</option>
   </select>
 
-  <button>Zatwierdź</button>
+  <button *ngIf="!isMonthSubmitted; else unsubmitMonth">Submit</button>
 </form>
+
+<ng-template #unsubmitMonth>
+  <button type="button" (click)="onUnsubmit()">Change month</button>
+</ng-template>
