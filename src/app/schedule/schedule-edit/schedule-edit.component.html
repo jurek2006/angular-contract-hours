@@ -13,7 +13,7 @@
       </thead>
       <tbody formArrayName="days">
         <tr
-          *ngFor="let dayControl of getControls(); let i = index"
+          *ngFor="let dayControl of getDaysControls(); let i = index"
           [formGroupName]="i"
           [ngClass]="{
             disabledDay: dayControl.value.disabled === true,
@@ -64,12 +64,18 @@
         </tr>
       </tfoot>
     </table>
+    <input type="hidden" formControlName="contractorName" />
 
-    <p class="form-invalid" *ngIf="!scheduleForm.valid">
+    <p class="form-invalid" *ngIf="!areDaysControlsValid()">
       Correct highlighted cells. For each of days amount of hours has to be
       between 0 (empty cell is also ok) and 24.
     </p>
-    <button [disabled]="!scheduleForm.valid">Export to printable PDF</button>
+    <p class="form-invalid" *ngIf="!isContractorNameValid()">
+      Fill in contractor name
+    </p>
+    <button [disabled]="!areDaysControlsValid() || !isContractorNameValid()">
+      Export to printable PDF
+    </button>
   </form>
   <ng-template #showPrint>
     <app-schedule-print

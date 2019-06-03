@@ -92,7 +92,14 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     // create main form with days FormArray and field totalHours
     this.scheduleForm = new FormGroup({
       totalHours: new FormControl({ value: 0, disabled: true }),
-      days: daysFields
+      days: daysFields,
+      contractorName: new FormControl(
+        {
+          value: this.contractorName,
+          disabled: false
+        },
+        Validators.required
+      )
     });
 
     // subscribe to watch changes in form fields values - to sum total hours
@@ -106,7 +113,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
       });
 
     // subscribe to watch only disabled control (binded with select in form) in each group in FormArray
-    this.getControls().forEach((control: FormControl, index: number) => {
+    this.getDaysControls().forEach((control: FormControl, index: number) => {
       const subscription: Subscription = control
         .get("disabled")
         .valueChanges.pipe(takeUntil(this.ngUnsubscribe))
@@ -131,8 +138,16 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  public getControls() {
+  public getDaysControls() {
     return (this.scheduleForm.get("days") as FormArray).controls;
+  }
+
+  private areDaysControlsValid() {
+    return this.scheduleForm.get("days").valid;
+  }
+
+  private isContractorNameValid() {
+    return this.scheduleForm.get("contractorName").valid;
   }
 
   public onPrint() {

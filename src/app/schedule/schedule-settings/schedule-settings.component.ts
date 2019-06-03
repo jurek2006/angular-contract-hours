@@ -55,7 +55,7 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
 
   initContractorForm(): void {
     this.contractorForm = new FormGroup({
-      contractorName: new FormControl(this.contractorName)
+      contractorName: new FormControl(this.contractorName, Validators.required)
     });
 
     this.contractorForm
