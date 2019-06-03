@@ -16,7 +16,7 @@ export class ScheduleSettingsComponent implements OnInit {
   @Input() isMonthSubmitted: boolean;
   @Output() isMonthSubmittedChange = new EventEmitter<boolean>();
   @Input() selectedMonth: Moment;
-  @Output() selectedMonthEvent = new EventEmitter<string>();
+  @Output() selectedMonthChange = new EventEmitter<string>();
 
   constructor(private scheduleService: ScheduleService) {}
 
@@ -35,7 +35,7 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.selectedMonthEvent.emit(this.settingsForm.value.month); // emits choosen month from selected option
+    this.selectedMonthChange.emit(this.settingsForm.value.month); // emits choosen month from selected option
     this.isMonthSubmittedChange.emit(true);
   }
 

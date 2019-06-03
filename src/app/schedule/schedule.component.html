@@ -1,8 +1,7 @@
 <app-schedule-settings
   *ngIf="!printMode"
   [(isMonthSubmitted)]="isMonthSubmitted"
-  [selectedMonth]="selectedMonth"
-  (selectedMonthEvent)="onSelectedMonth($event)"
+  [(selectedMonth)]="selectedMonth"
 ></app-schedule-settings>
 
 <app-schedule-edit
