@@ -20,7 +20,8 @@ import { takeUntil } from "rxjs/operators";
 })
 export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  settingsForm: FormGroup;
+  monthPickerForm: FormGroup;
+  contractorForm: FormGroup;
   months: Month[];
 
   @Input() isMonthSubmitted: boolean;
@@ -33,7 +34,8 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   constructor(private scheduleService: ScheduleService) {}
 
   ngOnInit() {
-    this.initForm();
+    this.initMonthPickerForm();
+    this.initContractorForm();
   }
 
   ngOnDestroy() {
@@ -41,17 +43,22 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  initForm(): void {
+  initMonthPickerForm(): void {
     this.months = this.scheduleService.getMonths(); // generates array of months to populate select's options
-    this.settingsForm = new FormGroup({
+    this.monthPickerForm = new FormGroup({
       month: new FormControl({
         value: this.months[0].firstDay,
         disabled: false
-      }), // by default selects first element, first month hence
+      }) // by default selects first element, first month hence
+    });
+  }
+
+  initContractorForm(): void {
+    this.contractorForm = new FormGroup({
       contractorName: new FormControl(this.contractorName)
     });
 
-    this.settingsForm
+    this.contractorForm
       .get("contractorName")
       .valueChanges.pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(value => {
@@ -60,7 +67,7 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.selectedMonthChange.emit(this.settingsForm.value.month); // emits choosen month from selected option
+    this.selectedMonthChange.emit(this.monthPickerForm.value.month); // emits choosen month from selected option
     this.isMonthSubmittedChange.emit(true);
   }
 

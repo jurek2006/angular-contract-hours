@@ -1,30 +1,31 @@
-<form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="monthSelect">Schedule month:</label>
-    <select
-      formControlName="month"
-      id="monthSelect"
-      [appDisableControl]="isMonthSubmitted"
-    >
-      <option *ngFor="let mon of months" [ngValue]="mon.firstDay">{{
-        mon.monthLabel
-      }}</option>
-    </select>
+<form [formGroup]="monthPickerForm" (ngSubmit)="onSubmit()">
+  <label for="monthSelect">Schedule month:</label>
+  <select
+    formControlName="month"
+    id="monthSelect"
+    [appDisableControl]="isMonthSubmitted"
+  >
+    <option *ngFor="let mon of months" [ngValue]="mon.firstDay">{{
+      mon.monthLabel
+    }}</option>
+  </select>
 
-    <button *ngIf="!isMonthSubmitted; else unsubmitMonth">
-      Submit month
-    </button>
-  </div>
-  <div>
-    <label for="contractorName">Contractor name:</label>
-    <input
-      type="text"
-      formControlName="contractorName"
-      name="contractorName"
-      id="contractorName"
-    />
-  </div>
+  <button *ngIf="!isMonthSubmitted; else unsubmitMonth">
+    Submit month
+  </button>
 </form>
+
+<form [formGroup]="contractorForm">
+  <label for="contractorName">Contractor name:</label>
+  <input
+    type="text"
+    formControlName="contractorName"
+    name="contractorName"
+    id="contractorName"
+    placeholder="Fill in contractor name"
+  />
+</form>
+
 <ng-template #unsubmitMonth>
   <button type="button" (click)="onUnsubmit()">Change month</button>
 </ng-template>
