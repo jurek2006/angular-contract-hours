@@ -5,20 +5,24 @@ import {
   OnChanges,
   SimpleChanges,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnDestroy
 } from "@angular/core";
 import { FormArray, FormGroup, FormControl, Validators } from "@angular/forms";
 import { ScheduleDay } from "../scheduleDay.model";
 import { Subscription } from "rxjs";
 import { ScheduleService } from "src/app/services/schedule.service";
 import { Moment } from "moment";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-schedule-edit",
   templateUrl: "./schedule-edit.component.html",
   styleUrls: ["./schedule-edit.component.css"]
 })
-export class ScheduleEditComponent implements OnInit, OnChanges {
+export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
+  private ngUnsubscribe = new Subject();
   schedule: ScheduleDay[];
 
   @Input() selectedMonth: Moment;
@@ -37,6 +41,11 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.schedule = this.scheduleService.initSchedule(this.selectedMonth);
     this.initScheduleForm();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private initScheduleForm(): void {
@@ -87,20 +96,21 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
     });
 
     // subscribe to watch changes in form fields values - to sum total hours
-    this.formWatchSubscription = this.scheduleForm.controls.days.valueChanges.subscribe(
-      value => {
+    this.formWatchSubscription = this.scheduleForm.controls.days.valueChanges
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(value => {
         const sum = this.scheduleForm.value.days
           .map(day => (day.hours > 0 ? day.hours : 0))
           .reduce((a, b) => a + b);
         this.scheduleForm.get("totalHours").setValue(sum);
-      }
-    );
+      });
 
     // subscribe to watch only disabled control (binded with select in form) in each group in FormArray
     this.getControls().forEach((control: FormControl, index: number) => {
       const subscription: Subscription = control
         .get("disabled")
-        .valueChanges.subscribe(value => {
+        .valueChanges.pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(value => {
           const changedControl = (this.scheduleForm.get("days") as FormArray)
             .controls[index];
 
