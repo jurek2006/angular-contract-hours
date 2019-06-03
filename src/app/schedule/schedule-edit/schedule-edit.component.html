@@ -74,6 +74,7 @@
   <ng-template #showPrint>
     <app-schedule-print
       *ngIf="printMode"
+      [contractorName]="contractorName"
       [schedule]="schedule"
       [monthLabel]="getSelectedMonthLabel()"
       (closePrint)="onClosePrint()"

@@ -22,6 +22,7 @@ export class ScheduleEditComponent implements OnInit, OnChanges {
   schedule: ScheduleDay[];
 
   @Input() selectedMonth: Moment;
+  @Input() contractorName: string;
   @Output() printModeChanged = new EventEmitter<boolean>(); // fired when printMode turned on/off
 
   printMode = false;

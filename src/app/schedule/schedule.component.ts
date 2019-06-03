@@ -9,6 +9,7 @@ import { Moment } from "moment";
 export class ScheduleComponent {
   selectedMonth: Moment; // moment for beginning of selected month
   isMonthSubmitted = false; // when month is submitted is not possible to change it
+  contractorName: string;
   printMode = false;
 
   onSelectedMonth(selectedMonth: Moment) {

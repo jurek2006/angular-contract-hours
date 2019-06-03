@@ -18,6 +18,8 @@ import html2canvas from "html2canvas";
 export class SchedulePrintComponent {
   @Input() schedule: ScheduleDay[];
   @Input() monthLabel: string;
+  @Input() contractorName: string;
+
   @Output() closePrint = new EventEmitter<void>();
 
   @ViewChild("contentToConvert") pdfRenderView: ElementRef;

@@ -2,10 +2,12 @@
   *ngIf="!printMode"
   [(isMonthSubmitted)]="isMonthSubmitted"
   [(selectedMonth)]="selectedMonth"
+  [(contractorName)]="contractorName"
 ></app-schedule-settings>
 
 <app-schedule-edit
   *ngIf="selectedMonth"
   [selectedMonth]="selectedMonth"
+  [contractorName]="contractorName"
   (printModeChanged)="printModeChanged($event)"
 ></app-schedule-edit>
