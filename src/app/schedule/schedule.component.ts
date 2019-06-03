@@ -8,7 +8,8 @@ import { Moment } from "moment";
 })
 export class ScheduleComponent {
   selectedMonth: Moment; // moment for beginning of selected month
-  printMode: boolean;
+  isMonthSubmitted = false; // when month is submitted is not possible to change it
+  printMode = false;
 
   onSelectedMonth(selectedMonth: Moment) {
     this.selectedMonth = selectedMonth;
@@ -16,6 +17,5 @@ export class ScheduleComponent {
 
   printModeChanged(newPrintModeStatus: boolean): void {
     this.printMode = newPrintModeStatus;
-    console.log("print mode", this.printMode);
   }
 }

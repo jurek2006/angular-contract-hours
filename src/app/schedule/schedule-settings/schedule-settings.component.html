@@ -1,11 +1,13 @@
 <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-  <select formControlName="month">
+  <select formControlName="month" [appDisableControl]="isMonthSubmitted">
     <option *ngFor="let mon of months" [ngValue]="mon.firstDay">{{
       mon.monthLabel
     }}</option>
   </select>
 
-  <button *ngIf="!isMonthSubmitted; else unsubmitMonth">Submit</button>
+  <button *ngIf="!isMonthSubmitted; else unsubmitMonth">
+    Submit
+  </button>
 </form>
 
 <ng-template #unsubmitMonth>

@@ -9,6 +9,7 @@ import { ScheduleSettingsComponent } from "./schedule/schedule-settings/schedule
 import { ScheduleEditComponent } from './schedule/schedule-edit/schedule-edit.component';
 import { SchedulePrintComponent } from './schedule/schedule-print/schedule-print.component';
 import { DisplayHoursPipe } from './schedule/schedule-print/display-hours.pipe';
+import { DisableControlDirective } from './schedule/disable-control.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DisplayHoursPipe } from './schedule/schedule-print/display-hours.pipe';
     ScheduleSettingsComponent,
     ScheduleEditComponent,
     SchedulePrintComponent,
-    DisplayHoursPipe
+    DisplayHoursPipe,
+    DisableControlDirective
   ],
   imports: [BrowserModule, ReactiveFormsModule],
   providers: [],

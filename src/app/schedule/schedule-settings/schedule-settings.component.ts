@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ScheduleService } from "src/app/services/schedule.service";
 import { Month } from "src/app/shared/month";
+import { Moment } from "moment";
 
 @Component({
   selector: "app-schedule-settings",
@@ -10,10 +11,12 @@ import { Month } from "src/app/shared/month";
 })
 export class ScheduleSettingsComponent implements OnInit {
   settingsForm: FormGroup;
-  isMonthSubmitted: boolean;
   months: Month[];
 
-  @Output() selectedMonth = new EventEmitter<string>();
+  @Input() isMonthSubmitted: boolean;
+  @Output() isMonthSubmittedChange = new EventEmitter<boolean>();
+  @Input() selectedMonth: Moment;
+  @Output() selectedMonthEvent = new EventEmitter<string>();
 
   constructor(private scheduleService: ScheduleService) {}
 
@@ -22,21 +25,21 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   initForm(): void {
-    this.isMonthSubmitted = false;
     this.months = this.scheduleService.getMonths(); // generates array of months to populate select's options
     this.settingsForm = new FormGroup({
-      month: new FormControl(this.months[0].firstDay) // by default selects first element, first month hence
+      month: new FormControl({
+        value: this.months[0].firstDay,
+        disabled: false
+      }) // by default selects first element, first month hence
     });
   }
 
   onSubmit() {
-    this.isMonthSubmitted = true;
-    this.selectedMonth.emit(this.settingsForm.value.month); // emits choosen month from selected option
-    this.settingsForm.get("month").disable();
+    this.selectedMonthEvent.emit(this.settingsForm.value.month); // emits choosen month from selected option
+    this.isMonthSubmittedChange.emit(true);
   }
 
   onUnsubmit() {
-    this.isMonthSubmitted = false;
-    this.settingsForm.get("month").enable();
+    this.isMonthSubmittedChange.emit(false);
   }
 }
