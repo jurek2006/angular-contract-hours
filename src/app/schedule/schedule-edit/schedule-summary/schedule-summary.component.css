@@ -1,0 +1,19 @@
+:host {
+  border: 1px solid;
+  position: sticky;
+  top: 0;
+
+  --error-background-color: pink;
+  --error-color: brown;
+  --primary-color: #e5f2ff;
+  --darker-color: #b3d9ff;
+  --darkest-color: #1a4d80;
+  --complementary-color: #fff2e5;
+}
+
+.error-message {
+  background-color: var(--error-background-color);
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+  padding: 1rem;
+}

@@ -1,82 +1,77 @@
-<div *ngIf="schedule">
-  <form
-    *ngIf="!printMode; else showPrint"
-    [formGroup]="scheduleForm"
-    (ngSubmit)="onPrint()"
-  >
-    <table class="scheduleTable">
-      <thead class="scheduleTable__head">
-        <tr>
-          <td colspan="3">Day</td>
-          <td>Hours</td>
-        </tr>
-      </thead>
-      <tbody formArrayName="days">
-        <tr
-          *ngFor="let dayControl of getDaysControls(); let i = index"
-          [formGroupName]="i"
-          [ngClass]="{
-            disabledDay: dayControl.value.disabled === true,
-            enabledDay: dayControl.value.disabled === false
-          }"
-        >
-          <td>
-            {{ dayControl.value.date }}
-          </td>
-          <td>
-            {{ dayControl.value.weekday }}
-          </td>
-          <td>
-            <select
-              class="scheduleTable__input"
-              formControlName="disabled"
-              name="disabled"
-              id="disabled"
-            >
-              <option [ngValue]="true">disabled</option>
-              <option [ngValue]="false">enabled</option>
-            </select>
-          </td>
-          <td>
-            <input
-              class="scheduleTable__input"
-              type="number"
-              formControlName="hours"
-              min="0"
-              max="24"
-            />
-          </td>
-        </tr>
-      </tbody>
-      <tfoot class="scheduleTable__foot">
-        <tr>
-          <td colspan="3">Total hours</td>
-          <td>
-            <input
-              class="scheduleTable__input"
-              formControlName="totalHours"
-              id="totalHours"
-              type="text"
-              maxlength="3"
-              size="3"
-            />
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-    <input type="hidden" formControlName="contractorName" />
+<div class="scheduleView" *ngIf="schedule">
+  <ng-container *ngIf="!printMode; else showPrint">
+    <form [formGroup]="scheduleForm" (ngSubmit)="onPrint()">
+      <table class="scheduleTable">
+        <thead class="scheduleTable__head">
+          <tr>
+            <td colspan="3">Day</td>
+            <td>Hours</td>
+          </tr>
+        </thead>
+        <tbody formArrayName="days">
+          <tr
+            *ngFor="let dayControl of getDaysControls(); let i = index"
+            [formGroupName]="i"
+            [ngClass]="{
+              disabledDay: dayControl.value.disabled === true,
+              enabledDay: dayControl.value.disabled === false
+            }"
+          >
+            <td>
+              {{ dayControl.value.date }}
+            </td>
+            <td>
+              {{ dayControl.value.weekday }}
+            </td>
+            <td>
+              <select
+                class="scheduleTable__input"
+                formControlName="disabled"
+                name="disabled"
+                id="disabled"
+              >
+                <option [ngValue]="true">disabled</option>
+                <option [ngValue]="false">enabled</option>
+              </select>
+            </td>
+            <td>
+              <input
+                class="scheduleTable__input"
+                type="number"
+                formControlName="hours"
+                min="0"
+                max="24"
+              />
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="scheduleTable__foot">
+          <tr>
+            <td colspan="3">Total hours</td>
+            <td>
+              <input
+                class="scheduleTable__input"
+                formControlName="totalHours"
+                id="totalHours"
+                type="text"
+                maxlength="3"
+                size="3"
+              />
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <input type="hidden" formControlName="contractorName" />
+    </form>
 
-    <p class="form-invalid" *ngIf="!areDaysControlsValid()">
-      Correct highlighted cells. For each of days amount of hours has to be
-      between 0 (empty cell is also ok) and 24.
-    </p>
-    <p class="form-invalid" *ngIf="!isContractorNameValid()">
-      Fill in contractor name
-    </p>
-    <button [disabled]="!areDaysControlsValid() || !isContractorNameValid()">
-      Export to printable PDF
-    </button>
-  </form>
+    <app-schedule-summary
+      [totalHours]="getTotalScheduledHours()"
+      [isContractorNameValid]="isContractorNameValid()"
+      [areAllDaysControlsValid]="areAllDaysControlsValid()"
+      (openPrint)="onPrint()"
+    ></app-schedule-summary>
+  </ng-container>
+
   <ng-template #showPrint>
     <app-schedule-print
       *ngIf="printMode"

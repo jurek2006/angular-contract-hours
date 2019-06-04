@@ -142,7 +142,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     return (this.scheduleForm.get("days") as FormArray).controls;
   }
 
-  private areDaysControlsValid() {
+  private areAllDaysControlsValid() {
     return this.scheduleForm.get("days").valid;
   }
 
@@ -150,7 +150,12 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     return this.scheduleForm.get("contractorName").valid;
   }
 
+  private getTotalScheduledHours() {
+    return this.scheduleForm.get("totalHours").value;
+  }
+
   public onPrint() {
+    console.log("on print");
     // submitting schedule form and going to "printing it" - exportint printable pdf
     this.printMode = true;
     this.schedule = this.scheduleForm.value.days;
