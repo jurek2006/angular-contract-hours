@@ -22,7 +22,7 @@ export class SchedulePrintComponent {
 
   @Output() closePrint = new EventEmitter<void>();
 
-  @ViewChild("contentToConvert") pdfRenderView: ElementRef;
+  @ViewChild("contentToConvert", { static: false }) pdfRenderView: ElementRef;
 
   constructor() {}
 
