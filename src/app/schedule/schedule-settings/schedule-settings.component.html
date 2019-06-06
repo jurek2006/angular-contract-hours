@@ -10,22 +10,28 @@
     }}</option>
   </select>
 
-  <button *ngIf="!isMonthSubmitted; else unsubmitMonth">
+  <button mat-raised-button *ngIf="!isMonthSubmitted; else unsubmitMonth">
     Submit month
   </button>
 </form>
 
 <form [formGroup]="contractorForm">
   <label for="contractorName">Contractor name:</label>
-  <input
-    type="text"
-    formControlName="contractorName"
-    name="contractorName"
-    id="contractorName"
-    placeholder="Fill in contractor name"
-  />
+
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      placeholder="Contractor name"
+      type="text"
+      formControlName="contractorName"
+      name="contractorName"
+      id="contractorName"
+    />
+  </mat-form-field>
 </form>
 
 <ng-template #unsubmitMonth>
-  <button type="button" (click)="onUnsubmit()">Change month</button>
+  <button type="button" mat-raised-button (click)="onUnsubmit()">
+    Change month
+  </button>
 </ng-template>
