@@ -1,12 +1,3 @@
-:host {
-  --error-background-color: pink;
-  --error-color: brown;
-  --primary-color: #e5f2ff;
-  --darker-color: #b3d9ff;
-  --darkest-color: #1a4d80;
-  --complementary-color: #fff2e5;
-}
-
 .scheduleView {
   display: flex;
   justify-content: center;
@@ -14,21 +5,31 @@
 }
 
 .scheduleTable {
-  background-color: var(--primary-color);
+  background-color: var(--surface-color);
+  color: var(--on-surface-color);
   border-collapse: collapse;
+  font-size: 1rem;
   margin: 2rem;
+
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .scheduleTable__head,
 .scheduleTable__foot {
-  color: var(--primary-color);
-  background-color: var(--darkest-color);
-  text-align: center;
+  background-color: var(--primary-color);
+  color: var(--on-primary-color);
 }
 
 .scheduleTable td {
-  border: 1px solid #999999;
-  padding: 0.2rem;
+  border-bottom: 1px solid var(--primary-color);
+  padding: 1rem 1.5rem;
+}
+.scheduleTable td:first-child {
+  padding-left: 3rem;
+}
+.scheduleTable td:last-child {
+  padding-right: 3rem;
 }
 
 .scheduleTable__input {
@@ -38,11 +39,11 @@
   text-align: right;
 }
 .scheduleTable__input:not([disabled]) {
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 .scheduleTable__input:not([disabled]):hover {
-  background-color: var(--complementary-color);
-  border-color: var(--darkest-color);
+  background-color: var(--primary-dark-color);
+  border-color: var(--on-primary-dark-color);
 }
 
 .scheduleTable__foot .scheduleTable__input {
@@ -51,12 +52,12 @@
 }
 
 tr.disabledDay {
-  background-color: var(--darker-color);
-  color: #999;
+  background-color: var(--primary-light-color);
+  color: var(--primary-dark-color);
 }
 
 .scheduleTable__input.ng-invalid {
-  background-color: var(--error-background-color);
-  color: var(--error-color);
+  background-color: var(--error-color);
+  color: var(--on-error-color);
   border: none;
 }
