@@ -16,6 +16,7 @@ body {
   background-color: var(--background-color);
   color: var(--on-background-color);
   box-sizing: border-box;
+  margin: 0;
 }
 
 input,
