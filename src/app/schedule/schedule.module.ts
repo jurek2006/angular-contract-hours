@@ -9,10 +9,7 @@ import { SchedulePrintComponent } from "./schedule-print/schedule-print.componen
 import { DisplayHoursPipe } from "./schedule-print/display-hours.pipe";
 import { DisableControlDirective } from "./disable-control.directive";
 import { ScheduleSummaryComponent } from "./schedule-edit/schedule-summary/schedule-summary.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatButtonModule } from "@angular/material";
-import { MatInputModule } from "@angular/material/input";
-import { MatSelectModule } from "@angular/material/select";
+import { MaterialModule } from "../shared/modules/material.module";
 
 @NgModule({
   declarations: [
@@ -24,15 +21,7 @@ import { MatSelectModule } from "@angular/material/select";
     DisplayHoursPipe,
     DisableControlDirective
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-
-    MatButtonModule,
-    MatInputModule,
-    MatSelectModule
-  ],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule],
   exports: [ScheduleComponent]
 })
 export class ScheduleModule {}
