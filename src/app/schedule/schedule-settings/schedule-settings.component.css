@@ -10,14 +10,35 @@
 }
 
 .monthPickerForm {
-  /* border: 1px solid beige; */
   flex-grow: 1;
 
   display: contents;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .vertical-gap {
   margin: 0 0.5rem;
+}
+
+input {
+  /* force input to occupy all mat-form-field width */
+  width: 100%;
+}
+
+@media (min-width: 641px) {
+  :host {
+    justify-content: center;
+  }
+
+  .monthPickerForm {
+    flex-grow: 0;
+    display: block;
+
+    margin-right: 4rem;
+  }
+}
+
+@media (min-width: 961px) {
+  .contractorForm__field {
+    width: 350px;
+  }
 }
