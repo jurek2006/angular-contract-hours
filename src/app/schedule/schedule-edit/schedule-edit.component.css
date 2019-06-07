@@ -57,13 +57,14 @@ tr.disabledDay {
   border: none;
 }
 
-@media (min-width: 641px) {
-  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+@media (min-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
   .scheduleView {
-    flex-direction: row;
+    align-items: center;
   }
 
   .scheduleTable {
+    width: auto;
     margin: 2rem;
   }
 
@@ -76,6 +77,13 @@ tr.disabledDay {
   }
   .scheduleTable td:last-child {
     padding-right: 3rem;
+  }
+}
+
+@media (min-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  .scheduleView {
+    flex-direction: row;
   }
 }
 
