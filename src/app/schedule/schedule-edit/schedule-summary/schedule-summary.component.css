@@ -1,7 +1,13 @@
 :host {
-  border: 1px solid;
+  position: sticky;
+  bottom: 0;
+}
+
+.summary {
   position: sticky;
   top: 0;
+  display: block;
+  background-color: white;
 }
 
 .error-message {
