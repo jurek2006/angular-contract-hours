@@ -1,16 +1,9 @@
-<form [formGroup]="monthPickerForm" (ngSubmit)="onSubmit()">
-  <!-- <label for="monthSelect">Schedule month:</label>
-  <select
-    formControlName="month"
-    id="monthSelect"
-    [appDisableControl]="isMonthSubmitted"
-  >
-    <option *ngFor="let mon of months" [ngValue]="mon.firstDay">{{
-      mon.monthLabel
-    }}</option>
-  </select> -->
-
-  <mat-form-field>
+<form
+  class="monthPickerForm"
+  [formGroup]="monthPickerForm"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-form-field class="vertical-gap">
     <mat-label>Schedule month</mat-label>
     <mat-select
       formControlName="month"
@@ -23,13 +16,17 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button *ngIf="!isMonthSubmitted; else unsubmitMonth">
+  <button
+    mat-raised-button
+    *ngIf="!isMonthSubmitted; else unsubmitMonth"
+    class="vertical-gap"
+  >
     Submit month
   </button>
 </form>
 
 <form [formGroup]="contractorForm">
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="vertical-gap">
     <mat-label>Contractor name</mat-label>
     <input
       matInput
