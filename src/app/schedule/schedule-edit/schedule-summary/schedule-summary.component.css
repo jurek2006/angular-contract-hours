@@ -7,10 +7,22 @@
 .summary {
   background-color: white;
   padding: 1em;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 15px 5px,
+    rgba(0, 0, 0, 0.12) 0px 0px 2px;
+}
+
+.summary__info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 p {
   margin: 1rem 0;
+}
+
+.highlight {
+  font-weight: bold;
 }
 
 .error-message {
@@ -23,6 +35,7 @@ p {
 }
 
 @media (min-width: 641px) {
+  /* general layout in columns */
   :host {
     width: inherit;
     align-self: flex-start;
@@ -33,6 +46,9 @@ p {
   }
 
   .summary {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px,
+      rgba(0, 0, 0, 0.12) -1px 3px 9px;
+    border-radius: 5px 0 0 5px;
     margin-top: 2rem;
   }
 }
