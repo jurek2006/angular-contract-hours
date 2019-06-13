@@ -4,6 +4,7 @@
       <table class="scheduleTable">
         <thead class="scheduleTable__head">
           <tr>
+            <td>Working?</td>
             <td colspan="3">Day</td>
             <td>Hours</td>
           </tr>
@@ -18,13 +19,26 @@
             }"
           >
             <td>
+              <!-- <input
+
+                type="checkbox"
+                id="scales"
+                name="scales"
+                checked
+              /> -->
+              <mat-checkbox
+                formControlName="disabled"
+                class="example-margin"
+              ></mat-checkbox>
+            </td>
+            <td>
               {{ dayControl.value.date }}
             </td>
             <td>
               {{ dayControl.value.weekday }}
             </td>
             <td>
-              <select
+              <!-- <select
                 class="scheduleTable__input"
                 formControlName="disabled"
                 name="disabled"
@@ -32,7 +46,7 @@
               >
                 <option [ngValue]="true">disabled</option>
                 <option [ngValue]="false">enabled</option>
-              </select>
+              </select> -->
             </td>
             <td>
               <input
