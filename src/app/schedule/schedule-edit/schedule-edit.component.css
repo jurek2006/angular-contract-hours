@@ -11,6 +11,7 @@
   color: var(--on-surface-color);
   border-collapse: collapse;
   font-size: 1rem;
+  text-align: center;
 
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
     0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
@@ -22,6 +23,10 @@
   color: var(--on-primary-color);
 }
 
+.scheduleTable__head {
+  font-size: 0.8rem;
+}
+
 .scheduleTable tr.nonWorkingDay {
   background-color: var(--primary-light-color);
   color: var(--primary-dark-color);
@@ -29,28 +34,19 @@
 
 .scheduleTable td {
   border-bottom: 1px solid var(--primary-color);
-  padding: 1rem 0.5rem;
 }
 
-.scheduleTable td:first-child {
-  padding-left: 0.5rem;
+.scheduleTable thead td,
+.scheduleTable tfoot td {
+  padding: 1rem 0.5rem;
 }
-.scheduleTable td:last-child {
-  padding-right: 0.5rem;
+.scheduleTable td.left {
+  text-align: left;
 }
 
 .scheduleTable__input {
-  border: 1px solid;
-  border-color: inherit;
   background-color: transparent;
   text-align: right;
-}
-.scheduleTable__input:not([disabled]) {
-  /* background-color: #fff; */
-}
-.scheduleTable__input:not([disabled]):hover {
-  background-color: var(--primary-dark-color);
-  border-color: var(--on-primary-dark-color);
 }
 
 .scheduleTable__foot .scheduleTable__input {
@@ -64,23 +60,15 @@
   border: none;
 }
 
+.form-field--narow {
+  width: 4rem;
+}
+
 @media (min-width: 481px) {
   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
-  .scheduleView {
-  }
-
-  .scheduleTable {
-  }
 
   .scheduleTable td {
-    padding: 1rem 0.5rem;
-  }
-
-  .scheduleTable td:first-child {
-    padding-left: 2rem;
-  }
-  .scheduleTable td:last-child {
-    padding-right: 2rem;
+    padding: 0 0.5rem;
   }
 }
 
@@ -91,20 +79,20 @@
   }
 
   .scheduleTable {
+    border: 1px solid var(--primary-color);
     width: calc(100% - 4rem);
     margin: 2rem;
   }
 
   .scheduleTable td {
-    margin: 2rem;
-    padding: 1rem 1.5rem;
+    padding: 0 2rem;
   }
 
   .scheduleTable td:first-child {
-    padding-left: 3rem;
+    padding-left: 2rem;
   }
-  .scheduleTable td:last-child {
-    padding-right: 3rem;
+  .scheduleTable tbody td:last-child {
+    padding-right: 2rem;
   }
 }
 

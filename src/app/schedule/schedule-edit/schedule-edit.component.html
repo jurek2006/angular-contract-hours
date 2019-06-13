@@ -32,20 +32,23 @@
               {{ dayControl.value.weekday }}
             </td>
             <td>
-              <input
-                class="scheduleTable__input"
-                type="number"
-                formControlName="hours"
-                min="0"
-                max="24"
-                step="0.5"
-              />
+              <mat-form-field class="form-field--narow">
+                <input
+                  matInput
+                  class="scheduleTable__input"
+                  type="number"
+                  formControlName="hours"
+                  min="0"
+                  max="24"
+                  step="0.5"
+                />
+              </mat-form-field>
             </td>
           </tr>
         </tbody>
         <tfoot class="scheduleTable__foot">
           <tr>
-            <td colspan="3">Total hours</td>
+            <td colspan="3" class="left">Total hours</td>
             <td>
               <input
                 class="scheduleTable__input"
