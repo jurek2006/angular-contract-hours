@@ -30,7 +30,7 @@ export class ScheduleService {
         new ScheduleDay(
           day.format("D.MM"),
           day.format("dd"),
-          day.day() === 6 || day.day() === 0 ? true : false,
+          day.day() !== 6 && day.day() !== 0 ? true : false, // set default sat and sun as non working days
           0
         )
       ];

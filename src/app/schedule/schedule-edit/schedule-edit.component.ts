@@ -73,14 +73,14 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
           new FormGroup({
             date: new FormControl({ value: day.date, disabled: false }),
             weekday: new FormControl({ value: day.weekday, disabled: false }),
-            disabled: new FormControl({
-              value: day.disabled,
+            workingDay: new FormControl({
+              value: day.workingDay,
               disabled: false
             }),
             hours: new FormControl(
               {
                 value: day.hours,
-                disabled: day.disabled
+                disabled: !day.workingDay
               },
               [Validators.min(0), Validators.max(24)]
             )
@@ -112,20 +112,20 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
         this.scheduleForm.get("totalHours").setValue(sum);
       });
 
-    // subscribe to watch only disabled control (binded with select in form) in each group in FormArray
+    // subscribe to watch only 'workingDay' control (binded with select in form) in each group in FormArray
     this.getDaysControls().forEach((control: FormControl, index: number) => {
       const subscription: Subscription = control
-        .get("disabled")
+        .get("workingDay")
         .valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(value => {
+        .subscribe(newWorkingDayStatus => {
           const changedControl = (this.scheduleForm.get("days") as FormArray)
             .controls[index];
 
-          // if "day" changed to disabled set hours to 0 and disable hours control
+          // if "day" changed to non working set hours to 0 and disable hours control
           // otherwise enable hours control
-          if (value) {
+          if (!newWorkingDayStatus) {
             changedControl.patchValue({
-              hours: 0
+              hours: "0"
             });
             changedControl.get("hours").disable();
           } else {
@@ -155,7 +155,6 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onPrint() {
-    console.log("on print");
     // submitting schedule form and going to "printing it" - exportint printable pdf
     this.printMode = true;
     this.schedule = this.scheduleForm.value.days;

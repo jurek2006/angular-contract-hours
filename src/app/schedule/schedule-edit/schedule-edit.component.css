@@ -22,7 +22,7 @@
   color: var(--on-primary-color);
 }
 
-.scheduleTable tr.disabledDay {
+.scheduleTable tr.nonWorkingDay {
   background-color: var(--primary-light-color);
   color: var(--primary-dark-color);
 }

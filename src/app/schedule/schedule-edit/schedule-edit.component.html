@@ -5,7 +5,7 @@
         <thead class="scheduleTable__head">
           <tr>
             <td>Working?</td>
-            <td colspan="3">Day</td>
+            <td colspan="2">Day</td>
             <td>Hours</td>
           </tr>
         </thead>
@@ -14,21 +14,15 @@
             *ngFor="let dayControl of getDaysControls(); let i = index"
             [formGroupName]="i"
             [ngClass]="{
-              disabledDay: dayControl.value.disabled === true,
-              enabledDay: dayControl.value.disabled === false
+              nonWorkingDay: dayControl.value.workingDay === false
             }"
           >
             <td>
-              <!-- <input
-
-                type="checkbox"
-                id="scales"
-                name="scales"
-                checked
-              /> -->
               <mat-checkbox
-                formControlName="disabled"
+                formControlName="workingDay"
                 class="example-margin"
+                title="is working day?"
+                aria-label="is working day?"
               ></mat-checkbox>
             </td>
             <td>
@@ -36,17 +30,6 @@
             </td>
             <td>
               {{ dayControl.value.weekday }}
-            </td>
-            <td>
-              <!-- <select
-                class="scheduleTable__input"
-                formControlName="disabled"
-                name="disabled"
-                id="disabled"
-              >
-                <option [ngValue]="true">disabled</option>
-                <option [ngValue]="false">enabled</option>
-              </select> -->
             </td>
             <td>
               <input
