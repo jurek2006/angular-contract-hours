@@ -22,9 +22,21 @@
   color: var(--on-primary-color);
 }
 
+.scheduleTable tr.disabledDay {
+  background-color: var(--primary-light-color);
+  color: var(--primary-dark-color);
+}
+
 .scheduleTable td {
   border-bottom: 1px solid var(--primary-color);
   padding: 1rem 0.5rem;
+}
+
+.scheduleTable td:first-child {
+  padding-left: 0.5rem;
+}
+.scheduleTable td:last-child {
+  padding-right: 0.5rem;
 }
 
 .scheduleTable__input {
@@ -46,11 +58,6 @@
   border: none;
 }
 
-tr.disabledDay {
-  background-color: var(--primary-light-color);
-  color: var(--primary-dark-color);
-}
-
 .scheduleTable__input.ng-invalid {
   background-color: var(--error-color);
   color: var(--on-error-color);
@@ -60,15 +67,36 @@ tr.disabledDay {
 @media (min-width: 481px) {
   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
   .scheduleView {
-    align-items: center;
   }
 
   .scheduleTable {
-    width: auto;
+  }
+
+  .scheduleTable td {
+    padding: 1rem 0.5rem;
+  }
+
+  .scheduleTable td:first-child {
+    padding-left: 2rem;
+  }
+  .scheduleTable td:last-child {
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  .scheduleView {
+    flex-direction: row;
+  }
+
+  .scheduleTable {
+    width: calc(100% - 4rem);
     margin: 2rem;
   }
 
   .scheduleTable td {
+    margin: 2rem;
     padding: 1rem 1.5rem;
   }
 
@@ -77,13 +105,6 @@ tr.disabledDay {
   }
   .scheduleTable td:last-child {
     padding-right: 3rem;
-  }
-}
-
-@media (min-width: 641px) {
-  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
-  .scheduleView {
-    flex-direction: row;
   }
 }
 

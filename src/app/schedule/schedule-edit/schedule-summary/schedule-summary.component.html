@@ -1,6 +1,7 @@
 <div class="summary">
   <p>Total hours: {{ totalHours }}</p>
   <button
+    mat-raised-button
     (click)="onOpenPrint()"
     [disabled]="!areAllDaysControlsValid || !isContractorNameValid"
   >

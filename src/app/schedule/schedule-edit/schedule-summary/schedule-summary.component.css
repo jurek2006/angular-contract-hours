@@ -1,17 +1,38 @@
 :host {
+  flex-grow: 1;
   position: sticky;
   bottom: 0;
 }
 
 .summary {
-  position: sticky;
-  top: 0;
-  display: block;
   background-color: white;
+  padding: 1em;
+}
+
+p {
+  margin: 1rem 0;
 }
 
 .error-message {
   background-color: var(--error-color);
   color: var(--on-error-color);
   padding: 1rem;
+}
+
+@media (min-width: 481px) {
+}
+
+@media (min-width: 641px) {
+  :host {
+    width: inherit;
+    align-self: flex-start;
+    position: sticky;
+    top: -2rem;
+    right: 0;
+    bottom: auto;
+  }
+
+  .summary {
+    margin-top: 2rem;
+  }
 }
