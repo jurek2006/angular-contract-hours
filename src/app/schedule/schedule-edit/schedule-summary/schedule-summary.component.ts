@@ -18,4 +18,8 @@ export class ScheduleSummaryComponent implements OnInit {
   onOpenPrint(): void {
     this.openPrint.emit();
   }
+
+  private isErrorStatus(): boolean {
+    return !this.isContractorNameValid || !this.areAllDaysControlsValid;
+  }
 }

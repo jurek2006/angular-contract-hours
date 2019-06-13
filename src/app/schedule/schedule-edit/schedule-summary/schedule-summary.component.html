@@ -1,4 +1,4 @@
-<div class="summary">
+<div class="summary" [ngClass]="{ isError: isErrorStatus() }">
   <div class="summary__info">
     <p>
       Total hours: <span class="highlight">{{ totalHours }}</span>
