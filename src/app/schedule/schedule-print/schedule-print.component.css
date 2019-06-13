@@ -24,7 +24,7 @@
   */
   width: 2480px;
   height: 3508px;
-  font-size: 65px;
+  font-size: 45px;
   padding: 200px; /* PDF page margin */
   border: 1px solid red;
 
@@ -33,12 +33,17 @@
 
 p {
   text-align: center;
+  margin: 4rem 0;
 }
 
 p.sign {
   text-align: right;
   margin-right: 3em;
   margin-bottom: 200px;
+}
+
+p.header {
+  text-transform: uppercase;
 }
 
 table {
