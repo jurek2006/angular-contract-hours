@@ -92,11 +92,16 @@ export class ScheduleService {
     );
   }
 
-  public getMonths(amount: number = 12): Month[] {
+  // TEMP - SCHOULD BE MOVED TO SCHEDULE SETTINGS AND REFACTORED
+  public getMonths(
+    amount: number = 12,
+    selectedMonth?: Moment
+  ): { list: Month[]; selected: Month } {
     /* * generates and returns months for select options
         each element contains monthLabel (seen by user)
         and firstDay which is Moment of first day of given month
-    */
+        */
+    let selected: Month;
     let months: Month[] = [];
 
     const currentMonthStart = moment().startOf("month");
@@ -110,9 +115,21 @@ export class ScheduleService {
           monthLabel: this.getMonthLabel(firstDayOfMonth)
         }
       ];
+      if (
+        selectedMonth &&
+        this.getMonthLabel(firstDayOfMonth) ===
+          this.getMonthLabel(selectedMonth)
+      ) {
+        selected = {
+          firstDay: firstDayOfMonth,
+          monthLabel: this.getMonthLabel(firstDayOfMonth)
+        };
+      }
     }
 
-    return months;
+    console.log("getMonths", { list: months, selected });
+
+    return { list: months, selected };
   }
 
   public getMonthLabel(day: Moment): string {

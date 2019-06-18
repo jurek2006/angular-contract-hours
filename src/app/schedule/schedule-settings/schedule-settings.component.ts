@@ -12,7 +12,6 @@ import { Month } from "src/app/shared/month";
 import { Moment } from "moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { settings } from "cluster";
 import moment = require("moment");
 
 @Component({
@@ -52,17 +51,20 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   }
 
   initSettingsForm(): void {
-    this.months = this.scheduleService.getMonths(); // generates array of months to populate select's options
+    const gotxxx = this.scheduleService.getMonths(
+      12,
+      this.settings ? this.settings.selectedMonth : undefined
+    ); // generates array of months to populate select's options
+
+    this.months = gotxxx.list;
 
     const contractorNameInit = this.settings
       ? this.settings.contractorName
       : "";
 
-    // if not received month from settings - select default first month from options
-    const selectedMonthInit =
-      this.settings && this.settings.selectedMonth
-        ? this.settings.selectedMonth
-        : this.months[0].firstDay;
+    const selectedMonthInit = gotxxx.selected
+      ? gotxxx.selected.firstDay
+      : this.months[0].firstDay;
 
     console.log(
       "settings",
