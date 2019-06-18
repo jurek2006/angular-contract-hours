@@ -11,9 +11,9 @@
 
 <div class="wrapper">
   <div #contentToConvert id="contentToConvert">
-    <p>{{ contractorName }}</p>
+    <p>{{ settings?.contractorName }}</p>
     <p class="header">Ewidencjonowanie czasu wykonywania umowy zlecenia</p>
-    <p>Miesiąc: {{ monthLabel }}</p>
+    <p>Miesiąc: {{ getSelectedMonthLabel() }}</p>
 
     <table>
       <thead>
@@ -47,9 +47,9 @@
 
 <div class="preview">
   <div id="contentToConvert">
-    <p>{{ contractorName }}</p>
+    <p>{{ settings?.contractorName }}</p>
     <p class="header">Ewidencjonowanie czasu wykonywania umowy zlecenia</p>
-    <p>Miesiąc: {{ monthLabel }}</p>
+    <p>Miesiąc: {{ getSelectedMonthLabel() }}</p>
 
     <table>
       <thead>

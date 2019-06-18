@@ -9,6 +9,7 @@ import {
 import { ScheduleDay } from "../scheduleDay.model";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
+import { MomentMonthsService } from "src/app/services/moment-months.service";
 
 @Component({
   selector: "app-schedule-print",
@@ -17,14 +18,13 @@ import html2canvas from "html2canvas";
 })
 export class SchedulePrintComponent {
   @Input() schedule: ScheduleDay[];
-  @Input() monthLabel: string;
-  @Input() contractorName: string;
+  @Input() settings;
 
   @Output() closePrint = new EventEmitter<void>();
 
   @ViewChild("contentToConvert", { static: false }) pdfRenderView: ElementRef;
 
-  constructor() {}
+  constructor(private momentMonthsService: MomentMonthsService) {}
 
   onClose() {
     this.closePrint.emit();
@@ -45,7 +45,13 @@ export class SchedulePrintComponent {
       const contentDataURL = canvas.toDataURL("image/jpeg", 0.5);
       const pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
       pdf.addImage(contentDataURL, "PNG", 0, 0, page.width, page.height); // converted image occupies full A4 page
-      pdf.save(`${this.monthLabel}.pdf`); // generate pdf for downloading
+      pdf.save(
+        `${this.settings.contractorName} - ${this.getSelectedMonthLabel()}.pdf`
+      ); // generate pdf for downloading
     });
+  }
+
+  private getSelectedMonthLabel(): string {
+    return this.momentMonthsService.getMonthLabel(this.settings.selectedMonth);
   }
 }

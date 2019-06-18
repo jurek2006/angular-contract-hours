@@ -12,10 +12,8 @@ import { FormArray, FormGroup, FormControl, Validators } from "@angular/forms";
 import { ScheduleDay } from "../scheduleDay.model";
 import { Subscription } from "rxjs";
 import { ScheduleService } from "src/app/services/schedule.service";
-import { Moment } from "moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { MomentMonthsService } from "src/app/services/moment-months.service";
 
 @Component({
   selector: "app-schedule-edit",
@@ -34,10 +32,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   formWatchSubscription: Subscription;
   formDaysSubscriptions: Subscription[] = [];
 
-  constructor(
-    private scheduleService: ScheduleService,
-    private momentMonthsService: MomentMonthsService
-  ) {}
+  constructor(private scheduleService: ScheduleService) {}
 
   ngOnInit() {}
 
@@ -100,13 +95,6 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     this.scheduleForm = new FormGroup({
       totalHours: new FormControl({ value: 0, disabled: true }),
       days: daysFields
-      // contractorName: new FormControl(
-      //   {
-      //     value: this.contractorName,
-      //     disabled: false
-      //   },
-      //   Validators.required
-      // )
     });
 
     // subscribe to watch changes in form fields values - to sum total hours
@@ -167,9 +155,5 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   public onClosePrint(): void {
     this.printMode = false;
     this.printModeChanged.emit(this.printMode);
-  }
-
-  public getSelectedMonthLabel(): string {
-    return this.momentMonthsService.getMonthLabel(this.settings.selectedMonth);
   }
 }
