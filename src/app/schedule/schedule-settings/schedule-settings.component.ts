@@ -34,7 +34,7 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   // @Input() isMonthSubmitted: boolean;
   // @Output() isMonthSubmittedChange = new EventEmitter<boolean>();
   // @Input() selectedMonth: Moment;
-  @Output() selectedMonthChange = new EventEmitter<Moment>();
+  // @Output() selectedMonthChange = new EventEmitter<Moment>();
   // @Input() contractorName: string;
   // @Output() contractorNameChange = new EventEmitter<string>();
 
@@ -53,12 +53,31 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
 
   initSettingsForm(): void {
     this.months = this.scheduleService.getMonths(); // generates array of months to populate select's options
+
+    const contractorNameInit = this.settings
+      ? this.settings.contractorName
+      : "";
+
+    // if not received month from settings - select default first month from options
+    const selectedMonthInit =
+      this.settings && this.settings.selectedMonth
+        ? this.settings.selectedMonth
+        : this.months[0].firstDay;
+
+    console.log(
+      "settings",
+      this.settings && this.settings.selectedMonth
+        ? this.settings.selectedMonth
+        : "undefined"
+    );
+    console.log("first day", this.months[0].firstDay);
+
     this.settingsForm = new FormGroup({
-      contractorName: new FormControl(this.contractorName, Validators.required),
+      contractorName: new FormControl(contractorNameInit, Validators.required),
       selectedMonth: new FormControl({
-        value: this.months[0].firstDay,
+        value: selectedMonthInit,
         disabled: false
-      }) // by default selects first element, first month hence
+      })
     });
   }
 

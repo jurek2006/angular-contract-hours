@@ -25,6 +25,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   private ngUnsubscribe = new Subject();
   schedule: ScheduleDay[];
 
+  @Input() settings: any;
   @Input() selectedMonth: Moment;
   @Input() contractorName: string;
   @Output() printModeChanged = new EventEmitter<boolean>(); // fired when printMode turned on/off
@@ -39,8 +40,12 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    this.schedule = this.scheduleService.initSchedule(this.selectedMonth);
-    this.initScheduleForm();
+    if (this.settings.selectedMonth) {
+      this.schedule = this.scheduleService.initSchedule(
+        this.settings.selectedMonth
+      );
+      this.initScheduleForm();
+    }
   }
 
   ngOnDestroy() {

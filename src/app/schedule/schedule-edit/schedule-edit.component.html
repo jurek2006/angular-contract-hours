@@ -1,4 +1,3 @@
-Edit
 <div class="scheduleView" *ngIf="schedule">
   <ng-container *ngIf="!printMode; else showPrint">
     <form [formGroup]="scheduleForm" (ngSubmit)="onPrint()">
