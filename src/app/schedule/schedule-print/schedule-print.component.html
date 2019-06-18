@@ -1,3 +1,14 @@
+<div class="topBar">
+  <div class="topBar__item topBar__item--mobile-hidden">PDF preview</div>
+  <button mat-raised-button class="topBar__item" (click)="generatePdf()">
+    Download PDF
+  </button>
+  <div class="topBar__item--grow"></div>
+  <button mat-button class="topBar__item" (click)="onClose()">
+    Close
+  </button>
+</div>
+
 <div class="wrapper">
   <div #contentToConvert id="contentToConvert">
     <p>{{ contractorName }}</p>
@@ -69,6 +80,3 @@
     <p class="sign">Podpis zleceniobiorcy:</p>
   </div>
 </div>
-
-<button (click)="onClose()">Close</button>
-<button (click)="generatePdf()">Pobierz PDF</button>

@@ -1,3 +1,28 @@
+:host {
+  width: 100%;
+}
+.topBar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  background-color: var(--primary-color);
+}
+
+.topBar__item {
+  margin: 1rem;
+  flex-shrink: 1;
+}
+
+.topBar__item--grow {
+  flex-grow: 1;
+}
+
+.topBar__item--mobile-hidden {
+  display: none;
+}
+
 .wrapper {
   /*
     hiding element which is source to generate PDF
@@ -90,6 +115,10 @@ tfoot {
   .preview {
     /* scale down to get PDF preview */
     transform: scale(0.18);
+  }
+
+  .topBar__item--mobile-hidden {
+    display: block;
   }
 }
 
