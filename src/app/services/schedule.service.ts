@@ -9,7 +9,7 @@ import { Month } from "../shared/month";
 })
 export class ScheduleService {
   private schedule = [];
-  private monthLabelFormat = "MMMM YYYY"; // moment format to generate month label string
+  private monthLabelFormat = "MMMM YYYY"; // moment format to generate month label string // TEMP - usunąć
 
   constructor() {}
 
@@ -132,6 +132,7 @@ export class ScheduleService {
     return { list: months, selected };
   }
 
+  // TEMP - PRZENIEŚĆ
   public getMonthLabel(day: Moment): string {
     // returns month string label for given moment day
     // i.e. for 1.05.2019 returns may 2019 (or maj 2019 ect. depending on defined moment locale and defined label format)

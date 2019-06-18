@@ -12,7 +12,7 @@ import { Month } from "src/app/shared/month";
 import { Moment } from "moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import moment = require("moment");
+import { MomentMonthsService } from "src/app/services/moment-months.service";
 
 @Component({
   selector: "app-schedule-settings",
@@ -37,7 +37,7 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   // @Input() contractorName: string;
   // @Output() contractorNameChange = new EventEmitter<string>();
 
-  constructor(private scheduleService: ScheduleService) {}
+  constructor(private momentMonthsService: MomentMonthsService) {}
 
   ngOnInit() {
     // this.initMonthPickerForm();
@@ -51,28 +51,16 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   }
 
   initSettingsForm(): void {
-    const gotxxx = this.scheduleService.getMonths(
-      12,
-      this.settings ? this.settings.selectedMonth : undefined
-    ); // generates array of months to populate select's options
-
-    this.months = gotxxx.list;
-
     const contractorNameInit = this.settings
       ? this.settings.contractorName
       : "";
 
-    const selectedMonthInit = gotxxx.selected
-      ? gotxxx.selected.firstDay
-      : this.months[0].firstDay;
+    this.months = this.momentMonthsService.getMonths();
 
-    console.log(
-      "settings",
+    const selectedMonthInit =
       this.settings && this.settings.selectedMonth
         ? this.settings.selectedMonth
-        : "undefined"
-    );
-    console.log("first day", this.months[0].firstDay);
+        : this.months[0].firstDay;
 
     this.settingsForm = new FormGroup({
       contractorName: new FormControl(contractorNameInit, Validators.required),
@@ -81,53 +69,25 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
         disabled: false
       })
     });
+
+    if (
+      // disable form if contractor name and month submited already by user
+      this.settings &&
+      this.settings.contractorName &&
+      this.settings.selectedMonth
+    ) {
+      this.settingsForm.disable();
+    }
   }
 
   onFormSubmit() {
     if (this.settingsForm.valid) {
-      this.areSettingsSubmitted = true;
       this.settingsChange.emit(this.settingsForm.value);
+      this.settingsForm.disable();
     }
   }
 
   onAllowEditing() {
-    console.log("allow editing");
-    this.areSettingsSubmitted = false;
+    this.settingsForm.enable();
   }
-
-  // --- WYWALIĆ
-
-  // initMonthPickerForm(): void {
-  //   this.months = this.scheduleService.getMonths(); // generates array of months to populate select's options
-  //   this.monthPickerForm = new FormGroup({
-  //     month: new FormControl({
-  //       value: this.months[0].firstDay,
-  //       disabled: false
-  //     }) // by default selects first element, first month hence
-  //   });
-  // }
-
-  // initContractorForm(): void {
-  //   this.contractorForm = new FormGroup({
-  //     contractorName: new FormControl(this.contractorName, Validators.required)
-  //   });
-
-  //   this.contractorForm
-  //     .get("contractorName")
-  //     .valueChanges.pipe(takeUntil(this.ngUnsubscribe))
-  //     .subscribe(value => {
-  //       this.contractorNameChange.emit(value);
-  //     });
-  // }
-
-  // -------------------------
-
-  // onSubmit() {
-  //   this.selectedMonthChange.emit(this.monthPickerForm.value.month); // emits choosen month from selected option
-  //   this.isMonthSubmittedChange.emit(true);
-  // }
-
-  // onUnsubmit() {
-  //   this.isMonthSubmittedChange.emit(false);
-  // }
 }
