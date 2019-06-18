@@ -62,12 +62,11 @@
           </tr>
         </tfoot>
       </table>
-      <input type="hidden" formControlName="contractorName" />
+      <!-- <input type="hidden" formControlName="contractorName" /> -->
     </form>
 
     <app-schedule-summary
       [totalHours]="getTotalScheduledHours()"
-      [isContractorNameValid]="isContractorNameValid()"
       [areAllDaysControlsValid]="areAllDaysControlsValid()"
       (openPrint)="onPrint()"
     ></app-schedule-summary>

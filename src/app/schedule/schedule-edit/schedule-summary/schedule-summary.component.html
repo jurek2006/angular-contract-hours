@@ -4,9 +4,6 @@
       Correct highlighted cells. For each of days amount of hours has to be
       between 0 (empty cell or "-"" is also ok) and 24.
     </p>
-    <p class="error-message" *ngIf="!isContractorNameValid">
-      Fill in contractor name
-    </p>
   </div>
 
   <div class="summary__info">
@@ -16,7 +13,7 @@
     <button
       mat-raised-button
       (click)="onOpenPrint()"
-      [disabled]="!areAllDaysControlsValid || !isContractorNameValid"
+      [disabled]="!areAllDaysControlsValid"
       color="primary"
     >
       Generate PDF

@@ -15,6 +15,7 @@ import { ScheduleService } from "src/app/services/schedule.service";
 import { Moment } from "moment";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MomentMonthsService } from "src/app/services/moment-months.service";
 
 @Component({
   selector: "app-schedule-edit",
@@ -26,8 +27,6 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   schedule: ScheduleDay[];
 
   @Input() settings: any;
-  @Input() selectedMonth: Moment;
-  @Input() contractorName: string;
   @Output() printModeChanged = new EventEmitter<boolean>(); // fired when printMode turned on/off
 
   printMode = false;
@@ -35,7 +34,10 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   formWatchSubscription: Subscription;
   formDaysSubscriptions: Subscription[] = [];
 
-  constructor(private scheduleService: ScheduleService) {}
+  constructor(
+    private scheduleService: ScheduleService,
+    private momentMonthsService: MomentMonthsService
+  ) {}
 
   ngOnInit() {}
 
@@ -97,14 +99,14 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     // create main form with days FormArray and field totalHours
     this.scheduleForm = new FormGroup({
       totalHours: new FormControl({ value: 0, disabled: true }),
-      days: daysFields,
-      contractorName: new FormControl(
-        {
-          value: this.contractorName,
-          disabled: false
-        },
-        Validators.required
-      )
+      days: daysFields
+      // contractorName: new FormControl(
+      //   {
+      //     value: this.contractorName,
+      //     disabled: false
+      //   },
+      //   Validators.required
+      // )
     });
 
     // subscribe to watch changes in form fields values - to sum total hours
@@ -151,10 +153,6 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     return this.scheduleForm.get("days").valid;
   }
 
-  private isContractorNameValid() {
-    return this.scheduleForm.get("contractorName").valid;
-  }
-
   private getTotalScheduledHours() {
     return this.scheduleForm.get("totalHours").value;
   }
@@ -172,6 +170,6 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public getSelectedMonthLabel(): string {
-    return this.scheduleService.getMonthLabel(this.selectedMonth);
+    return this.momentMonthsService.getMonthLabel(this.settings.selectedMonth);
   }
 }

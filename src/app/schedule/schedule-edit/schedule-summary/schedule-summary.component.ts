@@ -7,7 +7,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 })
 export class ScheduleSummaryComponent implements OnInit {
   @Input() totalHours: number;
-  @Input() isContractorNameValid: boolean;
   @Input() areAllDaysControlsValid: boolean;
   @Output() openPrint = new EventEmitter<void>();
 
@@ -20,6 +19,6 @@ export class ScheduleSummaryComponent implements OnInit {
   }
 
   private isErrorStatus(): boolean {
-    return !this.isContractorNameValid || !this.areAllDaysControlsValid;
+    return !this.areAllDaysControlsValid;
   }
 }

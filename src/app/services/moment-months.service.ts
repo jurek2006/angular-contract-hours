@@ -11,6 +11,11 @@ export class MomentMonthsService {
   private months: Month[];
 
   private generateMonths(amount: number = 12): void {
+    // generate months options for select element
+    // every month item contains:
+    //  firstDay - moment for first day of given month
+    //  monthLabel - string label
+
     let months: Month[] = [];
 
     const currentMonthStart = moment().startOf("month");
@@ -30,6 +35,7 @@ export class MomentMonthsService {
   }
 
   public getMonths(): Month[] {
+    // gets generated months for populating month picker select
     if (!this.months) {
       this.generateMonths();
     }

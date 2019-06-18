@@ -21,8 +21,6 @@ import { MomentMonthsService } from "src/app/services/moment-months.service";
 })
 export class ScheduleSettingsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
-  // monthPickerForm: FormGroup; // TEMP - wywalić
-  // contractorForm: FormGroup; // TEMP - wywalić
   settingsForm: FormGroup;
   months: Month[];
   areSettingsSubmitted = false;
@@ -30,18 +28,10 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
 
   @Input() settings: any;
   @Output() settingsChange = new EventEmitter<any>();
-  // @Input() isMonthSubmitted: boolean;
-  // @Output() isMonthSubmittedChange = new EventEmitter<boolean>();
-  // @Input() selectedMonth: Moment;
-  // @Output() selectedMonthChange = new EventEmitter<Moment>();
-  // @Input() contractorName: string;
-  // @Output() contractorNameChange = new EventEmitter<string>();
 
   constructor(private momentMonthsService: MomentMonthsService) {}
 
   ngOnInit() {
-    // this.initMonthPickerForm();
-    // this.initContractorForm();
     this.initSettingsForm();
   }
 

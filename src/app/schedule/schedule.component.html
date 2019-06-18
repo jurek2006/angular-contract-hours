@@ -6,7 +6,5 @@
 <app-schedule-edit
   *ngIf="settings"
   [settings]="settings"
-  [selectedMonth]="settings?.selectedMonth"
-  [contractorName]="settings?.contractorName"
   (printModeChanged)="printModeChanged($event)"
 ></app-schedule-edit>

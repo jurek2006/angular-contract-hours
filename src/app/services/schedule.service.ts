@@ -9,7 +9,6 @@ import { Month } from "../shared/month";
 })
 export class ScheduleService {
   private schedule = [];
-  private monthLabelFormat = "MMMM YYYY"; // moment format to generate month label string // TEMP - usunąć
 
   constructor() {}
 
@@ -81,7 +80,6 @@ export class ScheduleService {
   }
 
   private setHoursForDay(hours: number, dayIndex: number, schedule: any) {
-    // const previousDayData = schedule[dayIndex];
     schedule[dayIndex].hours = hours;
   }
 
@@ -90,52 +88,5 @@ export class ScheduleService {
       (previous, currentDay) => previous + currentDay.hours,
       0
     );
-  }
-
-  // TEMP - SCHOULD BE MOVED TO SCHEDULE SETTINGS AND REFACTORED
-  public getMonths(
-    amount: number = 12,
-    selectedMonth?: Moment
-  ): { list: Month[]; selected: Month } {
-    /* * generates and returns months for select options
-        each element contains monthLabel (seen by user)
-        and firstDay which is Moment of first day of given month
-        */
-    let selected: Month;
-    let months: Month[] = [];
-
-    const currentMonthStart = moment().startOf("month");
-
-    for (let i = 0; i < amount; i++) {
-      const firstDayOfMonth = currentMonthStart.clone().subtract(i, "months");
-      months = [
-        ...months,
-        {
-          firstDay: firstDayOfMonth,
-          monthLabel: this.getMonthLabel(firstDayOfMonth)
-        }
-      ];
-      if (
-        selectedMonth &&
-        this.getMonthLabel(firstDayOfMonth) ===
-          this.getMonthLabel(selectedMonth)
-      ) {
-        selected = {
-          firstDay: firstDayOfMonth,
-          monthLabel: this.getMonthLabel(firstDayOfMonth)
-        };
-      }
-    }
-
-    console.log("getMonths", { list: months, selected });
-
-    return { list: months, selected };
-  }
-
-  // TEMP - PRZENIEŚĆ
-  public getMonthLabel(day: Moment): string {
-    // returns month string label for given moment day
-    // i.e. for 1.05.2019 returns may 2019 (or maj 2019 ect. depending on defined moment locale and defined label format)
-    return day.format(this.monthLabelFormat);
   }
 }
