@@ -1,4 +1,52 @@
-<form
+<form [formGroup]="settingsForm" (ngSubmit)="onFormSubmit()">
+  <mat-form-field class="settingsForm__field vertical-gap">
+    <mat-label>Contractor name</mat-label>
+    <input
+      matInput
+      placeholder="Contractor name"
+      type="text"
+      formControlName="contractorName"
+      name="contractorName"
+      id="contractorName"
+      [appDisableControl]="areSettingsSubmitted"
+    />
+    <mat-error *ngIf="true">
+      Contractor name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="vertical-gap">
+    <mat-label>Schedule month</mat-label>
+    <mat-select
+      formControlName="selectedMonth"
+      id="monthSelect"
+      [appDisableControl]="areSettingsSubmitted"
+    >
+      <mat-option *ngFor="let month of months" [value]="month.firstDay">
+        {{ month.monthLabel }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button
+    type="submit"
+    *ngIf="!areSettingsSubmitted; else editSettings"
+    mat-raised-button
+    class="vertical-gap"
+  >
+    Submit
+  </button>
+</form>
+
+<ng-template #editSettings>
+  <button type="button" mat-raised-button (click)="onAllowEditing()">
+    Edit settings
+  </button>
+</ng-template>
+
+<!-- TEMP - stare - wywalić: -->
+
+<!-- <form
   class="monthPickerForm"
   [formGroup]="monthPickerForm"
   (ngSubmit)="onSubmit()"
@@ -43,4 +91,4 @@
   <button type="button" mat-raised-button (click)="onUnsubmit()">
     Change month
   </button>
-</ng-template>
+</ng-template> -->
