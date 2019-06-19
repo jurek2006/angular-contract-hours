@@ -26,6 +26,10 @@ export class SchedulePrintComponent {
 
   constructor(private momentMonthsService: MomentMonthsService) {}
 
+  ngOnInit() {
+    window.scroll(0, 0);
+  }
+
   onClose() {
     this.closePrint.emit();
   }
