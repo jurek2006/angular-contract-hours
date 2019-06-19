@@ -38,7 +38,13 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.settings.selectedMonth) {
+    // reinit scheduleForm only when selectedMonth was changed or selected for the first time
+    if (
+      this.settings.selectedMonth &&
+      (changes.settings.firstChange ||
+        changes.settings.currentValue.selectedMonth !==
+          changes.settings.previousValue.selectedMonth)
+    ) {
       this.schedule = this.scheduleService.initSchedule(
         this.settings.selectedMonth
       );
