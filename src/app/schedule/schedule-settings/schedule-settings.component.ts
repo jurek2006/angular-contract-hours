@@ -1,43 +1,25 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  OnDestroy
-} from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ScheduleService } from "src/app/services/schedule.service";
 import { Month } from "src/app/shared/month";
-import { Moment } from "moment";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { MomentMonthsService } from "src/app/services/moment-months.service";
+import { Settings } from "../models/settings.model";
 
 @Component({
   selector: "app-schedule-settings",
   templateUrl: "./schedule-settings.component.html",
   styleUrls: ["./schedule-settings.component.css"]
 })
-export class ScheduleSettingsComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject();
+export class ScheduleSettingsComponent implements OnInit {
   settingsForm: FormGroup;
   months: Month[];
-  areSettingsSubmitted = false;
-  contractorName: string;
 
-  @Input() settings: any;
-  @Output() settingsChange = new EventEmitter<any>();
+  @Input() settings: Settings;
+  @Output() settingsChange = new EventEmitter<Settings>();
 
   constructor(private momentMonthsService: MomentMonthsService) {}
 
   ngOnInit() {
     this.initSettingsForm();
-  }
-
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
   }
 
   initSettingsForm(): void {
@@ -47,10 +29,11 @@ export class ScheduleSettingsComponent implements OnInit, OnDestroy {
 
     this.months = this.momentMonthsService.getMonths();
 
+    // set default or chosen month in select element
     const selectedMonthInit =
       this.settings && this.settings.selectedMonth
         ? this.settings.selectedMonth
-        : this.months[0].firstDay;
+        : this.months[0].firstDay; // if there isn't selectedMonth - select first of generated months
 
     this.settingsForm = new FormGroup({
       contractorName: new FormControl(contractorNameInit, Validators.required),

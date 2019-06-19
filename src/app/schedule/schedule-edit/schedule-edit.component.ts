@@ -14,6 +14,7 @@ import { ScheduleService } from "src/app/services/schedule.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { ScheduleDay } from "../models/scheduleDay.model";
+import { Settings } from "../models/settings.model";
 
 @Component({
   selector: "app-schedule-edit",
@@ -24,7 +25,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   private ngUnsubscribe = new Subject();
   schedule: ScheduleDay[];
 
-  @Input() settings: any;
+  @Input() settings: Settings;
   @Output() printModeChanged = new EventEmitter<boolean>(); // fired when printMode turned on/off
 
   printMode = false;
@@ -146,7 +147,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onPrint() {
-    // submitting schedule form and going to "printing it" - exportint printable pdf
+    // submitting schedule form and going to "printing" - exporting printable pdf
     this.printMode = true;
     this.schedule = this.scheduleForm.value.days;
     this.printModeChanged.emit(this.printMode);

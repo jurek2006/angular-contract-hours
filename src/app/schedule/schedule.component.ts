@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Moment } from "moment";
+import { Settings } from "./models/settings.model";
 
 @Component({
   selector: "app-schedule",
@@ -7,11 +7,8 @@ import { Moment } from "moment";
   styleUrls: ["./schedule.component.css"]
 })
 export class ScheduleComponent {
-  selectedMonth: Moment; // moment for beginning of selected month
-  isMonthSubmitted = false; // when month is submitted is not possible to change it
-  contractorName: string;
   printMode = false;
-  settings: any;
+  settings: Settings;
 
   printModeChanged(newPrintModeStatus: boolean): void {
     this.printMode = newPrintModeStatus;
