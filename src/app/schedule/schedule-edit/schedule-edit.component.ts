@@ -58,21 +58,17 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private initScheduleForm(): void {
-    // unsubscribe curren watching form subscription, if there is any
-    if (this.formWatchSubscription) {
-      this.formWatchSubscription.unsubscribe();
-    }
+    // create main form with days FormArray and field totalHours
+    this.scheduleForm = new FormGroup({
+      totalHours: new FormControl({ value: 0, disabled: true }),
+      days: this.formGenerateDaysFieldsArray()
+    });
 
-    // unsubscribe all subscriptions from FormArray (watching if day is disabled/enabled)
-    if (this.formDaysSubscriptions && this.formDaysSubscriptions.length > 0) {
-      this.formDaysSubscriptions.forEach((subscription: Subscription) => {
-        subscription.unsubscribe();
-      });
-      this.formDaysSubscriptions = [];
-    }
+    this.formSubscribeToSumHours();
+    this.formSubscribeToWatchWorkingDayStatus();
+  }
 
-    // --- form creation
-
+  private formGenerateDaysFieldsArray() {
     // create FormArray for each day in given this.schedule
     const daysFields = new FormArray([]);
 
@@ -80,8 +76,14 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
       for (const day of this.schedule) {
         daysFields.push(
           new FormGroup({
-            date: new FormControl({ value: day.date, disabled: false }),
-            weekday: new FormControl({ value: day.weekday, disabled: false }),
+            date: new FormControl({
+              value: day.date,
+              disabled: false
+            }),
+            weekday: new FormControl({
+              value: day.weekday,
+              disabled: false
+            }),
             workingDay: new FormControl({
               value: day.workingDay,
               disabled: false
@@ -98,13 +100,18 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
       }
     }
 
-    // create main form with days FormArray and field totalHours
-    this.scheduleForm = new FormGroup({
-      totalHours: new FormControl({ value: 0, disabled: true }),
-      days: daysFields
-    });
+    return daysFields;
+  }
 
+  private formSubscribeToSumHours() {
     // subscribe to watch changes in form fields values - to sum total hours
+
+    // unsubscribe current watching form subscription, if there is any
+    if (this.formWatchSubscription) {
+      this.formWatchSubscription.unsubscribe();
+    }
+
+    // subscribe
     this.formWatchSubscription = this.scheduleForm.controls.days.valueChanges
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(value => {
@@ -113,8 +120,20 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
           .reduce((a, b) => a + b);
         this.scheduleForm.get("totalHours").setValue(sum);
       });
+  }
 
-    // subscribe to watch only 'workingDay' control (binded with select in form) in each group in FormArray
+  private formSubscribeToWatchWorkingDayStatus() {
+    // subscribe to watch 'workingDay' control (enabling/disabling day) for each day in FormArray
+
+    // unsubscribe all subscriptions from FormArray (watching if day is disabled/enabled)
+    if (this.formDaysSubscriptions && this.formDaysSubscriptions.length > 0) {
+      this.formDaysSubscriptions.forEach((subscription: Subscription) => {
+        subscription.unsubscribe();
+      });
+      this.formDaysSubscriptions = [];
+    }
+
+    // subscribe to watch only 'workingDay' control for each day
     this.getDaysControls().forEach((control: FormControl, index: number) => {
       const subscription: Subscription = control
         .get("workingDay")
