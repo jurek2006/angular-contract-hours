@@ -34,7 +34,7 @@ export class SchedulePrintComponent {
     this.closePrint.emit();
   }
 
-  private countTotalHours() {
+  public countTotalHours() {
     return this.schedule
       .map(day => (day.hours > 0 ? day.hours : 0))
       .reduce((a, b) => a + b);
@@ -55,7 +55,7 @@ export class SchedulePrintComponent {
     });
   }
 
-  private getSelectedMonthLabel(): string {
+  public getSelectedMonthLabel(): string {
     return this.momentMonthsService.getMonthLabel(this.settings.selectedMonth);
   }
 }

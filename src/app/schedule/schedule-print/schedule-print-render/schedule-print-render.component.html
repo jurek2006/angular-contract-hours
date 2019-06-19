@@ -1,0 +1,31 @@
+<p>{{ contractorNameLabel }}</p>
+<p class="header">Ewidencjonowanie czasu wykonywania umowy zlecenia</p>
+<p>Miesiąc: {{ monthLabel }}</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dzień</th>
+      <th>Liczba godzin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let day of schedule"
+      [ngClass]="{ disabled: day.disabled === true }"
+    >
+      <td>{{ day.date }}</td>
+      <td>
+        {{ day.hours | displayHours }}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Razem</th>
+      <td>{{ totalHours }}</td>
+    </tr>
+  </tfoot>
+</table>
+
+<p class="sign">Podpis zleceniobiorcy:</p>
