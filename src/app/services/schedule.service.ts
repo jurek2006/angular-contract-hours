@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Moment } from "moment";
 import * as moment from "moment";
+import cloneDeep from "lodash/cloneDeep";
+
 import { ScheduleDay } from "../schedule/models/scheduleDay.model";
 
 @Injectable({
@@ -38,7 +40,7 @@ export class ScheduleService {
   }
 
   public getSchedule(): ScheduleDay[] {
-    return JSON.parse(JSON.stringify(this.schedule));
+    return cloneDeep(this.schedule);
   }
 
   // !!! FILL SCHEDULE
