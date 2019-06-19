@@ -1,4 +1,8 @@
-<form [formGroup]="settingsForm" (ngSubmit)="onFormSubmit()">
+<form
+  [formGroup]="settingsForm"
+  class="settingsForm"
+  (ngSubmit)="onFormSubmit()"
+>
   <mat-form-field class="settingsForm__field vertical-gap">
     <mat-label>Contractor name</mat-label>
     <input
