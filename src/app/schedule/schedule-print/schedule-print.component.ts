@@ -6,10 +6,10 @@ import {
   ViewChild,
   ElementRef
 } from "@angular/core";
-import { ScheduleDay } from "../scheduleDay.model";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
 import { MomentMonthsService } from "src/app/services/moment-months.service";
+import { ScheduleDay } from "../models/scheduleDay.model";
 
 @Component({
   selector: "app-schedule-print",
@@ -38,7 +38,7 @@ export class SchedulePrintComponent {
 
   public generatePdf() {
     // converts schedule HTML (nativeElement) to image and put it to generated pdf
-    const scheduleImage = this.pdfRenderView.nativeElement; //
+    const scheduleImage = this.pdfRenderView.nativeElement;
     html2canvas(scheduleImage).then(canvas => {
       const page = { height: 297, width: 210 }; // a4 page size (in mm) to fit image on pdf page
 

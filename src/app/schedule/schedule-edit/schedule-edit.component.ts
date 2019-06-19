@@ -9,11 +9,11 @@ import {
   OnDestroy
 } from "@angular/core";
 import { FormArray, FormGroup, FormControl, Validators } from "@angular/forms";
-import { ScheduleDay } from "../scheduleDay.model";
 import { Subscription } from "rxjs";
 import { ScheduleService } from "src/app/services/schedule.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { ScheduleDay } from "../models/scheduleDay.model";
 
 @Component({
   selector: "app-schedule-edit",

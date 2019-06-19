@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Moment } from "moment";
 import * as moment from "moment";
-import { ScheduleDay } from "../schedule/scheduleDay.model";
 import { Month } from "../shared/month";
+import { ScheduleDay } from "../schedule/models/scheduleDay.model";
 
 @Injectable({
   providedIn: "root"
