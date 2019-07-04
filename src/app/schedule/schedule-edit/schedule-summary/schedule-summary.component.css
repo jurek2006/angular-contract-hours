@@ -4,11 +4,18 @@
   bottom: 0;
 }
 
+:host.mobileFullScreen {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
 .summary {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 15px 5px,
     rgba(0, 0, 0, 0.12) 0px 0px 2px;
   position: relative;
+  height: 100%;
 }
 
 .summary__info {
@@ -24,12 +31,6 @@
 
 .summary__info p {
   margin: 1rem 0;
-}
-
-.summary__errors {
-  top: 0;
-  width: 100%;
-  height: 100%;
 }
 
 .summary__errors p {
@@ -69,5 +70,9 @@
 
   .isError .summary__info {
     display: flex;
+  }
+
+  .mobile-fullscreen-btn {
+    display: none;
   }
 }

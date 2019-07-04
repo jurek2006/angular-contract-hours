@@ -11,6 +11,14 @@
       Total hours: <span class="highlight">{{ totalHours }}</span>
     </p>
     <button
+      class="mobile-fullscreen-btn"
+      mat-raised-button
+      (click)="onOpenMobileFullScreen()"
+      color="primary"
+    >
+      F
+    </button>
+    <button
       mat-raised-button
       (click)="onOpenPrint()"
       [disabled]="!areAllDaysControlsValid"
