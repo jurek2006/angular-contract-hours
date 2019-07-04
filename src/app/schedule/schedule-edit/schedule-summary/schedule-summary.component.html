@@ -1,4 +1,21 @@
 <div class="summary" [ngClass]="{ isError: isErrorStatus() }">
+  <mat-toolbar
+    *ngIf="isMobileFullScreen"
+    class="summary__toolbar--only-mobile-fullscreen"
+  >
+    <mat-toolbar-row class="summary__toolbar__row">
+      <span>Schedule settings</span>
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="onOpenMobileFullScreen(false)"
+        aria-label="Close settings"
+      >
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
   <div class="summary__errors">
     <p class="error-message" *ngIf="!areAllDaysControlsValid">
       Correct highlighted cells. For each of days amount of hours has to be
@@ -7,18 +24,22 @@
   </div>
 
   <div class="summary__info">
+    <button
+      *ngIf="!isMobileFullScreen"
+      class="mobile-fullscreen-btn"
+      mat-icon-button
+      (click)="onOpenMobileFullScreen(true)"
+      color="primary"
+      aria-label="Open settings"
+    >
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
     <p>
       Total hours: <span class="highlight">{{ totalHours }}</span>
     </p>
+
     <button
-      class="mobile-fullscreen-btn"
-      mat-raised-button
-      (click)="onOpenMobileFullScreen()"
-      color="primary"
-    >
-      F
-    </button>
-    <button
+      class="btn-v-stretched"
       mat-raised-button
       (click)="onOpenPrint()"
       [disabled]="!areAllDaysControlsValid"

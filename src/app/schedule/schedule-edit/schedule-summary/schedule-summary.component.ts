@@ -27,8 +27,8 @@ export class ScheduleSummaryComponent implements OnInit {
     this.openPrint.emit();
   }
 
-  onOpenMobileFullScreen(): void {
-    this.isMobileFullScreen = true;
+  onOpenMobileFullScreen(isOpenStatus: boolean): void {
+    this.isMobileFullScreen = isOpenStatus;
   }
 
   private isErrorStatus(): boolean {
