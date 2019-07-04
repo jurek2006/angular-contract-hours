@@ -25,7 +25,7 @@ export class ScheduleSettingsComponent implements OnInit {
   initSettingsForm(): void {
     const contractorNameInit = this.settings
       ? this.settings.contractorName
-      : "";
+      : "DEFAULT";
 
     this.months = this.momentMonthsService.getMonths();
 
