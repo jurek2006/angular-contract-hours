@@ -34,18 +34,40 @@
     >
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
-    <p>
-      Total hours: <span class="highlight">{{ totalHours }}</span>
-    </p>
 
-    <button
-      class="btn-v-stretched"
-      mat-raised-button
-      (click)="onOpenPrint()"
-      [disabled]="!areAllDaysControlsValid"
-      color="primary"
-    >
-      Generate PDF
-    </button>
+    <form #f="ngForm" (ngSubmit)="onGeneratePdf(f)">
+      <p>
+        Total hours: <span class="highlight">{{ totalHours }}</span>
+      </p>
+
+      <mat-checkbox
+        ngModel
+        name="isTotalHoursDefined"
+        #totalHoursEnable="ngModel"
+      ></mat-checkbox>
+      Defined total hours:
+      <mat-form-field class="hoursInput">
+        <input
+          matInput
+          ngModel
+          name="totalHours"
+          type="number"
+          min="1"
+          max="31*24"
+          step="0.5"
+          [disabled]="!totalHoursEnable.value"
+        />
+      </mat-form-field>
+
+      <button
+        type="submit"
+        class="btn-v-stretched"
+        mat-raised-button
+        [disabled]="!areAllDaysControlsValid"
+        color="primary"
+      >
+        Generate PDF
+      </button>
+    </form>
   </div>
 </div>

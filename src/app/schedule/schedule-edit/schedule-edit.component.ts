@@ -7,19 +7,19 @@ import {
   Output,
   EventEmitter,
   OnDestroy
-} from "@angular/core";
-import { FormArray, FormGroup, FormControl, Validators } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { ScheduleService } from "src/app/services/schedule.service";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { ScheduleDay } from "../models/scheduleDay.model";
-import { Settings } from "../models/settings.model";
+} from '@angular/core';
+import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ScheduleService } from 'src/app/services/schedule.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ScheduleDay } from '../models/scheduleDay.model';
+import { Settings } from '../models/settings.model';
 
 @Component({
-  selector: "app-schedule-edit",
-  templateUrl: "./schedule-edit.component.html",
-  styleUrls: ["./schedule-edit.component.css"]
+  selector: 'app-schedule-edit',
+  templateUrl: './schedule-edit.component.html',
+  styleUrls: ['./schedule-edit.component.css']
 })
 export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   private ngUnsubscribe = new Subject();
@@ -118,7 +118,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
         const sum = this.scheduleForm.value.days
           .map(day => (day.hours > 0 ? day.hours : 0))
           .reduce((a, b) => a + b);
-        this.scheduleForm.get("totalHours").setValue(sum);
+        this.scheduleForm.get('totalHours').setValue(sum);
       });
   }
 
@@ -136,21 +136,21 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     // subscribe to watch only 'workingDay' control for each day
     this.getDaysControls().forEach((control: FormControl, index: number) => {
       const subscription: Subscription = control
-        .get("workingDay")
+        .get('workingDay')
         .valueChanges.pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(newWorkingDayStatus => {
-          const changedControl = (this.scheduleForm.get("days") as FormArray)
+          const changedControl = (this.scheduleForm.get('days') as FormArray)
             .controls[index];
 
           // if "day" changed to non working set hours to 0 and disable hours control
           // otherwise enable hours control
           if (!newWorkingDayStatus) {
             changedControl.patchValue({
-              hours: "0"
+              hours: '0'
             });
-            changedControl.get("hours").disable();
+            changedControl.get('hours').disable();
           } else {
-            changedControl.get("hours").enable();
+            changedControl.get('hours').enable();
           }
         });
 
@@ -160,15 +160,15 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public getDaysControls() {
-    return (this.scheduleForm.get("days") as FormArray).controls;
+    return (this.scheduleForm.get('days') as FormArray).controls;
   }
 
   private areAllDaysControlsValid() {
-    return this.scheduleForm.get("days").valid;
+    return this.scheduleForm.get('days').valid;
   }
 
   private getTotalScheduledHours() {
-    return this.scheduleForm.get("totalHours").value;
+    return this.scheduleForm.get('totalHours').value;
   }
 
   public onPrint() {

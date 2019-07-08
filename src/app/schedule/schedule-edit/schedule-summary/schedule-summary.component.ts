@@ -5,25 +5,26 @@ import {
   Output,
   EventEmitter,
   HostBinding
-} from "@angular/core";
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: "app-schedule-summary",
-  templateUrl: "./schedule-summary.component.html",
-  styleUrls: ["./schedule-summary.component.css"]
+  selector: 'app-schedule-summary',
+  templateUrl: './schedule-summary.component.html',
+  styleUrls: ['./schedule-summary.component.css']
 })
 export class ScheduleSummaryComponent implements OnInit {
   @Input() totalHours: number;
   @Input() areAllDaysControlsValid: boolean;
   @Output() openPrint = new EventEmitter<void>();
 
-  @HostBinding("class.mobileFullScreen") isMobileFullScreen = false;
+  @HostBinding('class.mobileFullScreen') isMobileFullScreen = false;
 
   constructor() {}
 
   ngOnInit() {}
 
-  onOpenPrint(): void {
+  onGeneratePdf(form: NgForm): void {
     this.openPrint.emit();
   }
 

@@ -72,6 +72,10 @@
   align-self: stretch;
 }
 
+.hoursInput {
+  width: 3em;
+}
+
 mat-icon {
   transform: scale(2);
 }
