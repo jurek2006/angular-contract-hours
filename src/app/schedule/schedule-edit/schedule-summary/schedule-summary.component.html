@@ -35,27 +35,22 @@
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
 
-    <form #f="ngForm" (ngSubmit)="onGeneratePdf(f)">
+    <form [formGroup]="summaryForm" (ngSubmit)="onGeneratePdf()">
       <p>
         Total hours: <span class="highlight">{{ totalHours }}</span>
       </p>
 
-      <mat-checkbox
-        ngModel
-        name="isTotalHoursDefined"
-        #totalHoursEnable="ngModel"
-      ></mat-checkbox>
+      <mat-checkbox formControlName="isTotalHoursDefined"></mat-checkbox>
       Defined total hours:
       <mat-form-field class="hoursInput">
         <input
           matInput
-          ngModel
-          name="totalHours"
+          formControlName="totalHoursDefined"
           type="number"
           min="1"
           max="31*24"
           step="0.5"
-          [disabled]="!totalHoursEnable.value"
+          [appDisableControl]="!summaryForm.get('isTotalHoursDefined').value"
         />
       </mat-form-field>
 

@@ -4,9 +4,12 @@ import {
   Input,
   Output,
   EventEmitter,
-  HostBinding
+  HostBinding,
+  ViewChild
 } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { SummarySettingsService } from 'src/app/services/summary-settings.service';
+import { SummarySettings } from '../../models/summarySettings.model';
 
 @Component({
   selector: 'app-schedule-summary',
@@ -14,17 +17,36 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./schedule-summary.component.css']
 })
 export class ScheduleSummaryComponent implements OnInit {
+  settings: SummarySettings;
+  summaryForm: FormGroup;
+
+  formChangesSubscription;
+
   @Input() totalHours: number;
   @Input() areAllDaysControlsValid: boolean;
   @Output() openPrint = new EventEmitter<void>();
 
   @HostBinding('class.mobileFullScreen') isMobileFullScreen = false;
+  @ViewChild('f', { static: true }) ngForm: NgForm;
 
-  constructor() {}
+  constructor(private summarySettingsService: SummarySettingsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('settings', this.settings);
+    this.initSettingsForm();
+  }
 
-  onGeneratePdf(form: NgForm): void {
+  initSettingsForm(): void {
+    this.settings = this.summarySettingsService.loadSettings();
+
+    this.summaryForm = new FormGroup({
+      isTotalHoursDefined: new FormControl(this.settings.isTotalHoursDefined),
+      totalHoursDefined: new FormControl(this.settings.totalHoursDefined)
+    });
+  }
+
+  onGeneratePdf(): void {
+    this.summarySettingsService.saveSettings(this.summaryForm.value);
     this.openPrint.emit();
   }
 
