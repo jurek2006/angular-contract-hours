@@ -63,17 +63,23 @@
         />
       </mat-form-field>
 
-      <button
-        type="submit"
-        class="btn-v-stretched"
-        mat-raised-button
-        [disabled]="!summaryForm.valid"
-        color="primary"
+      <!-- span with tooltip to show error if expected and current amount of hours doesn't match -->
+      <span
+        matTooltipClass="mat-tooltip-error"
+        [matTooltip]="summaryForm.errors?.hoursDefinedCurrentNotMatch"
+        [matTooltipDisabled]="summaryForm.valid"
       >
-        Generate PDF
-      </button>
-      <!-- show error if expected and current amount of hours doesn't match -->
-      {{ summaryForm.errors?.hoursDefinedCurrentNotMatch }}
+        <button
+          type="submit"
+          class="btn-v-stretched"
+          mat-raised-button
+          [disabled]="!summaryForm.valid"
+          color="primary"
+          aria-label="Button to generate PDF with Schedule"
+        >
+          Generate PDF
+        </button>
+      </span>
     </form>
   </div>
 </div>

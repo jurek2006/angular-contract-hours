@@ -80,6 +80,12 @@ mat-icon {
   transform: scale(2);
 }
 
+::ng-deep .mat-tooltip-error {
+  background-color: var(--error-color);
+  color: var(--on-error-color);
+  font-size: 1rem;
+}
+
 @media (min-width: 481px) {
 }
 
