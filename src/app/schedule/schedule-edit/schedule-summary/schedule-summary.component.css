@@ -11,7 +11,7 @@
 :host.mobileFullScreen {
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
 }
 
 .summary {
@@ -58,8 +58,26 @@
   justify-content: space-between;
 }
 
+.summary__form {
+  /* form for mobile view & not .mobileFullScreen */
+  display: none;
+}
+
+:host.mobileFullScreen .summary__form {
+  /* form for mobile view with .mobileFullScreen */
+  display: block;
+}
+
 .highlight {
   font-weight: bold;
+}
+
+/* styles for difference in total hour between expected and scheduled */
+.totalHoursDifference--ok-value {
+  color: var(--success-color);
+}
+.totalHoursDifference--error-value {
+  color: var(--error-color);
 }
 
 .error-message {
@@ -108,15 +126,20 @@ mat-icon {
     height: inherit;
   }
 
-  :host.mobileFullScreen .summary__toolbar--only-mobile-fullscreen {
-    display: none;
-  }
-
   .summary {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px,
       rgba(0, 0, 0, 0.12) -1px 3px 9px;
     border-radius: 5px 0 0 5px;
     margin-top: 2rem;
+  }
+
+  .summary__form {
+    /* form displayed for non-mobile resolution */
+    display: block;
+  }
+
+  .summary__info {
+    flex-direction: column;
   }
 
   .isError .summary__info {

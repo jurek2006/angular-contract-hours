@@ -30,22 +30,54 @@
       mat-icon-button
       (click)="onOpenMobileFullScreen(true)"
       color="primary"
-      aria-label="Open settings"
+      aria-label="Open schedule settings"
     >
-      <mat-icon>keyboard_arrow_up</mat-icon>
+      <mat-icon>alarm</mat-icon>
     </button>
 
-    <form [formGroup]="summaryForm" (ngSubmit)="onGeneratePdf()">
+    <p>
+      Total hours:
+      <span class="highlight">{{ totalHours }} </span>
+      <span
+        *ngIf="isTotalHoursEnabled()"
+        class="highlight totalHoursDifference"
+        [ngClass]="
+          totalHours - summaryForm.get('totalHoursDefined').value === 0
+            ? 'totalHoursDifference--ok-value'
+            : 'totalHoursDifference--error-value'
+        "
+        >({{ totalHours - summaryForm.get('totalHoursDefined').value }})</span
+      >
+    </p>
+
+    <!-- span with tooltip to show error if expected and current amount of hours doesn't match -->
+    <span
+      matTooltipClass="mat-tooltip-error"
+      [matTooltip]="summaryForm.errors?.hoursDefinedCurrentNotMatch"
+      [matTooltipDisabled]="summaryForm.valid"
+    >
+      <button
+        type="submit"
+        form="summaryForm"
+        class="btn-v-stretched"
+        mat-raised-button
+        [disabled]="!summaryForm.valid"
+        color="primary"
+        aria-label="Generate PDF with Schedule"
+      >
+        PDF
+      </button>
+    </span>
+
+    <!-- show only when .mobileFullScreen or not mobile view -->
+    <form
+      class="summary__form"
+      [formGroup]="summaryForm"
+      id="summaryForm"
+      (ngSubmit)="onGeneratePdf()"
+    >
       <!-- input needed to validate if expected (defined) total hours match already scheduled (current) -->
       <input formControlName="totalHoursCurrent" type="hidden" />
-
-      <p>
-        Total hours:
-        <span class="highlight">{{ totalHours }} </span>
-        <span *ngIf="isTotalHoursEnabled()" class="highlight"
-          >({{ totalHours - summaryForm.get('totalHoursDefined').value }})</span
-        >
-      </p>
 
       <mat-checkbox formControlName="isTotalHoursDefined">
         <!-- checkbox to turn on/off defined (expected) amount of hours-->
@@ -62,24 +94,6 @@
           [appDisableControl]="!isTotalHoursEnabled()"
         />
       </mat-form-field>
-
-      <!-- span with tooltip to show error if expected and current amount of hours doesn't match -->
-      <span
-        matTooltipClass="mat-tooltip-error"
-        [matTooltip]="summaryForm.errors?.hoursDefinedCurrentNotMatch"
-        [matTooltipDisabled]="summaryForm.valid"
-      >
-        <button
-          type="submit"
-          class="btn-v-stretched"
-          mat-raised-button
-          [disabled]="!summaryForm.valid"
-          color="primary"
-          aria-label="Button to generate PDF with Schedule"
-        >
-          Generate PDF
-        </button>
-      </span>
     </form>
   </div>
 </div>
