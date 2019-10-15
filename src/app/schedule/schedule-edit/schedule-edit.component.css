@@ -3,6 +3,14 @@
   flex-direction: column;
 }
 
+.schedule-summary {
+  flex-grow: 0.5;
+}
+
+.scheduleForm {
+  flex-grow: 1;
+}
+
 .scheduleTable {
   width: 100%;
   margin: 0;
@@ -81,7 +89,8 @@
   .scheduleTable {
     border: 1px solid var(--primary-color);
     width: calc(100% - 4rem);
-    margin: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
   }
 
   .scheduleTable td {

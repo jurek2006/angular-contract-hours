@@ -1,6 +1,10 @@
 <div class="scheduleView" *ngIf="schedule">
   <ng-container *ngIf="!printMode; else showPrint">
-    <form [formGroup]="scheduleForm" (ngSubmit)="onPrint()">
+    <form
+      [formGroup]="scheduleForm"
+      class="scheduleForm"
+      (ngSubmit)="onPrint()"
+    >
       <table class="scheduleTable">
         <thead class="scheduleTable__head">
           <tr>
@@ -65,6 +69,7 @@
     </form>
 
     <app-schedule-summary
+      class="schedule-summary"
       [totalHours]="getTotalScheduledHours()"
       [areAllDaysControlsValid]="areAllDaysControlsValid()"
       (openPrint)="onPrint()"
