@@ -38,6 +38,7 @@
             <td>
               <mat-form-field class="form-field--narow">
                 <input
+                  (focus)="$event.target.select()"
                   matInput
                   class="scheduleTable__input"
                   type="number"
