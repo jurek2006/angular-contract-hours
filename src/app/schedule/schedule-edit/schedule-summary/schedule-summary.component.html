@@ -21,6 +21,10 @@
       Correct highlighted cells. For each of days amount of hours has to be
       between 0 (empty cell or "-"" is also ok) and 24.
     </p>
+    <!-- showing error if expected total hours different than scheduled (based on summaryForm and its validation) -->
+    <p class="error-message" *ngIf="!summaryForm.valid">
+      {{ summaryForm.errors?.error.msgVerbose }}
+    </p>
   </div>
 
   <div class="summary__info">
@@ -53,7 +57,7 @@
     <!-- span with tooltip to show error if expected and current amount of hours doesn't match -->
     <span
       matTooltipClass="mat-tooltip-error"
-      [matTooltip]="summaryForm.errors?.hoursDefinedCurrentNotMatch"
+      [matTooltip]="summaryForm.errors?.error.msg"
       [matTooltipDisabled]="summaryForm.valid"
     >
       <button
@@ -61,9 +65,9 @@
         form="summaryForm"
         class="btn-v-stretched"
         mat-raised-button
-        [disabled]="!summaryForm.valid"
         color="primary"
         aria-label="Generate PDF with Schedule"
+        [disabled]="!summaryForm.valid"
       >
         PDF
       </button>
