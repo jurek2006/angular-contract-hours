@@ -9,9 +9,9 @@
         mat-icon-button
         color="primary"
         (click)="onOpenMobileFullScreen(false)"
-        aria-label="Close settings"
+        aria-label="Save and close settings"
       >
-        <mat-icon>keyboard_arrow_down</mat-icon>
+        <mat-icon>check</mat-icon>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -34,52 +34,54 @@
   </div>
 
   <div class="summary__info">
-    <button
-      *ngIf="!isMobileFullScreen"
-      class="mobile-fullscreen-btn"
-      mat-icon-button
-      (click)="onOpenMobileFullScreen(true)"
-      color="primary"
-      aria-label="Open schedule settings"
-    >
-      <mat-icon>alarm</mat-icon>
-    </button>
-
-    <p>
-      Total hours:
-      <span class="highlight">{{ totalHours }} </span>
-      <span
-        *ngIf="isTotalHoursEnabled()"
-        class="highlight totalHoursDifference"
-        [ngClass]="
-          totalHours - summaryForm.get('totalHoursDefined').value === 0
-            ? 'totalHoursDifference--ok-value'
-            : 'totalHoursDifference--error-value'
-        "
-        >({{ totalHours - summaryForm.get('totalHoursDefined').value }})</span
-      >
-    </p>
-
-    <!-- span with tooltip to show error if expected and current amount of hours doesn't match -->
-    <span
-      matTooltipClass="mat-tooltip-error"
-      [matTooltip]="summaryForm.errors?.error.msg"
-      [matTooltipDisabled]="summaryForm.valid"
-    >
+    <div class="flex-row">
       <button
-        type="submit"
-        form="summaryForm"
-        class="btn-v-stretched"
-        mat-raised-button
+        *ngIf="!isMobileFullScreen"
+        class="mobile-fullscreen-btn"
+        mat-icon-button
+        (click)="onOpenMobileFullScreen(true)"
         color="primary"
-        aria-label="Generate PDF with Schedule"
-        [disabled]="!summaryForm.valid"
+        aria-label="Open schedule settings"
       >
-        <!-- On mobile show shorter button laber -->
-        <span class="hideOnMobile">Generate</span>
-        PDF
+        <mat-icon>alarm</mat-icon>
       </button>
-    </span>
+
+      <p>
+        Total hours:
+        <span class="highlight">{{ totalHours }} </span>
+        <span
+          *ngIf="isTotalHoursEnabled()"
+          class="highlight totalHoursDifference"
+          [ngClass]="
+            totalHours - summaryForm.get('totalHoursDefined').value === 0
+              ? 'totalHoursDifference--ok-value'
+              : 'totalHoursDifference--error-value'
+          "
+          >({{ totalHours - summaryForm.get('totalHoursDefined').value }})</span
+        >
+      </p>
+
+      <!-- span with tooltip to show error if expected and current amount of hours doesn't match -->
+      <span
+        matTooltipClass="mat-tooltip-error"
+        [matTooltip]="summaryForm.errors?.error.msg"
+        [matTooltipDisabled]="summaryForm.valid"
+      >
+        <button
+          type="submit"
+          form="summaryForm"
+          class="btn-v-stretched"
+          mat-raised-button
+          color="primary"
+          aria-label="Generate PDF with Schedule"
+          [disabled]="!summaryForm.valid"
+        >
+          <!-- On mobile show shorter button laber -->
+          <span class="hideOnMobile">Generate</span>
+          PDF
+        </button>
+      </span>
+    </div>
 
     <!-- show only when .mobileFullScreen or not mobile view -->
     <form

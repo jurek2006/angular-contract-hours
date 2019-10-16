@@ -25,11 +25,15 @@
 }
 
 .summary__info {
+  padding: 0.75rem;
+}
+
+.flex-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem;
+  margin-bottom: 15px;
 }
 
 .isError .summary__info {
@@ -151,10 +155,6 @@ mat-icon {
   .summary__form {
     /* form displayed for non-mobile resolution */
     display: block;
-  }
-
-  .summary__info {
-    flex-direction: column;
   }
 
   .isError .summary__info {
