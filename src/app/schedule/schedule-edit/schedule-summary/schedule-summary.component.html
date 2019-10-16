@@ -23,7 +23,13 @@
     </p>
     <!-- showing error if expected total hours different than scheduled (based on summaryForm and its validation) -->
     <p class="error-message" *ngIf="!summaryForm.valid">
-      {{ summaryForm.errors?.error.msgVerbose }}
+      <!-- for mobile resolution show shorter error message -->
+      <span class="hideOnMobile">
+        {{ summaryForm.errors?.error.msgVerbose }}
+      </span>
+      <span class="showOnlyMobile">
+        {{ summaryForm.errors?.error.msg }}
+      </span>
     </p>
   </div>
 
@@ -69,6 +75,8 @@
         aria-label="Generate PDF with Schedule"
         [disabled]="!summaryForm.valid"
       >
+        <!-- On mobile show shorter button laber -->
+        <span class="hideOnMobile">Generate</span>
         PDF
       </button>
     </span>

@@ -104,7 +104,22 @@ mat-icon {
   font-size: 1rem;
 }
 
+.hideOnMobile {
+  display: none;
+}
+
+.showOnlyMobile {
+  display: initial;
+}
+
 @media (min-width: 481px) {
+  .hideOnMobile {
+    display: initial;
+  }
+
+  .showOnlyMobile {
+    display: none;
+  }
 }
 
 @media (min-width: 641px) {
