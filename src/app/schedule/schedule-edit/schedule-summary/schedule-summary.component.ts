@@ -39,9 +39,10 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // when input values changed - update totalHoursCurrent value
+    // when input value totalHours changed - update totalHoursCurrent value
     // (hidden input needed to validate if expected total hours match current scheduled)
     if (
+      changes.totalHours &&
       !changes.totalHours.firstChange &&
       changes.totalHours.currentValue !== changes.totalHours.previousValue &&
       this.summaryForm &&
