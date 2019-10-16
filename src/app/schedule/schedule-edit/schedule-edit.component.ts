@@ -115,7 +115,10 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     this.formWatchSubscription = this.scheduleForm.controls.days.valueChanges
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(value => {
-        const sum = this.scheduleForm.value.days
+        // form data taken below from value instead of this.scheduleForm.value days
+        // because value is updated whenever any input value is changed,
+        // this.scheduleForm.value days only when input lost focus
+        const sum = value
           .map(day => (day.hours > 0 ? day.hours : 0))
           .reduce((a, b) => a + b);
         this.scheduleForm.get('totalHours').setValue(sum);
