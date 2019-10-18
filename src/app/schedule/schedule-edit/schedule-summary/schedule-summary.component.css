@@ -98,6 +98,13 @@
   width: 3em;
 }
 
+.fixed-field {
+  /* fixed size for span which is like field
+  - style prevents from blinking width change when value changes*/
+  display: inline-block;
+  width: 3em;
+}
+
 mat-icon {
   transform: scale(2);
 }

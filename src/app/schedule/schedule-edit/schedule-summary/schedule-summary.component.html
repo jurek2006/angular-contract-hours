@@ -25,10 +25,11 @@
     <p class="error-message" *ngIf="!summaryForm.valid">
       <!-- for mobile resolution show shorter error message -->
       <span class="hideOnMobile">
-        {{ summaryForm.errors?.error.msgVerbose }}
+        {{ summaryForm.errors?.error.msgVerbose }}:
       </span>
-      <span class="showOnlyMobile">
-        {{ summaryForm.errors?.error.msg }}
+      <span class="showOnlyMobile"> {{ summaryForm.errors?.error.msg }}:</span>
+      <span class="fixed-field">
+        {{ summaryForm.errors?.error.differenceAmount }}
       </span>
     </p>
   </div>
@@ -48,10 +49,10 @@
 
       <p>
         Total hours:
-        <span class="highlight">{{ totalHours }} </span>
+        <span class="highlight fixed-field">{{ totalHours }} </span>
         <span
           *ngIf="isTotalHoursEnabled()"
-          class="highlight totalHoursDifference"
+          class="highlight totalHoursDifference fixed-field"
           [ngClass]="
             totalHours - summaryForm.get('totalHoursDefined').value === 0
               ? 'totalHoursDifference--ok-value'

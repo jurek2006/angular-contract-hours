@@ -9,31 +9,28 @@ export const scheduleSummaryFormValidator: ValidatorFn = (
     totalHoursCurrent
   } = form.controls;
   // Validator checking (when defined total hours for month)
-  // if defined (expected) total hours match current (scheduled) total hours
-  // if not - returns error with message
+  // if defined total hours doesn't match currently scheduled - return error:
+  // "to many hours" or "not enough hours"
+
   if (
     isTotalHoursDefined.value &&
     totalHoursDefined.value - totalHoursCurrent.value !== 0
   ) {
-    if (totalHoursDefined.value - totalHoursCurrent.value > 0) {
-      return {
-        error: {
-          msg: `Not enough hours: ${totalHoursDefined.value -
-            totalHoursCurrent.value}`,
-          msgVerbose: `Less hours scheduled than expected: ${totalHoursDefined.value -
-            totalHoursCurrent.value}`
-        }
-      };
-    } else if (totalHoursDefined.value - totalHoursCurrent.value < 0) {
-      return {
-        error: {
-          msg: `To many hours hours: ${totalHoursCurrent.value -
-            totalHoursDefined.value}`,
-          msgVerbose: `To many hours scheduled than expected: ${totalHoursCurrent.value -
-            totalHoursDefined.value}`
-        }
-      };
-    }
+    return {
+      error: {
+        msg:
+          totalHoursDefined.value - totalHoursCurrent.value > 0
+            ? `Not enough hours`
+            : `To many hours`,
+        msgVerbose:
+          totalHoursDefined.value - totalHoursCurrent.value > 0
+            ? `Less hours scheduled than expected`
+            : `To many hours scheduled than expected`,
+        differenceAmount: Math.abs(
+          totalHoursDefined.value - totalHoursCurrent.value
+        )
+      }
+    };
   }
   return null;
 };
