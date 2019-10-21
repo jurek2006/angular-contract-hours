@@ -1,13 +1,13 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Month } from "src/app/shared/month";
-import { MomentMonthsService } from "src/app/services/moment-months.service";
-import { Settings } from "../models/settings.model";
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Month } from 'src/app/shared/month';
+import { MomentMonthsService } from 'src/app/services/moment-months.service';
+import { Settings } from '../models/settings.model';
 
 @Component({
-  selector: "app-schedule-settings",
-  templateUrl: "./schedule-settings.component.html",
-  styleUrls: ["./schedule-settings.component.css"]
+  selector: 'app-schedule-settings',
+  templateUrl: './schedule-settings.component.html',
+  styleUrls: ['./schedule-settings.component.css']
 })
 export class ScheduleSettingsComponent implements OnInit {
   settingsForm: FormGroup;
@@ -25,7 +25,7 @@ export class ScheduleSettingsComponent implements OnInit {
   initSettingsForm(): void {
     const contractorNameInit = this.settings
       ? this.settings.contractorName
-      : "DEFAULT";
+      : '';
 
     this.months = this.momentMonthsService.getMonths();
 
