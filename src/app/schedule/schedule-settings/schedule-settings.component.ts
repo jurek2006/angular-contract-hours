@@ -23,9 +23,15 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   initSettingsForm(): void {
-    const contractorNameInit = this.settings
-      ? this.settings.contractorName
-      : '';
+    let contractorNameInit: string;
+    if (this.settings && this.settings.contractorName) {
+      contractorNameInit = this.settings.contractorName;
+    } else {
+      // if contractor name not filled, check if user stored it before in a browser local storage
+      contractorNameInit = localStorage.getItem('contractorNameStored')
+        ? localStorage.getItem('contractorNameStored')
+        : '';
+    }
 
     this.months = this.momentMonthsService.getMonths();
 
@@ -57,6 +63,11 @@ export class ScheduleSettingsComponent implements OnInit {
     if (this.settingsForm.valid) {
       this.settingsChange.emit(this.settingsForm.value);
       this.settingsForm.disable();
+      // save contractor name in local storage (used only for the user convenience - to persist in browser)
+      localStorage.setItem(
+        'contractorNameStored',
+        this.settingsForm.get('contractorName').value
+      );
     }
   }
 
