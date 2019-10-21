@@ -13,6 +13,7 @@ import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SummarySettingsService } from 'src/app/services/summary-settings.service';
 import { SummarySettings } from '../../models/summarySettings.model';
 import { scheduleSummaryFormValidator } from './schedule-summary-form-validator.directive';
+import { MatCheckboxChange } from '@angular/material';
 
 @Component({
   selector: 'app-schedule-summary',
@@ -86,5 +87,11 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
 
   private isErrorStatus(): boolean {
     return !this.areAllDaysControlsValid;
+  }
+
+  resetAmountIfTotalHoursDisabled(event: MatCheckboxChange) {
+    if (!event.checked) {
+      this.summaryForm.get('totalHoursDefined').setValue(0);
+    }
   }
 }

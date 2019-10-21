@@ -100,7 +100,10 @@
       <!-- input needed to validate if expected (defined) total hours match already scheduled (current) -->
       <input formControlName="totalHoursCurrent" type="hidden" />
 
-      <mat-checkbox formControlName="isTotalHoursDefined">
+      <mat-checkbox
+        formControlName="isTotalHoursDefined"
+        (change)="resetAmountIfTotalHoursDisabled($event)"
+      >
         <!-- checkbox to turn on/off defined (expected) amount of hours-->
       </mat-checkbox>
       Defined total hours:
