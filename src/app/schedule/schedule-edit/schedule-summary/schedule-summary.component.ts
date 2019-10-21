@@ -85,7 +85,7 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
     this.isMobileFullScreen = isOpenStatus;
   }
 
-  private isErrorStatus(): boolean {
+  public isErrorStatus(): boolean {
     return !this.areAllDaysControlsValid;
   }
 
