@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   OnChanges
 } from '@angular/core';
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SummarySettingsService } from 'src/app/services/summary-settings.service';
 import { SummarySettings } from '../../models/summarySettings.model';
 import { scheduleSummaryFormValidator } from './schedule-summary-form-validator.directive';
@@ -22,8 +22,6 @@ import { scheduleSummaryFormValidator } from './schedule-summary-form-validator.
 export class ScheduleSummaryComponent implements OnInit, OnChanges {
   settings: SummarySettings;
   summaryForm: FormGroup;
-
-  formChangesSubscription;
 
   @Input() totalHours: number;
   @Input() areAllDaysControlsValid: boolean;
@@ -60,7 +58,10 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
     this.summaryForm = new FormGroup(
       {
         isTotalHoursDefined: new FormControl(this.settings.isTotalHoursDefined),
-        totalHoursDefined: new FormControl(this.settings.totalHoursDefined),
+        totalHoursDefined: new FormControl(this.settings.totalHoursDefined, [
+          Validators.min(0),
+          Validators.max(31 * 24) // maximum possible hours in a month
+        ]),
         totalHoursCurrent: new FormControl({
           value: this.totalHours,
           disabled: true

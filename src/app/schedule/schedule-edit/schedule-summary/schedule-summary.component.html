@@ -22,7 +22,7 @@
       between 0 (empty cell or "-"" is also ok) and 24.
     </p>
     <!-- showing error if expected total hours different than scheduled (based on summaryForm and its validation) -->
-    <p class="error-message" *ngIf="!summaryForm.valid">
+    <p class="error-message" *ngIf="!summaryForm.valid && summaryForm.errors">
       <!-- for mobile resolution show shorter error message -->
       <span class="hideOnMobile">
         {{ summaryForm.errors?.error.msgVerbose }}:
@@ -31,6 +31,12 @@
       <span class="fixed-field">
         {{ summaryForm.errors?.error.differenceAmount }}
       </span>
+    </p>
+    <p
+      class="error-message"
+      *ngIf="summaryForm.get('totalHoursDefined').invalid"
+    >
+      Wrong value in input <strong>defined total hours </strong>
     </p>
   </div>
 
@@ -100,11 +106,12 @@
       Defined total hours:
       <mat-form-field class="hoursInput">
         <input
+          (focus)="$event.target.select()"
           matInput
           formControlName="totalHoursDefined"
           type="number"
           min="1"
-          max="31*24"
+          max="{{ 31 * 24 }}"
           step="0.5"
           [appDisableControl]="!isTotalHoursEnabled()"
         />

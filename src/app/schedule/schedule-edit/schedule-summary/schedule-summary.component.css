@@ -123,6 +123,11 @@ mat-icon {
   display: initial;
 }
 
+input.ng-invalid {
+  background-color: var(--error-color);
+  color: var(--on-error-color);
+}
+
 @media (min-width: 481px) {
   .hideOnMobile {
     display: initial;
