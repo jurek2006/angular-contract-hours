@@ -1,10 +1,15 @@
 <div class="topBar">
   <div class="topBar__item topBar__item--mobile-hidden">PDF preview</div>
-  <button mat-raised-button class="topBar__item" (click)="generatePdf()">
+  <button
+    mat-raised-button
+    color="primary"
+    class="topBar__item"
+    (click)="generatePdf()"
+  >
     Download PDF
   </button>
   <div class="topBar__item--grow"></div>
-  <button mat-button class="topBar__item" (click)="onClose()">
+  <button mat-raised-button class="topBar__item" (click)="onClose()">
     Close
   </button>
 </div>
