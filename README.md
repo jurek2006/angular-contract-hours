@@ -81,7 +81,7 @@ On the right side of total hours you can also see difference between currently s
 
 #### <span id="manual-defined-hours-mobile"> Define expected total hours on mobile/ smaller screens</span>
 
-On mobile / smaller screens the summary panel is located on the bottom of the screen. It works similarly to the version on bigger screens, but some options (for now - defining total hours only) are hidden. You can show these options by clicking the clock icon on the left side of the panel.
+On mobile / smaller screens the summary panel is located on the bottom of the screen. It works similarly to the version on bigger screens, but some options (for now - defining total hours only) are hidden. You can show these options by clicking the **clock icon** on the left side of the panel.
 
 <img src="README.assets/1571825912556.png" style="width:50%; max-width: 300px" />
 
@@ -89,13 +89,13 @@ The schedule settings will expand and there you can define expected total hours.
 
 <img src="README.assets/1571826423365.png" style="width:50%; max-width: 300px" />
 
-Clicking the tick icon will close the schedule settings panel. Similar to the bigger resolution version, proper errors will be shown on the top of the summary panel:
+Clicking the **tick icon** will close the schedule settings panel. Similar to the bigger resolution version, proper errors will be shown on the top of the summary panel:
 
 <img src="README.assets/1571826542975.png" style="width:50%; max-width: 300px" />
 
 ### <span id="manual-generate-pdf"> 4. Generate PDF preview and download printable PDF</span>
 
-On the summary panel press the "Generate PDF" button (which is shortened to "PDF" on smaller screens). If there is any error (e.g.: amount of current and expected total hours not matching) the button will be disabled.
+On the summary panel press the **"Generate PDF" button** (which is shortened to **"PDF"** on smaller screens). If there is any error (e.g.: amount of current and expected total hours not matching) the button will be disabled.
 
 After clicking the button you will see a preview of the report:
 
@@ -111,13 +111,16 @@ The project was started on **Angular 7** and updated to **Angular 8**.
 
 It uses some features from **Angular Material** like inputs, buttons, chechbox.
 
-For generating PDF documents it uses together **jspdf** (https://github.com/MrRio/jsPDF) and **html2canvas** (https://html2canvas.hertzen.com/) - the latter simplifies producing styled content for PDFs. With it you just need to generate elements with data as HTML and CSS, and html2canvas converts it to image which is easily placed in pdf by jspdf. (But html2canvas creates images only in low resolution, so it was needed to implement my own scaling solution, based on styling to make element to be very big - to get an image in high resolution after placing it on A4 sheet).
+For generating PDF documents it uses together [**jspdf**](https://github.com/MrRio/jsPDF) and [**html2canvas** ](https://html2canvas.hertzen.com/) - the latter simplifies producing styled content for PDFs. With it you just need to generate elements with data as HTML and CSS, and html2canvas converts it to image which is easily placed in pdf by jspdf. (But html2canvas creates images only in low resolution, so it was needed to implement my own scaling solution, based on styling to make element to be very big - to get an image in high resolution after placing it on A4 sheet).
 
-**Moment.js** (https://momentjs.com/) helps working with dates (i.e. generating consecutive months, generating consecutive days in a month or getting a day of the week).
+[**Moment.js**](https://momentjs.com/) helps working with dates (i.e. generating consecutive months, generating consecutive days in a month or getting a day of the week).
 
-**lodash/cloneDeep** was used to prevent mutations of data handled in services and returned by its methods.
+[**lodash/cloneDeep**](https://www.npmjs.com/package/lodash) was used to prevent mutations of data handled in services and returned by its methods.
 
-To improve the quality of code I used **Prettier** & **tslint** during the development.
+To improve the quality of code I used [**Prettier**](https://prettier.io/) & **tslint** during the development.
+
+The application was published to GitHub Pages using [**angular-cli-ghpages**](https://www.npmjs.com/package/angular-cli-ghpages).
+I also used [**Ngrok**](https://ngrok.com/) during development to expose my local web server for testing on other devices.
 
 ## <span id="known-issues">Known issues</span>
 
