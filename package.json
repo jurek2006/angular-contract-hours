@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@types/lodash": "^4.14.134",
+    "angular-cli-ghpages": "^0.6.0",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.1",
     "html2canvas": "^1.0.0-alpha.12",
@@ -35,7 +36,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.1",
-    "@angular/cli": "~8.0.1",
+    "@angular/cli": "^8.3.14",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",
     "@types/file-saver": "^2.0.0",
