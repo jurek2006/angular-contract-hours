@@ -46,7 +46,7 @@ If you want to fill out the schedule and generate a report follow these steps:
 
 Provide contractor name, choose month you want the report for and click "Submit" button. (You can change both - name and/or month later, by pressing "Edit settings" button. But remember, if you change month, schedule you defined before will be gone)
 
-![1571823204532](/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571823204532.png)
+<img src="README.assets/1571823204532.png">
 
 ### <span id="manual-working-schedule">2. Fill out the working schedule.</span>
 
@@ -56,9 +56,9 @@ After submitting previous form you will see a table with days of the month. Put 
 
 By default only Saturdays and Sundays are treated as non-working days, but you can easily change it for each day using checkboxes.
 
-![1571823565413](/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571823565413.png)
+<img src="README.assets/1571823565413.png">
 
-<img src="/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571823615465.png" alt="1571823615465" style="zoom:50%;" />
+<img src="README.assets/1571823615465.png" style="width:50%; max-width: 300px" />
 
 ### <span id="manual-defined-hours">3. [Optional] Define total (expected) hours per month</span>
 
@@ -70,13 +70,12 @@ The way you can turn on this option vary a bit on bigger and smaller (mobile) sc
 
 On bigger screens (tablets, desktops) the summary panel is located on the right side of the screen. If you want defined total hours (e.g.: you should schedule exactly 40h for given month) check a box "Defined total hours" and fill in amount in input next to it:
 
-![1571825118376](/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571825118376.png)
-
-![1571825395866](/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571825395866.png)
+<img src="README.assets/1571825118376.png">
+<img src="README.assets/1571825395866.png">
 
 On the top of the summary panel you will find error if scheduled total hours are different than expected (defined). When you schedule right amount of hours the error will be gone.
 
-![1571825589149](/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571825589149.png)
+<img src="README.assets/1571825589149.png">
 
 On the right side of total hours you can also see difference between currently scheduled and expected (defined) hours.
 
@@ -84,15 +83,15 @@ On the right side of total hours you can also see difference between currently s
 
 On mobile / smaller screens the summary panel is located on the bottom of the screen. It works similarly to the version on bigger screens, but some options (for now - defining total hours only) are hidden. You can show these options by clicking the clock icon on the left side of the panel.
 
-<img src="/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571825912556.png" alt="1571825912556" style="zoom:50%;" />
+<img src="README.assets/1571825912556.png" style="width:50%; max-width: 300px" />
 
 The schedule settings will expand and there you can define expected total hours.
 
-<img src="/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571826423365.png" alt="1571826423365" style="zoom:50%;" />
+<img src="README.assets/1571826423365.png" style="width:50%; max-width: 300px" />
 
 Clicking the tick icon will close the schedule settings panel. Similar to the bigger resolution version, proper errors will be shown on the top of the summary panel:
 
-<img src="/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571826542975.png" alt="1571826542975" style="zoom:50%;" />
+<img src="README.assets/1571826542975.png" style="width:50%; max-width: 300px" />
 
 ### <span id="manual-generate-pdf"> 4. Generate PDF preview and download printable PDF</span>
 
@@ -100,7 +99,7 @@ On the summary panel press the "Generate PDF" button (which is shortened to "PDF
 
 After clicking the button you will see a preview of the report:
 
-![1571826842433](/home/jurek/Dokumenty/PROGRAMOWANIE/PROJEKTY/angular-contract-hours/README.assets/1571826842433.png)
+<img src="README.assets/1571826842433.png">
 
 You can download a printable PDF by pressing the "Download PDF" button. (As mentioned in paragraph "Known issues" - **at the moment downloading PDFs doesn't work on most of the mobile browsers.** :( )
 
