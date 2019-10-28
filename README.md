@@ -102,7 +102,7 @@ After pressing "Close" on the right side you will be redirected back to the sche
 
 ## Technologies used
 
-The project was started in **Angular 7** and updated to **Angular 8**. 
+The project was started on **Angular 7** and updated to **Angular 8**. 
 
 It uses some features from **Angular Material** like inputs, buttons, chechbox. 
 
@@ -116,7 +116,7 @@ To improve the quality of code I used **Prettier** & **tslint** during the devel
 
 ## Known issues
 
-At the moment, the biggest problem is not working properly PDF generation/downloading on mobile browsers. It is connected with jsPDF, which is responsible for this task. 
+At the moment, the biggest problem is PDF generation/downloading on mobile browsers not working properly. It is connected with jsPDF, which is responsible for this task. 
 
 This issue prevents the application from being useful on mobile devices so it is the most important at the moment to be solved.
 
@@ -134,5 +134,5 @@ To read more about the issues you can see the Issues section on this repository.
 The most important thing, at the moment, is to provide working PDF generating for mobile browsers. After resolving this issue and other known minor problems I would like to improve the application with:
 
 - fetching non-working days (such as holidays) from some API
-- option to generate random working schedule (i.e. user wants to schedule 40 hours in given month, defines constrains as default/minimum/maximum amount of hour per each day)
+- option to generate random working schedule (i.e. user wants to schedule 40 hours in given month, define constrains as default/minimum/maximum amount of hour per each day)
 - other features asked by users
