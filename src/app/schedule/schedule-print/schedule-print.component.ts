@@ -4,7 +4,8 @@ import {
   EventEmitter,
   Input,
   ViewChild,
-  ElementRef
+  ElementRef,
+  OnInit
 } from '@angular/core';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -17,7 +18,7 @@ import { Settings } from '../models/settings.model';
   templateUrl: './schedule-print.component.html',
   styleUrls: ['./schedule-print.component.css']
 })
-export class SchedulePrintComponent {
+export class SchedulePrintComponent implements OnInit {
   @Input() schedule: ScheduleDay[];
   @Input() settings: Settings;
 
@@ -44,15 +45,18 @@ export class SchedulePrintComponent {
   public generatePdf() {
     // converts schedule HTML (nativeElement) to image and put it to generated pdf
     const scheduleImage = this.pdfRenderView.nativeElement;
-    html2canvas(scheduleImage).then(canvas => {
+    html2canvas(scheduleImage, {
+      imageTimeout: 15000,
+      scale: 1
+    }).then(canvas => {
       const page = { height: 297, width: 210 }; // a4 page size (in mm) to fit image on pdf page
 
       const contentDataURL = canvas.toDataURL('image/jpeg', 0.5);
       const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      pdf.addImage(contentDataURL, 'PNG', 0, 0, page.width, page.height); // converted image occupies full A4 page
+      pdf.addImage(contentDataURL, 'JPEG', 0, 0, page.width, page.height); // converted image occupies full A4 page
       pdf.save(
         `${this.settings.contractorName} - ${this.getSelectedMonthLabel()}.pdf`
-      ); // generate pdf for downloading
+      ); // generate pdf for download
     });
   }
 
