@@ -12,6 +12,7 @@ import html2canvas from 'html2canvas';
 import { MomentMonthsService } from 'src/app/services/moment-months.service';
 import { ScheduleDay } from '../models/scheduleDay.model';
 import { Settings } from '../models/settings.model';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-schedule-print',
@@ -26,7 +27,10 @@ export class SchedulePrintComponent implements OnInit {
 
   @ViewChild('contentToConvert', { static: false }) pdfRenderView: ElementRef;
 
-  constructor(private momentMonthsService: MomentMonthsService) {}
+  constructor(
+    private momentMonthsService: MomentMonthsService,
+    private uiService: UiService
+  ) {}
 
   ngOnInit() {
     window.scroll(0, 0);
@@ -60,7 +64,14 @@ export class SchedulePrintComponent implements OnInit {
           } - ${this.getSelectedMonthLabel()}.pdf`
         ); // generate pdf for download
       })
-      .catch(err => console.error('Generating pdf failed', err));
+      .catch(err => {
+        console.error('Generating pdf failed', err);
+        this.uiService.showSnackbar(
+          'Error - Generating pdf failed',
+          null,
+          3000
+        );
+      });
   }
 
   public getSelectedMonthLabel(): string {
