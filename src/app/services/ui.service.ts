@@ -6,11 +6,12 @@ import { MatSnackBar } from '@angular/material';
   providedIn: 'root'
 })
 export class UiService {
-  public loadingStateChanged = new Subject<boolean>();
+  // subject holding value if some action is going (and therefore i.e. should spinner be visible)
+  public isActionInProgress = new Subject<boolean>();
 
   constructor(private snackBar: MatSnackBar) {}
 
-  showSnackbar(message, action, duration) {
+  showSnackbar(message, action = null, duration = 3000) {
     this.snackBar.open(message, action, { duration });
   }
 }

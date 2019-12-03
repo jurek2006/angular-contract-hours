@@ -29,7 +29,7 @@ export class SchedulePrintComponent implements OnInit {
 
   constructor(
     private momentMonthsService: MomentMonthsService,
-    private uiService: UiService
+    public uiService: UiService
   ) {}
 
   ngOnInit() {
@@ -47,7 +47,9 @@ export class SchedulePrintComponent implements OnInit {
   }
 
   public generatePdf() {
-    // converts schedule HTML (nativeElement) to image and put it to generated pdf
+    // converts schedule HTML (nativeElement) to image and puts it to generated pdf
+
+    this.uiService.isActionInProgress.next(true);
     const scheduleImage = this.pdfRenderView.nativeElement;
     html2canvas(scheduleImage, {
       imageTimeout: 15000,
@@ -63,14 +65,13 @@ export class SchedulePrintComponent implements OnInit {
             this.settings.contractorName
           } - ${this.getSelectedMonthLabel()}.pdf`
         ); // generate pdf for download
+        this.uiService.isActionInProgress.next(false);
+        this.uiService.showSnackbar('Successfully generated PDF ');
       })
       .catch(err => {
         console.error('Generating pdf failed', err);
-        this.uiService.showSnackbar(
-          'Error - Generating pdf failed',
-          null,
-          3000
-        );
+        this.uiService.isActionInProgress.next(false);
+        this.uiService.showSnackbar('Error - Generating pdf failed');
       });
   }
 
