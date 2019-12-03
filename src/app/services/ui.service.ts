@@ -11,7 +11,7 @@ export class UiService {
 
   constructor(private snackBar: MatSnackBar) {}
 
-  showSnackbar(message, action = null, duration = 3000) {
+  public showSnackbar(message, action = null, duration = 3000) {
     this.snackBar.open(message, action, { duration });
   }
 }
