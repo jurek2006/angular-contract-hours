@@ -7,8 +7,6 @@ import {
   ElementRef,
   OnInit
 } from '@angular/core';
-import * as jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
 import { MomentMonthsService } from 'src/app/services/moment-months.service';
 import { ScheduleDay } from '../models/scheduleDay.model';
 import { Settings } from '../models/settings.model';
