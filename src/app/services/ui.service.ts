@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { UiStatus } from '../shared/ui-status.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,14 @@ export class UiService {
 
   constructor(private snackBar: MatSnackBar) {}
 
-  public showSnackbar(message, action = null, duration = 3000) {
-    this.snackBar.open(message, action, { duration });
+  public showSnackbar(
+    message: string,
+    status?: UiStatus,
+    { actionButtonLabel = null, duration = 3000 } = {}
+  ) {
+    this.snackBar.open(message, actionButtonLabel, {
+      duration,
+      panelClass: status ? `snackbar-${status}` : ''
+    });
   }
 }

@@ -1,0 +1,20 @@
+/* MAT SNACKBARS styles with different statuses */
+.snackbar-error {
+  color: var(--on-error-color);
+  background: var(--error-color);
+}
+
+.snackbar-warning {
+  color: var(--on-warning-color);
+  background: var(--warning-color);
+}
+
+.snackbar-warning button {
+  color: var(--on-warning-color);
+  background-color: var(--primary-light-color);
+}
+
+.snackbar-success {
+  color: var(--on-success-color);
+  background: var(--success-color);
+}

@@ -1,5 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { UiService } from './ui.service';
+import { UiStatus } from '../shared/ui-status.enum';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -27,12 +28,19 @@ export class PdfGeneratorService {
         pdf.addImage(contentDataURL, 'JPEG', 0, 0, page.width, page.height); // add converted image to pdf - occupying full page
         pdf.save(params.fileName); // generate pdf for download
         this.uiService.isActionInProgress.next(false);
-        this.uiService.showSnackbar('Successfully generated PDF ');
+        this.uiService.showSnackbar(
+          'Successfully generated PDF',
+          UiStatus.success
+        );
       })
       .catch(err => {
         console.error('Generating pdf failed', err);
         this.uiService.isActionInProgress.next(false);
-        this.uiService.showSnackbar('Error - Generating pdf failed');
+        this.uiService.showSnackbar(
+          'Error - Generating pdf failed',
+          UiStatus.error,
+          {}
+        );
       });
   }
 }

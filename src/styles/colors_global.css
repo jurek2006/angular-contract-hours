@@ -15,4 +15,8 @@
   --on-error-color: #ffffff;
 
   --success-color: #599015;
+  --on-success-color: #ffffff;
+
+  --warning-color: #ffcc00;
+  --on-warning-color: var(--on-primary-color);
 }
