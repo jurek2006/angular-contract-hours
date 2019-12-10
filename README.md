@@ -19,7 +19,7 @@ AngularContractHours helps **reporting contractor's working hours** and **genera
 
 The application is in English, but some parts are provided in Polish (as dates and report template), because I suppose it's useful only in "polish reality" (Let me know if it can be useful for you after some changes).
 
-**The application is responsive** - it changes slightly its appearance and behavior on mobile (smaller) screens to remain useful. (At the moment, because of some isses [see issues on Github] - especially **not working properly PDF generation/download on mobile browsers** - it is still not very usefull on those devices).
+**The application is responsive** - it changes slightly its appearance and behavior on mobile (smaller) screens to remain useful. (At the moment, it is still cumbersome to use it on small mobile screens in landscape orientation when screen keyboard is opened [see issues on Github]).
 
 ## <span id="problem-to-solve">Problem to solve</span>
 
@@ -101,7 +101,7 @@ After clicking the button you will see a preview of the report:
 
 <img src="README.assets/1571826842433.png">
 
-You can download a printable PDF by pressing the "Download PDF" button. (As mentioned in paragraph "Known issues" - **at the moment downloading PDFs doesn't work on most of the mobile browsers.** :( )
+You can download a printable PDF by pressing the "Download PDF" button.
 
 After pressing "Close" on the right side you will be redirected back to the schedule view.
 
@@ -109,7 +109,7 @@ After pressing "Close" on the right side you will be redirected back to the sche
 
 The project was started on **Angular 7** and updated to **Angular 8**.
 
-It uses some features from [**Angular Material**](https://material.angular.io/) like inputs, buttons, chechbox.
+It uses some features from [**Angular Material**](https://material.angular.io/) like inputs, buttons, chechbox, snackBar, spinner.
 
 For generating PDF documents it uses together [**jspdf**](https://github.com/MrRio/jsPDF) and [**html2canvas** ](https://html2canvas.hertzen.com/) - the latter simplifies producing styled content for PDFs. With it you just need to generate elements with data as HTML and CSS, and html2canvas converts it to image which is easily placed in pdf by jspdf. (But html2canvas creates images only in low resolution, so it was needed to implement my own scaling solution, based on styling to make element to be very big - to get an image in high resolution after placing it on A4 sheet).
 
@@ -124,22 +124,17 @@ I also used [**Ngrok**](https://ngrok.com/) during development to expose my loca
 
 ## <span id="known-issues">Known issues</span>
 
-At the moment, the biggest problem is PDF generation/downloading on mobile browsers not working properly. It is connected with jsPDF, which is responsible for this task.
-
-This issue prevents the application from being useful on mobile devices so it is the most important at the moment to be solved.
-
-I also found some other problems (to be solved in the future as well):
-
-- Application is cumbersome in use on mobile devices in landscape orientation.
+- Application is cumbersome in use on mobile devices in landscape orientation (when screen keyboard is opened)
 - Opened schedule settings has wrong height on safari mobile.
-- Summary panel is "jumping" when defined total hours enabled.
-- The report header and footer not shown properly on opera mobile.
+- Summary panel is "jumping" when defined total hours enabled/disabled.
+- The report preview header and footer not shown properly on opera mobile.
+- Downloading PDF doesn't work on UC Browser.
 
 To read more about the issues you can see the Issues section on this repository.
 
 ## <span id="future-plans">Future plans for improvement</span>
 
-The most important thing, at the moment, is to provide working PDF generating for mobile browsers. After resolving this issue and other known minor problems I would like to improve the application with:
+After fixing key-bug with html2canvas, which was making the application unusable on mobile devices, now I want to resolve other known minor problems (see Issues) and then I would like to improve the application with:
 
 - fetching non-working days (such as holidays) from some API
 - option to generate random working schedule (i.e. user wants to schedule 40 hours in given month, define constrains as default/minimum/maximum amount of hour per each day)
