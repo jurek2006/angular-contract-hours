@@ -14,7 +14,8 @@
   </button>
 </div>
 
-<div class="wrapper">
+<div class="wrapper-invisible">
+  <!-- element which is source to generate PDF -->
   <div #contentToConvert id="contentToConvert">
     <app-schedule-print-render
       [schedule]="schedule"
@@ -26,6 +27,8 @@
 </div>
 
 <div class="preview">
+  <!-- the same element as in #contentToConvert but is scaled accordingly
+  to the screen size and is only preview of PDF -->
   <div id="contentToConvert">
     <app-schedule-print-render
       [schedule]="schedule"
