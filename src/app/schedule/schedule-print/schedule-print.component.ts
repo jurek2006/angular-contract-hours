@@ -10,7 +10,6 @@ import {
 import { MomentMonthsService } from 'src/app/services/moment-months.service';
 import { ScheduleDay } from '../models/scheduleDay.model';
 import { Settings } from '../models/settings.model';
-import { UiService } from 'src/app/services/ui.service';
 import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
 
 @Component({
@@ -29,8 +28,7 @@ export class SchedulePrintComponent implements OnInit {
 
   constructor(
     private momentMonthsService: MomentMonthsService,
-    private pdfGeneratorService: PdfGeneratorService,
-    public uiService: UiService
+    private pdfGeneratorService: PdfGeneratorService
   ) {}
 
   ngOnInit() {
@@ -38,17 +36,17 @@ export class SchedulePrintComponent implements OnInit {
     window.scroll(0, 0);
   }
 
-  public closePrintPreview() {
+  public closePrintView(): void {
     this.closePrint.emit();
   }
 
-  public countTotalHours() {
+  public countTotalHours(): number {
     return this.schedule
       .map(day => (day.hours > 0 ? day.hours : 0))
       .reduce((a, b) => a + b);
   }
 
-  public generatePdf() {
+  public generatePdf(): void {
     this.pdfGeneratorService.generatePdf({
       elementToConvert: this.elementToConvertToPdf,
       fileName: `${
