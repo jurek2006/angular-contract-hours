@@ -1,16 +1,16 @@
-import { Component } from "@angular/core";
-import { Settings } from "./models/settings.model";
+import { Component } from '@angular/core';
+import { Settings } from './models/settings.model';
 
 @Component({
-  selector: "app-schedule",
-  templateUrl: "./schedule.component.html",
-  styleUrls: ["./schedule.component.css"]
+  selector: 'app-schedule',
+  templateUrl: './schedule.component.html',
+  styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent {
-  printMode = false;
+  isPrintView = false;
   settings: Settings;
 
-  printModeChanged(newPrintModeStatus: boolean): void {
-    this.printMode = newPrintModeStatus;
+  isPrintViewChanged(newIsPrintViewStatus: boolean): void {
+    this.isPrintView = newIsPrintViewStatus;
   }
 }

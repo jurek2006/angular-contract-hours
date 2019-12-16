@@ -1,10 +1,10 @@
 <app-schedule-settings
-  *ngIf="!printMode"
+  *ngIf="!isPrintView"
   [(settings)]="settings"
 ></app-schedule-settings>
 
 <app-schedule-edit
   *ngIf="settings"
   [settings]="settings"
-  (printModeChanged)="printModeChanged($event)"
+  (isPrintViewChanged)="isPrintViewChanged($event)"
 ></app-schedule-edit>

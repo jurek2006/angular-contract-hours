@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Input,
   OnChanges,
   SimpleChanges,
@@ -8,7 +7,13 @@ import {
   EventEmitter,
   OnDestroy
 } from '@angular/core';
-import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { Subject } from 'rxjs';
@@ -21,30 +26,28 @@ import { Settings } from '../models/settings.model';
   templateUrl: './schedule-edit.component.html',
   styleUrls: ['./schedule-edit.component.css']
 })
-export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
+export class ScheduleEditComponent implements OnDestroy, OnChanges {
+  public schedule: ScheduleDay[];
+  public isPrintView = false;
+  public scheduleForm: FormGroup;
   private ngUnsubscribe = new Subject();
-  schedule: ScheduleDay[];
+  private formWatchSubscription: Subscription;
+  private formDaysSubscriptions: Subscription[] = [];
 
   @Input() settings: Settings;
-  @Output() printModeChanged = new EventEmitter<boolean>(); // fired when printMode turned on/off
-
-  printMode = false;
-  scheduleForm: FormGroup;
-  formWatchSubscription: Subscription;
-  formDaysSubscriptions: Subscription[] = [];
+  @Output() isPrintViewChanged = new EventEmitter<boolean>(); // fired when isPrintView turned on/off
 
   constructor(private scheduleService: ScheduleService) {}
 
-  ngOnInit() {}
-
   ngOnChanges(changes: SimpleChanges) {
     // reinit scheduleForm only when selectedMonth was changed or selected for the first time
-    if (
+    const monthHasChanged =
       this.settings.selectedMonth &&
       (changes.settings.firstChange ||
         changes.settings.currentValue.selectedMonth !==
-          changes.settings.previousValue.selectedMonth)
-    ) {
+          changes.settings.previousValue.selectedMonth);
+
+    if (monthHasChanged) {
       this.schedule = this.scheduleService.initSchedule(
         this.settings.selectedMonth
       );
@@ -68,42 +71,36 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     this.formSubscribeToWatchWorkingDayStatus();
   }
 
-  private formGenerateDaysFieldsArray() {
+  private formGenerateDaysFieldsArray(): FormArray {
     // create FormArray for each day in given this.schedule
-    const daysFields = new FormArray([]);
+    const daysFields: FormArray = new FormArray([]);
+    const getDayData = (
+      value: string | number | boolean,
+      disabled: boolean = false
+    ) => ({
+      value,
+      disabled
+    });
 
     if (this.schedule) {
       for (const day of this.schedule) {
         daysFields.push(
           new FormGroup({
-            date: new FormControl({
-              value: day.date,
-              disabled: false
-            }),
-            weekday: new FormControl({
-              value: day.weekday,
-              disabled: false
-            }),
-            workingDay: new FormControl({
-              value: day.workingDay,
-              disabled: false
-            }),
-            hours: new FormControl(
-              {
-                value: day.hours,
-                disabled: !day.workingDay
-              },
-              [Validators.min(0), Validators.max(24)]
-            )
+            date: new FormControl(getDayData(day.date)),
+            weekday: new FormControl(getDayData(day.weekday)),
+            workingDay: new FormControl(getDayData(day.workingDay)),
+            hours: new FormControl(getDayData(day.hours, !day.workingDay), [
+              Validators.min(0),
+              Validators.max(24)
+            ])
           })
         );
       }
     }
-
     return daysFields;
   }
 
-  private formSubscribeToSumHours() {
+  private formSubscribeToSumHours(): void {
     // subscribe to watch changes in form fields values - to sum total hours
 
     // unsubscribe current watching form subscription, if there is any
@@ -125,7 +122,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
       });
   }
 
-  private formSubscribeToWatchWorkingDayStatus() {
+  private formSubscribeToWatchWorkingDayStatus(): void {
     // subscribe to watch 'workingDay' control (enabling/disabling day) for each day in FormArray
 
     // unsubscribe all subscriptions from FormArray (watching if day is disabled/enabled)
@@ -162,27 +159,27 @@ export class ScheduleEditComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  public getDaysControls() {
+  public getDaysControls(): Array<AbstractControl> {
     return (this.scheduleForm.get('days') as FormArray).controls;
   }
 
-  private areAllDaysControlsValid() {
+  public areAllDaysControlsValid(): boolean {
     return this.scheduleForm.get('days').valid;
   }
 
-  private getTotalScheduledHours() {
+  public getTotalScheduledHours(): number {
     return this.scheduleForm.get('totalHours').value;
   }
 
-  public onPrint() {
+  public openPrintView(): void {
     // submitting schedule form and going to "printing" - exporting printable pdf
-    this.printMode = true;
+    this.isPrintView = true;
     this.schedule = this.scheduleForm.value.days;
-    this.printModeChanged.emit(this.printMode);
+    this.isPrintViewChanged.emit(this.isPrintView);
   }
 
-  public onClosePrint(): void {
-    this.printMode = false;
-    this.printModeChanged.emit(this.printMode);
+  public closePrintView(): void {
+    this.isPrintView = false;
+    this.isPrintViewChanged.emit(this.isPrintView);
   }
 }

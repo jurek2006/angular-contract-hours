@@ -1,7 +1,7 @@
 <form
   [formGroup]="settingsForm"
   class="settingsForm"
-  (ngSubmit)="onFormSubmit()"
+  (ngSubmit)="submitSettingsForm()"
 >
   <mat-form-field class="settingsForm__field vertical-gap">
     <mat-label>Contractor name</mat-label>
@@ -21,7 +21,10 @@
   <mat-form-field class="vertical-gap">
     <mat-label>Schedule month</mat-label>
     <mat-select formControlName="selectedMonth" id="monthSelect">
-      <mat-option *ngFor="let month of months" [value]="month.firstDay">
+      <mat-option
+        *ngFor="let month of monthsForSelect"
+        [value]="month.firstDay"
+      >
         {{ month.monthLabel }}
       </mat-option>
     </mat-select>
@@ -38,7 +41,7 @@
 </form>
 
 <ng-template #editSettings>
-  <button type="button" mat-raised-button (click)="onAllowEditing()">
+  <button type="button" mat-raised-button (click)="allowSettingsFormEditing()">
     Edit settings
   </button>
 </ng-template>

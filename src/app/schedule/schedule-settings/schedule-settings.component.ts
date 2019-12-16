@@ -10,8 +10,8 @@ import { Settings } from '../models/settings.model';
   styleUrls: ['./schedule-settings.component.css']
 })
 export class ScheduleSettingsComponent implements OnInit {
-  settingsForm: FormGroup;
-  months: Month[];
+  public settingsForm: FormGroup;
+  public monthsForSelect: Month[];
 
   @Input() settings: Settings;
   @Output() settingsChange = new EventEmitter<Settings>();
@@ -22,24 +22,22 @@ export class ScheduleSettingsComponent implements OnInit {
     this.initSettingsForm();
   }
 
-  initSettingsForm(): void {
+  private initSettingsForm(): void {
     let contractorNameInit: string;
     if (this.settings && this.settings.contractorName) {
       contractorNameInit = this.settings.contractorName;
     } else {
       // if contractor name not filled, check if user stored it before in a browser local storage
-      contractorNameInit = localStorage.getItem('contractorNameStored')
-        ? localStorage.getItem('contractorNameStored')
-        : '';
+      contractorNameInit = localStorage.getItem('contractorNameStored') || '';
     }
 
-    this.months = this.momentMonthsService.getMonths();
+    this.monthsForSelect = this.momentMonthsService.getMonths();
 
     // set default or chosen month in select element
     const selectedMonthInit =
       this.settings && this.settings.selectedMonth
         ? this.settings.selectedMonth
-        : this.months[0].firstDay; // if there isn't selectedMonth - select first of generated months
+        : this.monthsForSelect[0].firstDay; // if there isn't selectedMonth - select first of generated monthsForSelect
 
     this.settingsForm = new FormGroup({
       contractorName: new FormControl(contractorNameInit, Validators.required),
@@ -49,17 +47,18 @@ export class ScheduleSettingsComponent implements OnInit {
       })
     });
 
-    if (
-      // disable form if contractor name and month submited already by user
+    const isSettingsFormSubmited =
       this.settings &&
       this.settings.contractorName &&
-      this.settings.selectedMonth
-    ) {
+      this.settings.selectedMonth;
+
+    // detect if contractor name and month already given (form have been already submited by user)
+    if (isSettingsFormSubmited) {
       this.settingsForm.disable();
     }
   }
 
-  onFormSubmit() {
+  public submitSettingsForm(): void {
     if (this.settingsForm.valid) {
       this.settingsChange.emit(this.settingsForm.value);
       this.settingsForm.disable();
@@ -71,7 +70,7 @@ export class ScheduleSettingsComponent implements OnInit {
     }
   }
 
-  onAllowEditing() {
+  public allowSettingsFormEditing(): void {
     this.settingsForm.enable();
   }
 }
