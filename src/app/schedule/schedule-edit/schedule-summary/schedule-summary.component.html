@@ -1,14 +1,25 @@
+<!-- summary acts differently depending on if is opened on mobile or bigger (tablet, desktop view)
+  component uses css media queries to "decide" if it's mobile or non-mobile view
+
+  when on mobile (small) screen only basic summary is shown by default
+  - user can open full summary by clicking "Open schedule settings" button
+
+  when on non-mobile view - full summary is presented on the screen by default
+-->
+
 <div class="summary" [ngClass]="{ isError: isErrorStatus() }">
+  <!-- show toolbar only when summary is opened by user on mobile view -->
+  <!-- the toolbar allows to close summary -->
   <mat-toolbar
-    *ngIf="isMobileFullScreen"
-    class="summary__toolbar--only-mobile-fullscreen"
+    *ngIf="isSummaryOpenedOnMobile"
+    class="summary__toolbar--only-on-mobile"
   >
     <mat-toolbar-row class="summary__toolbar__row">
       <span>Schedule settings</span>
       <button
         mat-icon-button
         color="primary"
-        (click)="onOpenMobileFullScreen(false)"
+        (click)="closeSummaryOnMobile()"
         aria-label="Save and close settings"
       >
         <mat-icon>check</mat-icon>
@@ -42,11 +53,12 @@
 
   <div class="summary__info">
     <div class="flex-row">
+      <!-- show button for opening full summary view (only on mobile) -->
       <button
-        *ngIf="!isMobileFullScreen"
-        class="mobile-fullscreen-btn"
+        *ngIf="!isSummaryOpenedOnMobile"
+        class="mobile-view-btn"
         mat-icon-button
-        (click)="onOpenMobileFullScreen(true)"
+        (click)="openSummaryOnMobile()"
         color="primary"
         aria-label="Open schedule settings"
       >
@@ -58,7 +70,7 @@
         <span class="highlight fixed-field">{{ totalHours }} </span>
         <!-- show difference between defined (expected) total hours and defined (if defined total Hours is enabled ) -->
         <span
-          *ngIf="isTotalHoursEnabled()"
+          *ngIf="isTotalHoursDefinedEnabled()"
           class="highlight totalHoursDifference fixed-field"
           [ngClass]="
             totalHours - summaryForm.get('totalHoursDefined').value === 0
@@ -88,21 +100,21 @@
           aria-label="Generate PDF with Schedule"
           [disabled]="!summaryForm.valid"
         >
-          <!-- On mobile show shorter button laber -->
+          <!-- On mobile show shorter button label -->
           <span class="hideOnMobile">Generate</span>
           PDF
         </button>
       </span>
     </div>
 
-    <!-- show only when .mobileFullScreen or not mobile view -->
+    <!-- show only when .mobileSummaryOpened (user has opened summary form on mobile) or not mobile view -->
     <form
       class="summary__form"
       [formGroup]="summaryForm"
       id="summaryForm"
-      (ngSubmit)="onGeneratePdf()"
+      (ngSubmit)="saveSettingsAndOpenPrintView()"
     >
-      <!-- input needed to validate if expected (defined) total hours match already scheduled (current) -->
+      <!-- input needed for validation if expected (defined) total hours match already scheduled (current) -->
       <input formControlName="totalHoursCurrent" type="hidden" />
 
       <mat-checkbox
@@ -121,7 +133,7 @@
           min="1"
           max="{{ 31 * 24 }}"
           step="0.5"
-          [appDisableControl]="!isTotalHoursEnabled()"
+          [appDisableControl]="!isTotalHoursDefinedEnabled()"
         />
       </mat-form-field>
     </form>

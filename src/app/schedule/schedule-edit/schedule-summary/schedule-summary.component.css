@@ -8,7 +8,7 @@
   align-items: flex-end;
 }
 
-:host.mobileFullScreen {
+:host.mobileSummaryOpened {
   position: fixed;
   width: 100vw;
   height: 80vh;
@@ -48,11 +48,13 @@
   margin: 0;
 }
 
-.summary__toolbar--only-mobile-fullscreen {
+.summary__toolbar--only-on-mobile {
+  /* not display toolbar by default - when not mobile view or user hasn't open summary details */
   display: none;
 }
 
-:host.mobileFullScreen .summary__toolbar--only-mobile-fullscreen {
+:host.mobileSummaryOpened .summary__toolbar--only-on-mobile {
+  /* show toolbar when on mobile view & user has opened summary details  */
   display: block;
   border-radius: inherit;
 }
@@ -63,12 +65,12 @@
 }
 
 .summary__form {
-  /* form for mobile view & not .mobileFullScreen */
+  /* hide form if user on mobile view and hasn't opened summary by clicking button*/
   display: none;
 }
 
-:host.mobileFullScreen .summary__form {
-  /* form for mobile view with .mobileFullScreen */
+:host.mobileSummaryOpened .summary__form {
+  /* form for mobile view when user has opened summary form */
   display: block;
 }
 
@@ -150,8 +152,9 @@ input.ng-invalid {
     bottom: auto;
   }
 
-  :host.mobileFullScreen {
-    /* disable fullscreen if not mobile resolution */
+  :host.mobileSummaryOpened {
+    /* disable opening summary form as on mobile when screen resolution is not mobile */
+    /* just show summary because it is not mobile view */
     position: inherit;
     width: inherit;
     height: inherit;
@@ -173,7 +176,7 @@ input.ng-invalid {
     display: flex;
   }
 
-  .mobile-fullscreen-btn {
+  .mobile-view-btn {
     display: none;
   }
 }

@@ -5,11 +5,10 @@ import {
   Output,
   EventEmitter,
   HostBinding,
-  ViewChild,
   SimpleChanges,
   OnChanges
 } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SummarySettingsService } from 'src/app/services/summary-settings.service';
 import { SummarySettings } from '../../models/summarySettings.model';
 import { scheduleSummaryFormValidator } from './schedule-summary-form-validator.directive';
@@ -21,29 +20,33 @@ import { MatCheckboxChange } from '@angular/material';
   styleUrls: ['./schedule-summary.component.css']
 })
 export class ScheduleSummaryComponent implements OnInit, OnChanges {
-  settings: SummarySettings;
-  summaryForm: FormGroup;
+  private summarySettings: SummarySettings;
+  public summaryForm: FormGroup;
 
   @Input() totalHours: number;
   @Input() areAllDaysControlsValid: boolean;
   @Output() openPrint = new EventEmitter<void>();
 
-  @HostBinding('class.mobileFullScreen') isMobileFullScreen = false;
-  @ViewChild('f', { static: true }) ngForm: NgForm;
+  @HostBinding('class.mobileSummaryOpened') isSummaryOpenedOnMobile = false;
 
   constructor(private summarySettingsService: SummarySettingsService) {}
 
   ngOnInit() {
-    this.initSettingsForm();
+    this.initSummaryForm();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // when input value totalHours changed - update totalHoursCurrent value
-    // (hidden input needed to validate if expected total hours match current scheduled)
-    if (
+    // when input value totalHours changed (user has changed assigned working hours in current month)
+    // - update totalHoursCurrent value
+    // (totalHoursCurrent is hidden input in summaryForm needed to validate if expected total hours match currently scheduled)
+
+    const isTotalHoursChanged =
       changes.totalHours &&
       !changes.totalHours.firstChange &&
-      changes.totalHours.currentValue !== changes.totalHours.previousValue &&
+      changes.totalHours.currentValue !== changes.totalHours.previousValue;
+
+    if (
+      isTotalHoursChanged &&
       this.summaryForm &&
       this.summaryForm.get('totalHoursCurrent')
     ) {
@@ -53,16 +56,21 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
     }
   }
 
-  initSettingsForm(): void {
-    this.settings = this.summarySettingsService.loadSettings();
+  private initSummaryForm(): void {
+    this.summarySettings = this.summarySettingsService.loadSettings();
 
     this.summaryForm = new FormGroup(
       {
-        isTotalHoursDefined: new FormControl(this.settings.isTotalHoursDefined),
-        totalHoursDefined: new FormControl(this.settings.totalHoursDefined, [
-          Validators.min(0),
-          Validators.max(31 * 24) // maximum possible hours in a month
-        ]),
+        isTotalHoursDefined: new FormControl(
+          this.summarySettings.isTotalHoursDefined
+        ),
+        totalHoursDefined: new FormControl(
+          this.summarySettings.totalHoursDefined,
+          [
+            Validators.min(0),
+            Validators.max(31 * 24) // maximum possible hours in a month
+          ]
+        ),
         totalHoursCurrent: new FormControl({
           value: this.totalHours,
           disabled: true
@@ -72,24 +80,28 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
     );
   }
 
-  isTotalHoursEnabled(): boolean {
+  public isTotalHoursDefinedEnabled(): boolean {
     return this.summaryForm.get('isTotalHoursDefined').value;
   }
 
-  onGeneratePdf(): void {
+  public saveSettingsAndOpenPrintView(): void {
     this.summarySettingsService.saveSettings(this.summaryForm.value);
     this.openPrint.emit();
   }
 
-  onOpenMobileFullScreen(isOpenStatus: boolean): void {
-    this.isMobileFullScreen = isOpenStatus;
+  public openSummaryOnMobile(): void {
+    this.isSummaryOpenedOnMobile = true;
+  }
+
+  public closeSummaryOnMobile(): void {
+    this.isSummaryOpenedOnMobile = false;
   }
 
   public isErrorStatus(): boolean {
     return !this.areAllDaysControlsValid;
   }
 
-  resetAmountIfTotalHoursDisabled(event: MatCheckboxChange) {
+  public resetAmountIfTotalHoursDisabled(event: MatCheckboxChange): void {
     if (!event.checked) {
       this.summaryForm.get('totalHoursDefined').setValue(0);
     }
