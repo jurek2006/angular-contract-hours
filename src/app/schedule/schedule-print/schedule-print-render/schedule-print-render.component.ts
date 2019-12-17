@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ScheduleDay } from '../../models/scheduleDay.model';
+import { ScheduleDay } from '../../../models/scheduleDay.model';
 
 @Component({
   selector: 'app-schedule-print-render',

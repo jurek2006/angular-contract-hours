@@ -7,8 +7,8 @@ import {
   ElementRef,
   OnInit
 } from '@angular/core';
-import { ScheduleDay } from '../models/scheduleDay.model';
-import { Settings } from '../models/settings.model';
+import { ScheduleDay } from '../../models/scheduleDay.model';
+import { Settings } from '../../models/settings.model';
 import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
 import { MomentService } from 'src/app/services/moment.service';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
 import cloneDeep from 'lodash/cloneDeep';
 
-import { ScheduleDay } from '../schedule/models/scheduleDay.model';
+import { ScheduleDay } from '../models/scheduleDay.model';
 
 @Injectable({
   providedIn: 'root'

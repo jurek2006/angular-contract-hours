@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Month } from 'src/app/shared/month';
-import { Settings } from '../models/settings.model';
+import { Settings } from '../../models/settings.model';
 import { MomentService } from 'src/app/services/moment.service';
 
 @Component({

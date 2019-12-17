@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SummarySettings } from '../schedule/models/summarySettings.model';
+import { SummarySettings } from '../models/summarySettings.model';
 import cloneDeep from 'lodash/cloneDeep';
 
 @Injectable({

@@ -18,8 +18,8 @@ import { Subscription } from 'rxjs';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ScheduleDay } from '../models/scheduleDay.model';
-import { Settings } from '../models/settings.model';
+import { ScheduleDay } from '../../models/scheduleDay.model';
+import { Settings } from '../../models/settings.model';
 
 @Component({
   selector: 'app-schedule-edit',

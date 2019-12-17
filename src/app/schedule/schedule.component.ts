@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Settings } from './models/settings.model';
+import { Settings } from '../models/settings.model';
 
 @Component({
   selector: 'app-schedule',
