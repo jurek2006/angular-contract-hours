@@ -27,7 +27,7 @@ export class MomentService {
   }
 
   public setMomentLocale(locale: string = 'pl') {
-    /* sets locale for moment used in schedule */
+    /* sets locale for moment used in application */
     moment.locale(locale);
   }
 

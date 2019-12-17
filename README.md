@@ -12,6 +12,7 @@ As a regular Angular project you can download/clone the repository, install depe
 - [Technologies used](#technologies)
 - [Known issues](#known-issues)
 - [Future plans for improvement](#future-plans)
+- [Info for developers](#for-developers)
 
 ## <span id="about">About AngularContractHours</span>
 
@@ -139,3 +140,14 @@ After fixing key-bug with html2canvas, which was making the application unusable
 - fetching non-working days (such as holidays) from some API
 - option to generate random working schedule (i.e. user wants to schedule 40 hours in given month, define constrains as default/minimum/maximum amount of hour per each day)
 - other features asked by users
+
+## <span id="for-developers">Info for developers</span>
+
+Additional info for future me ;)
+
+### <span id="change-locale">Changing locale (date's format)</span>
+
+As the application uses Moment.js library there's a method setMomentLocale() in moment.service allowing changing locale (date's format).
+By default (if no argument passed) - locale is set to 'pl'.
+
+The method is invoked in app.component's ngOnInit() to make sure locale is set every time application starts.
