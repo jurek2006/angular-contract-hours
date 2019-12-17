@@ -1,14 +1,35 @@
-import { Injectable } from "@angular/core";
-import { Month } from "../shared/month";
-import moment from "moment";
-import { Moment } from "moment";
+import { Injectable } from '@angular/core';
+import { Month } from '../shared/month';
+import moment from 'moment';
+import { Moment } from 'moment';
+import cloneDeep from 'lodash/cloneDeep';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class MomentMonthsService {
-  private monthLabelFormat = "MMMM YYYY";
+  private monthLabelFormat = 'MMMM YYYY';
   private months: Month[];
+
+  public getMonths(): Month[] {
+    // gets generated months for populating month picker select
+    if (!this.months) {
+      this.generateMonths();
+    }
+
+    return cloneDeep(this.months);
+  }
+
+  public getMonthLabel(day: Moment): string {
+    // returns month string label for given moment day
+    // i.e. for 1.05.2019 returns may 2019 (or maj 2019 ect. depending on defined moment locale and defined label format)
+    return day.format(this.monthLabelFormat);
+  }
+
+  public setMomentLocale(locale: string = 'pl') {
+    /* sets locale for moment used in schedule */
+    moment.locale(locale);
+  }
 
   private generateMonths(amount: number = 12): void {
     // generate months options for select element
@@ -18,10 +39,10 @@ export class MomentMonthsService {
 
     let months: Month[] = [];
 
-    const currentMonthStart = moment().startOf("month");
+    const currentMonthStart = moment().startOf('month');
 
     for (let i = 0; i < amount; i++) {
-      const firstDayOfMonth = currentMonthStart.clone().subtract(i, "months");
+      const firstDayOfMonth = currentMonthStart.clone().subtract(i, 'months');
       months = [
         ...months,
         {
@@ -32,20 +53,5 @@ export class MomentMonthsService {
     }
 
     this.months = months;
-  }
-
-  public getMonths(): Month[] {
-    // gets generated months for populating month picker select
-    if (!this.months) {
-      this.generateMonths();
-    }
-
-    return this.months;
-  }
-
-  public getMonthLabel(day: Moment): string {
-    // returns month string label for given moment day
-    // i.e. for 1.05.2019 returns may 2019 (or maj 2019 ect. depending on defined moment locale and defined label format)
-    return day.format(this.monthLabelFormat);
   }
 }

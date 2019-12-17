@@ -1,17 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { ScheduleService } from "./services/schedule.service";
+import { Component, OnInit } from '@angular/core';
+import { MomentMonthsService } from './services/moment-months.service';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  schedule = [];
-
-  constructor(private scheduleService: ScheduleService) {}
+  constructor(private momentMonthService: MomentMonthsService) {}
 
   ngOnInit() {
-    this.scheduleService.setMomentLocale();
+    this.momentMonthService.setMomentLocale('pl');
   }
 }
