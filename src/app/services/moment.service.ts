@@ -7,7 +7,7 @@ import cloneDeep from 'lodash/cloneDeep';
 @Injectable({
   providedIn: 'root'
 })
-export class MomentMonthsService {
+export class MomentService {
   private monthLabelFormat = 'MMMM YYYY';
   private months: Month[];
 

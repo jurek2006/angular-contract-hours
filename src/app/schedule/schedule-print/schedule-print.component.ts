@@ -7,10 +7,10 @@ import {
   ElementRef,
   OnInit
 } from '@angular/core';
-import { MomentMonthsService } from 'src/app/services/moment-months.service';
 import { ScheduleDay } from '../models/scheduleDay.model';
 import { Settings } from '../models/settings.model';
 import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
+import { MomentService } from 'src/app/services/moment.service';
 
 @Component({
   selector: 'app-schedule-print',
@@ -27,7 +27,7 @@ export class SchedulePrintComponent implements OnInit {
   elementToConvertToPdf: ElementRef;
 
   constructor(
-    private momentMonthsService: MomentMonthsService,
+    private momentService: MomentService,
     private pdfGeneratorService: PdfGeneratorService
   ) {}
 
@@ -56,6 +56,6 @@ export class SchedulePrintComponent implements OnInit {
   }
 
   public getSelectedMonthLabel(): string {
-    return this.momentMonthsService.getMonthLabel(this.settings.selectedMonth);
+    return this.momentService.getMonthLabel(this.settings.selectedMonth);
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Month } from 'src/app/shared/month';
-import { MomentMonthsService } from 'src/app/services/moment-months.service';
 import { Settings } from '../models/settings.model';
+import { MomentService } from 'src/app/services/moment.service';
 
 @Component({
   selector: 'app-schedule-settings',
@@ -16,7 +16,7 @@ export class ScheduleSettingsComponent implements OnInit {
   @Input() settings: Settings;
   @Output() settingsChange = new EventEmitter<Settings>();
 
-  constructor(private momentMonthsService: MomentMonthsService) {}
+  constructor(private momentService: MomentService) {}
 
   ngOnInit() {
     this.initSettingsForm();
@@ -31,7 +31,7 @@ export class ScheduleSettingsComponent implements OnInit {
       contractorNameInit = localStorage.getItem('contractorNameStored') || '';
     }
 
-    this.monthsForSelect = this.momentMonthsService.getMonths();
+    this.monthsForSelect = this.momentService.getMonths();
 
     // set default or chosen month in select element
     const selectedMonthInit =

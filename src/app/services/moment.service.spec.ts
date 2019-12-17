@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MomentMonthsService } from './moment-months.service';
+import { MomentService } from './moment.service';
 
-describe('MomentMonthsService', () => {
+describe('MomentService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MomentMonthsService = TestBed.get(MomentMonthsService);
+    const service: MomentService = TestBed.get(MomentService);
     expect(service).toBeTruthy();
   });
 });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MomentMonthsService } from './services/moment-months.service';
+import { MomentService } from './services/moment.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +7,9 @@ import { MomentMonthsService } from './services/moment-months.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private momentMonthService: MomentMonthsService) {}
+  constructor(private momentService: MomentService) {}
 
   ngOnInit() {
-    this.momentMonthService.setMomentLocale('pl');
+    this.momentService.setMomentLocale('pl');
   }
 }
