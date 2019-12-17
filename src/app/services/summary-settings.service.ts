@@ -11,8 +11,6 @@ export class SummarySettingsService {
     totalHoursDefined: 0
   };
 
-  constructor() {}
-
   public saveSettings(newSummarySettings: SummarySettings): void {
     this.summarySettings = newSummarySettings;
   }

@@ -13,8 +13,8 @@ export class PdfGeneratorService {
   public generatePdf(params: {
     elementToConvert: ElementRef;
     fileName: string;
-  }) {
-    // converts schedule HTML (nativeElement) to image and puts it to generated pdf
+  }): void {
+    // converts schedule HTML (nativeElement) to image and puts it to generated pdf which is downloaded from browser
     this.uiService.isActionInProgress.next(true);
     const scheduleImage = params.elementToConvert.nativeElement;
     html2canvas(scheduleImage, {

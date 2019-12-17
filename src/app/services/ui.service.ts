@@ -7,7 +7,7 @@ import { UiStatus } from '../shared/ui-status.enum';
   providedIn: 'root'
 })
 export class UiService {
-  // subject holding value if some action is going (and therefore i.e. should spinner be visible)
+  // subject holding value if some action is going (and therefore e.g. should spinner be visible)
   public isActionInProgress = new Subject<boolean>();
 
   constructor(private snackBar: MatSnackBar) {}
@@ -16,7 +16,7 @@ export class UiService {
     message: string,
     status?: UiStatus,
     { actionButtonLabel = null, duration = 3000 } = {}
-  ) {
+  ): void {
     this.snackBar.open(message, actionButtonLabel, {
       duration,
       panelClass: status ? `snackbar-${status}` : ''
