@@ -151,3 +151,10 @@ As the application uses Moment.js library there's a method setMomentLocale() in 
 By default (if no argument passed) - locale is set to 'pl'.
 
 The method is invoked in app.component's ngOnInit() to make sure locale is set every time application starts.
+
+### <span id="defining-working-days">Defining working days</span>
+
+Schedule.service delivers public method **setWorkingDays(workingDaysIndexes: number[])** which allows setting working days
+(). E.g. it can be invoked in app.component ngOnInit().
+
+It can be used in future to make a form where user can define his/her own default working days.

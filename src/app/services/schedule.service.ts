@@ -9,6 +9,7 @@ import { ScheduleDay } from '../schedule/models/scheduleDay.model';
 })
 export class ScheduleService {
   private schedule: ScheduleDay[];
+  private workingDaysIndexes: number[] = [1, 2, 3, 4, 5]; // default working days (as indexes, where 0 === sunday, ... 6 === saturday)
 
   constructor() {}
 
@@ -24,7 +25,7 @@ export class ScheduleService {
         new ScheduleDay(
           day.format('D.MM'),
           day.format('dd'),
-          day.day() !== 6 && day.day() !== 0 ? true : false, // set default sat and sun as non working days
+          this.isDayWorking(day),
           0
         )
       ];
@@ -35,5 +36,14 @@ export class ScheduleService {
 
   public getSchedule(): ScheduleDay[] {
     return cloneDeep(this.schedule);
+  }
+
+  public setWorkingDays(workingDaysIndexes: number[]) {
+    this.workingDaysIndexes = workingDaysIndexes;
+  }
+
+  private isDayWorking(day: Moment): boolean {
+    // returns if day is working
+    return this.workingDaysIndexes.includes(day.day());
   }
 }
