@@ -3,6 +3,7 @@ import { Month } from '../shared/month';
 import moment from 'moment';
 import { Moment } from 'moment';
 import cloneDeep from 'lodash/cloneDeep';
+import 'moment/locale/pl';
 
 @Injectable({
   providedIn: 'root'
