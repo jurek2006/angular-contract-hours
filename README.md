@@ -145,12 +145,97 @@ After fixing key-bug with html2canvas, which was making the application unusable
 
 Additional info for future me ;)
 
+- [Changing locale (date's format)](#change-locale)
+  - [Adding and using new locale](#change-locale--adding-locale)
+  - [Importing locales order](#change-locale--locales-order)
+- [Getting rid of unused moment's locales](#unused-locales)
+
 ### <span id="change-locale">Changing locale (date's format)</span>
 
 As the application uses Moment.js library there's a method setMomentLocale() in moment.service allowing changing locale (date's format).
 By default (if no argument passed) - locale is set to 'pl'.
 
 The method is invoked in app.component's ngOnInit() to make sure locale is set every time application starts.
+
+#### <span id="change-locale--adding-locale">Adding and using new locale</span>
+
+- copy locale file
+
+  As described in [paragraph](#unused-locales) locales we want to use have to be manually copied from node_modules/moment/locale to src/locale folder (as it is by default with pl.js).
+
+- import locale in moment.service.ts
+
+  Like: <pre><code>import 'moment/locale/pl';</code></pre>
+
+- change used locale in app.component.ts (ngOnInit)
+
+  <pre><code>this.momentService.setMomentLocale('pl');</code></pre>
+
+  replacing 'pl' with chosen locale abbreviation
+
+- verify if bundle works properly
+
+  As described in [paragraph](#unused-locales) - when locale works properly after ng serve it doesn't mean it will be also ok in bundle. To be sure bundle it to run locally (with --base-href ./)
+
+#### <span id="change-locale--locales-order">Importing locales order</span>
+
+**IMPORTANT! - If locale imported properly - the order doesn't matter**. It will work properly.
+Content of this paragraph is important only when facing some 'weird" locales bahavior.
+
+If we set locale e.g. for german (de) in app.component.ts <pre><code>this.momentService.setMomentLocale('de');</code></pre>
+and also properly copied de.js from moment/locale to src/locale but **didn't imported in moment.service.ts**
+
+<pre><code>import 'moment/locale/de';</code></pre>
+
+locale won't work.
+
+If there is any other locale imported in moment.service.ts - the last one will be used, e.g.:
+
+<pre><code>import 'moment/locale/es';
+import 'moment/locale/pl'; // last one imported will be used
+// import 'moment/locale/de'; // commented - not imported
+</code></pre>
+
+even though we set german (de):<pre><code>this.momentService.setMomentLocale('de');</code></pre>
+in this case polish (pl) will be used (but we will notice it only in the built version).
+
+If no locale is imported - moment will use english.
+
+### <span id="unused-locales">Getting rid of unused moment's locales</span>
+
+As described in [#7](https://github.com/jurek2006/angular-contract-hours/issues/7) there were unused moment's locales, making bundle size much bigger.
+
+After research I decided to try fix it with solution proposed [here](https://www.ishare.in.th/articles/reduce-angular-bundle-size-by-remove-unused-locale-in-moment-js) with replacing locale folders.
+
+The working solution was:
+
+- create locale folder in /src and copy used locale (in this case pl.js) from moment (node_modules/moment/locale)
+- use fileReplacements in angular.json:
+  <pre><code>"configurations": {
+    "production": {
+      "fileReplacements": [
+        {
+        "replace": "node_modules/moment/locale/",
+        "with": "src/locale/"
+        }
+      ],
+    }</code></pre>
+- import needed locale in moment.service.ts:
+
+  <pre><code>import 'moment/locale/pl';</code></pre>
+
+  This step is important because without it locales are not copied to the bundle during build (after ng serve we won't notice the issue) and chosen language won't work. (We can verify it building to run locally with --base-href ./)
+  Importing moment/locale/pl solves the issue.
+
+  #### Warning 'locale does not exist'
+
+  During the build we can encounter warning like so:
+
+  <pre>WARNING in Path ".../angular-contract-hours/node_modules/moment/locale/af.js" does not exist.</pre>
+
+  (Where e.g. af.js is the first locale from moment/locale not copied to our special prepared locale folder).
+
+  We can ignore it (and it is shown no matter if we imported locales properly and it works)
 
 ### <span id="defining-working-days">Defining working days</span>
 
