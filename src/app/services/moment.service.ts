@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Month } from '../shared/month';
 import moment from 'moment';
 import { Moment } from 'moment';
-import cloneDeep from 'lodash/cloneDeep';
 import 'moment/locale/pl';
 
 @Injectable({
@@ -18,7 +17,11 @@ export class MomentService {
       this.generateMonths();
     }
 
-    return cloneDeep(this.months);
+    // tried to return deep copy of this.months - but it produced issue
+    // when form was reinitiated and received already selected month (to be set in select field)
+    // months in select were new objects (as it was deepCopy)
+    // therefore select didn't work, because month never matched options in the select
+    return this.months;
   }
 
   public getMonthLabel(day: Moment): string {
