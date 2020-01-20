@@ -125,13 +125,14 @@ I also used [**Ngrok**](https://ngrok.com/) during development to expose my loca
 
 ## <span id="known-issues">Known issues</span>
 
+- Generating PDFs should be in separate, lazy loaded module, as it uses jspdf and html2canvas which are a substantial chunk of bundle and are not used in other parts of the application. But routing is not yet implemented in the application.
 - Application is cumbersome in use on mobile devices in landscape orientation (when screen keyboard is opened)
 - Opened schedule settings has wrong height on safari mobile.
 - Summary panel is "jumping" when defined total hours enabled/disabled.
 - The report preview header and footer not shown properly on opera mobile.
 - Downloading PDF doesn't work on UC Browser.
 
-To read more about the issues you can see the Issues section on this repository.
+To read more about the issues you can see [the Issues section](https://github.com/jurek2006/angular-contract-hours/issues) on this repository.
 
 ## <span id="future-plans">Future plans for improvement</span>
 
