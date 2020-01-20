@@ -5,6 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-local-stats-analyzer": "npm run build-local-stats && npm run webpack-analyzer",
+    "build-local-stats": "ng build --prod=true --statsJson=true --base-href ./",
+    "webpack-analyzer": "npx webpack-bundle-analyzer dist/angular-contract-hours/stats.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

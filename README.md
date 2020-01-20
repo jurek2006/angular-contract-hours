@@ -145,10 +145,30 @@ After fixing key-bug with html2canvas, which was making the application unusable
 
 Additional info for future me ;)
 
+- [Npm scripts](#npm-scripts)
+  - [Scripts for testing bundle locally and analyze bundle size](#npm-scripts--bundle)
 - [Changing locale (date's format)](#change-locale)
   - [Adding and using new locale](#change-locale--adding-locale)
   - [Importing locales order](#change-locale--locales-order)
 - [Getting rid of unused moment's locales](#unused-locales)
+
+### <span id="npm-scripts">Npm scripts</span>
+
+#### <span id="npm-scripts--bundle">Scripts for testing bundle locally and analyze bundle size</span>
+
+There were added some npm scripts to make testing and analyzing bundle easier:
+
+Script to make a build with generating bundle stats and base href for testing bundle locally:
+
+    "build-local-stats": "ng build --prod=true --statsJson=true --base-href ./",
+
+Scipt to run webpack bundle analyzer:
+
+    "webpack-analyzer": "npx webpack-bundle-analyzer dist/angular-contract-hours/stats.json",
+
+Script running both preceding scripts sequentially:
+
+    "build-local-stats-analyzer": "npm run build-local-stats && npm run webpack-analyzer",
 
 ### <span id="change-locale">Changing locale (date's format)</span>
 
