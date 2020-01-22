@@ -152,6 +152,7 @@ Additional info for future me ;)
   - [Adding and using new locale](#change-locale--adding-locale)
   - [Importing locales order](#change-locale--locales-order)
 - [Getting rid of unused moment's locales](#unused-locales)
+- [Defining working days](#defining-working-days)
 
 ### <span id="npm-scripts">Npm scripts</span>
 
