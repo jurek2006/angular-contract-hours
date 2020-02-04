@@ -18,8 +18,8 @@ import { MomentService } from 'src/app/services/moment.service';
   styleUrls: ['./schedule-print.component.css']
 })
 export class SchedulePrintComponent implements OnInit {
-  @Input() schedule: ScheduleDay[];
-  @Input() settings: Settings;
+  @Input() schedule: ScheduleDay[] | undefined; // lub domyślna wartość []
+  @Input() settings: Settings | undefined;
 
   @Output() closePrint = new EventEmitter<void>();
 

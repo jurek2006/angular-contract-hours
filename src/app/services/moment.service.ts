@@ -30,7 +30,7 @@ export class MomentService {
     return day.format(this.monthLabelFormat);
   }
 
-  public setMomentLocale(locale: string = 'pl') {
+  public setMomentLocale(locale: string = 'pl'): void {
     /* sets locale for moment used in application */
     moment.locale(locale);
   }
@@ -41,19 +41,17 @@ export class MomentService {
     //  firstDay - moment for first day of given month
     //  monthLabel - string label
 
-    let months: Month[] = [];
+    const months: Month[] = [];
 
     const currentMonthStart = moment().startOf('month');
 
+    /*
+    * nie jestem pewny czy dobrze rozumiem co tutaj robisz ale wprowadziłem zmianę mam nadzieję że nie zmieniłem działania ;)
+     */
     for (let i = 0; i < amount; i++) {
-      const firstDayOfMonth = currentMonthStart.clone().subtract(i, 'months');
-      months = [
-        ...months,
-        {
-          firstDay: firstDayOfMonth,
-          monthLabel: this.getMonthLabel(firstDayOfMonth)
-        }
-      ];
+      const firstDay = currentMonthStart.clone().subtract(i, 'months');
+      const monthLabel = this.getMonthLabel(firstDay);
+      months.push({firstDay, monthLabel})
     }
 
     this.months = months;

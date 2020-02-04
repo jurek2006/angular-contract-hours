@@ -14,12 +14,17 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { ScheduleService } from 'src/app/services/schedule.service';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ScheduleDay } from '../../models/scheduleDay.model';
 import { Settings } from '../../models/settings.model';
+
+/*
+ Trochę dziwne rzeczy się tutaj dzieją z tymi subskrypcjami ale nie bardzo mam czas żeby dokładnie zrozumieć
+ co próbujesz osiągnać itp więc jedynie mogę doradzić żebyś się zastanowił czy wszystko tu jest ok i czy nie da się
+ tego zrobić inaczej :)
+ */
 
 @Component({
   selector: 'app-schedule-edit',
@@ -27,19 +32,19 @@ import { Settings } from '../../models/settings.model';
   styleUrls: ['./schedule-edit.component.css']
 })
 export class ScheduleEditComponent implements OnDestroy, OnChanges {
-  public schedule: ScheduleDay[];
+  public schedule: ScheduleDay[]; // przypisz pustą tablicę albo zmień typ na `ScheduleDay[] | undefined`
   public isPrintView = false;
-  public scheduleForm: FormGroup;
+  public scheduleForm: FormGroup; // podobnie, poprawny typ to `FormGroup | undefined`
   private ngUnsubscribe = new Subject();
-  private formWatchSubscription: Subscription;
+  private formWatchSubscription: Subscription; // jak wyżej :)
   private formDaysSubscriptions: Subscription[] = [];
 
-  @Input() settings: Settings;
+  @Input() settings: Settings; // to samo, dodaj undefined to typu albo domyślna wartość
   @Output() isPrintViewChanged = new EventEmitter<boolean>(); // fired when isPrintView turned on/off
 
   constructor(private scheduleService: ScheduleService) {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) { // public
     // reinit scheduleForm only when selectedMonth was changed or selected for the first time
     const monthHasChanged =
       this.settings.selectedMonth &&
@@ -55,7 +60,7 @@ export class ScheduleEditComponent implements OnDestroy, OnChanges {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy() { // public
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
@@ -82,6 +87,13 @@ export class ScheduleEditComponent implements OnDestroy, OnChanges {
       disabled
     });
 
+
+    /*
+     * Tutaj chyba możesz użyć map?
+     * Dodatkowo jesli przypiszesz `schedule` domyślą wartość [] w definicji to nie musisz korzystać z if'a
+     *
+     * const daysFields = this.schedule.map((day: ScheduleDay) => ...
+     */
     if (this.schedule) {
       for (const day of this.schedule) {
         daysFields.push(
@@ -126,12 +138,12 @@ export class ScheduleEditComponent implements OnDestroy, OnChanges {
     // subscribe to watch 'workingDay' control (enabling/disabling day) for each day in FormArray
 
     // unsubscribe all subscriptions from FormArray (watching if day is disabled/enabled)
-    if (this.formDaysSubscriptions && this.formDaysSubscriptions.length > 0) {
-      this.formDaysSubscriptions.forEach((subscription: Subscription) => {
-        subscription.unsubscribe();
-      });
-      this.formDaysSubscriptions = [];
-    }
+
+    // to podejście chyba będzie miało ten sam efekt?
+    (this.formDaysSubscriptions || []).forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+    this.formDaysSubscriptions = [];
 
     // subscribe to watch only 'workingDay' control for each day
     this.getDaysControls().forEach((control: FormControl, index: number) => {

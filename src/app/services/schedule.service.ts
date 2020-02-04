@@ -16,19 +16,19 @@ export class ScheduleService {
   public initSchedule(startDateMoment: Moment): ScheduleDay[] {
     /* generates empty schedule for given month */
 
+    /*
+    * tutaj robisz coś podobnego do tego co w `moment.service.ts`, więc sugeruję podobne zmiany jeśli dobrze rozumiem
+     */
     this.schedule = [];
     for (let i = 0; i < startDateMoment.daysInMonth(); i++) {
       const day = startDateMoment.clone().add(i, 'days');
-
-      this.schedule = [
-        ...this.schedule,
-        new ScheduleDay(
-          day.format('D.MM'),
-          day.format('dd'),
-          this.isDayWorking(day),
-          0
-        )
-      ];
+      const scheduleDay = new ScheduleDay(
+        day.format('D.MM'),
+        day.format('dd'),
+        this.isDayWorking(day),
+        0
+      );
+      this.schedule.push(scheduleDay);
     }
 
     return this.getSchedule();

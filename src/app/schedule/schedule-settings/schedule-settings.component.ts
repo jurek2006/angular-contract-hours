@@ -10,10 +10,10 @@ import { MomentService } from 'src/app/services/moment.service';
   styleUrls: ['./schedule-settings.component.css']
 })
 export class ScheduleSettingsComponent implements OnInit {
-  public settingsForm: FormGroup;
-  public monthsForSelect: Month[];
+  public settingsForm: FormGroup | undefined;
+  public monthsForSelect: Month[] = [];
 
-  @Input() settings: Settings;
+  @Input() settings: Settings | undefined;
   @Output() settingsChange = new EventEmitter<Settings>();
 
   constructor(private momentService: MomentService) {}
@@ -23,21 +23,14 @@ export class ScheduleSettingsComponent implements OnInit {
   }
 
   private initSettingsForm(): void {
-    let contractorNameInit: string;
-    if (this.settings && this.settings.contractorName) {
-      contractorNameInit = this.settings.contractorName;
-    } else {
-      // if contractor name not filled, check if user stored it before in a browser local storage
-      contractorNameInit = localStorage.getItem('contractorNameStored') || '';
-    }
+    const settingsContractorName = this.settings && this.settings.contractorName;
+    const contractorNameInit = settingsContractorName || localStorage.getItem('contractorNameStored') || '';
 
     this.monthsForSelect = this.momentService.getMonths();
 
     // set default or chosen month in select element
-    const selectedMonthInit =
-      this.settings && this.settings.selectedMonth
-        ? this.settings.selectedMonth
-        : this.monthsForSelect[0].firstDay; // if there isn't selectedMonth - select first of generated monthsForSelect
+    const settingSelectedMonth = this.settings && this.settings.selectedMonth;
+    const selectedMonthInit = settingSelectedMonth || this.monthsForSelect[0].firstDay; // if there isn't selectedMonth - select first of generated monthsForSelect
 
     this.settingsForm = new FormGroup({
       contractorName: new FormControl(contractorNameInit, Validators.required),
@@ -47,13 +40,8 @@ export class ScheduleSettingsComponent implements OnInit {
       })
     });
 
-    const isSettingsFormSubmited =
-      this.settings &&
-      this.settings.contractorName &&
-      this.settings.selectedMonth;
-
     // detect if contractor name and month already given (form have been already submited by user)
-    if (isSettingsFormSubmited) {
+    if (settingsContractorName && settingSelectedMonth) {
       this.settingsForm.disable();
     }
   }

@@ -7,9 +7,9 @@ import { ScheduleDay } from '../../../models/scheduleDay.model';
   styleUrls: ['./schedule-print-render.component.css']
 })
 export class SchedulePrintRenderComponent {
-  @Input() schedule: ScheduleDay[];
-  @Input() monthLabel: string;
-  @Input() contractorNameLabel: string;
-  @Input() totalHours: number;
+  @Input() schedule: ScheduleDay[] = [];
+  @Input() monthLabel: string = '';
+  @Input() contractorNameLabel: string = '';
+  @Input() totalHours: number = 0;
   constructor() {}
 }

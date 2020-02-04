@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   constructor(private momentService: MomentService) {}
 
   ngOnInit() {
+    // tak jak sugerowałem możesz spróbować przenieść to do konstruktora MomentService
     this.momentService.setMomentLocale('pl');
   }
 }
