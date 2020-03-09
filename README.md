@@ -108,7 +108,7 @@ After pressing "Close" on the right side you will be redirected back to the sche
 
 ## <span id="technologies">Technologies used</span>
 
-The project was started on **Angular 7** and updated to **Angular 8**.
+The project was started on **Angular 7** and updated to **Angular 9**.
 
 It uses some features from [**Angular Material**](https://material.angular.io/) like inputs, buttons, chechbox, snackBar, spinner.
 
