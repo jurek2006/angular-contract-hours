@@ -23,7 +23,7 @@ export class SchedulePrintComponent implements OnInit {
 
   @Output() closePrint = new EventEmitter<void>();
 
-  @ViewChild('contentToConvert', { static: false })
+  @ViewChild('contentToConvert')
   elementToConvertToPdf: ElementRef;
 
   constructor(
