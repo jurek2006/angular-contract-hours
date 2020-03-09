@@ -12,7 +12,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SummarySettingsService } from 'src/app/services/summary-settings.service';
 import { SummarySettings } from '../../../models/summarySettings.model';
 import { scheduleSummaryFormValidator } from './schedule-summary-form-validator.directive';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-schedule-summary',
