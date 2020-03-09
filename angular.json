@@ -147,5 +147,8 @@
       }
     }
   },
-  "defaultProject": "angular-contract-hours"
+  "defaultProject": "angular-contract-hours",
+  "cli": {
+    "analytics": "393a3908-304e-4afd-9588-a33202ed582b"
+  }
 }
