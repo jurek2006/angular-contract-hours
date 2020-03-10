@@ -11,6 +11,23 @@ export class MomentService {
   private monthLabelFormat = 'MMMM YYYY';
   private months: Month[];
 
+  constructor() {
+    /*
+      if there's just one moment/locale imported (e.g. moment/locale/pl)
+      it's not necessary to invoke this.setMomentLocale(language-code)
+      - imported locale will be used
+
+      if there's more than one locale imported - without using setMomentLocale()
+      - last imported will be used
+
+      before building the app (only) - imported locale file must be manually copied
+      (from node_modules/moment/locale to src/locale)
+
+      for development (only) - locale can be set with setMomentLocale() without any import
+    */
+    // this.setMomentLocale('es');
+  }
+
   public getMonths(): Month[] {
     // gets generated months for populating month picker select
     if (!this.months) {
