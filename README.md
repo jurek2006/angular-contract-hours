@@ -1,6 +1,8 @@
 # angular-contract-hours
 Angular application to help reporting contractor's working hours. Learning project to develop an Angular app from scratch.
 
+Live version can be found here: https://jurek2006.github.io/angular-contract-hours/
+
 More info: https://github.com/jurek2006/angular-contract-hours/blob/master/README.md
 
 Last build(s) for gh-pages:
