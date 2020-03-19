@@ -8,7 +8,7 @@ import { ScheduleDay } from '../models/scheduleDay.model';
   providedIn: 'root'
 })
 export class ScheduleService {
-  private schedule: ScheduleDay[];
+  private schedule: ScheduleDay[] = [];
   private workingDaysIndexes: number[] = [1, 2, 3, 4, 5]; // default working days (as indexes, where 0 === sunday, ... 6 === saturday)
 
   constructor() {}
@@ -19,16 +19,14 @@ export class ScheduleService {
     this.schedule = [];
     for (let i = 0; i < startDateMoment.daysInMonth(); i++) {
       const day = startDateMoment.clone().add(i, 'days');
+      const scheduleDay = new ScheduleDay(
+        day.format('D.MM'),
+        day.format('dd'),
+        this.isDayWorking(day),
+        0
+      );
 
-      this.schedule = [
-        ...this.schedule,
-        new ScheduleDay(
-          day.format('D.MM'),
-          day.format('dd'),
-          this.isDayWorking(day),
-          0
-        )
-      ];
+      this.schedule.push(scheduleDay);
     }
 
     return this.getSchedule();
