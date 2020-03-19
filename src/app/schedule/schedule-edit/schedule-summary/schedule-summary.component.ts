@@ -20,12 +20,12 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./schedule-summary.component.css']
 })
 export class ScheduleSummaryComponent implements OnInit, OnChanges {
-  private summarySettings: SummarySettings;
-  public summaryForm: FormGroup;
-
   @Input() totalHours: number;
   @Input() areAllDaysControlsValid: boolean;
   @Output() openPrint = new EventEmitter<void>();
+
+  private summarySettings: SummarySettings;
+  public summaryForm: FormGroup;
 
   @HostBinding('class.mobileSummaryOpened') isSummaryOpenedOnMobile = false;
 

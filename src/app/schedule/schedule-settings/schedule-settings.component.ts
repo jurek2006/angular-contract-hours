@@ -10,11 +10,11 @@ import { MomentService } from 'src/app/services/moment.service';
   styleUrls: ['./schedule-settings.component.css']
 })
 export class ScheduleSettingsComponent implements OnInit {
-  public settingsForm: FormGroup | undefined;
-  public monthsForSelect: Month[] = [];
-
   @Input() settings: Settings | undefined;
   @Output() settingsChange = new EventEmitter<Settings>();
+
+  public settingsForm: FormGroup | undefined;
+  public monthsForSelect: Month[] = [];
 
   constructor(private momentService: MomentService) {}
 

@@ -27,15 +27,15 @@ import { Settings } from '../../models/settings.model';
   styleUrls: ['./schedule-edit.component.css']
 })
 export class ScheduleEditComponent implements OnDestroy, OnChanges {
+  @Input() settings: Settings;
+  @Output() isPrintViewChanged = new EventEmitter<boolean>(); // fired when isPrintView turned on/off
+
   public schedule: ScheduleDay[];
   public isPrintView = false;
   public scheduleForm: FormGroup;
   private ngUnsubscribe = new Subject();
   private formWatchSubscription: Subscription;
   private formDaysSubscriptions: Subscription[] = [];
-
-  @Input() settings: Settings;
-  @Output() isPrintViewChanged = new EventEmitter<boolean>(); // fired when isPrintView turned on/off
 
   constructor(private scheduleService: ScheduleService) {}
 
