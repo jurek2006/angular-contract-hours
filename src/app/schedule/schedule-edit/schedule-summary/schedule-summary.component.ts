@@ -24,8 +24,8 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
   @Input() areAllDaysControlsValid: boolean;
   @Output() openPrint = new EventEmitter<void>();
 
-  private summarySettings: SummarySettings;
-  public summaryForm: FormGroup;
+  private summarySettings: SummarySettings | undefined;
+  public summaryForm: FormGroup | undefined;
 
   @HostBinding('class.mobileSummaryOpened') isSummaryOpenedOnMobile = false;
 
@@ -45,36 +45,41 @@ export class ScheduleSummaryComponent implements OnInit, OnChanges {
       !changes.totalHours.firstChange &&
       changes.totalHours.currentValue !== changes.totalHours.previousValue;
 
-    if (
+    const totalHoursCurrentControl =
       isTotalHoursChanged &&
       this.summaryForm &&
-      this.summaryForm.get('totalHoursCurrent')
-    ) {
-      this.summaryForm
-        .get('totalHoursCurrent')
-        .setValue(changes.totalHours.currentValue);
+      this.summaryForm.get('totalHoursCurrent');
+
+    if (totalHoursCurrentControl) {
+      totalHoursCurrentControl.setValue(changes.totalHours.currentValue);
     }
   }
 
   private initSummaryForm(): void {
     this.summarySettings = this.summarySettingsService.loadSettings();
 
+    const isTotalHoursDefined = new FormControl(
+      this.summarySettings.isTotalHoursDefined
+    );
+
+    const totalHoursDefined = new FormControl(
+      this.summarySettings.totalHoursDefined,
+      [
+        Validators.min(0),
+        Validators.max(31 * 24) // maximum possible hours in a month
+      ]
+    );
+
+    const totalHoursCurrent = new FormControl({
+      value: this.totalHours,
+      disabled: true
+    });
+
     this.summaryForm = new FormGroup(
       {
-        isTotalHoursDefined: new FormControl(
-          this.summarySettings.isTotalHoursDefined
-        ),
-        totalHoursDefined: new FormControl(
-          this.summarySettings.totalHoursDefined,
-          [
-            Validators.min(0),
-            Validators.max(31 * 24) // maximum possible hours in a month
-          ]
-        ),
-        totalHoursCurrent: new FormControl({
-          value: this.totalHours,
-          disabled: true
-        })
+        isTotalHoursDefined,
+        totalHoursDefined,
+        totalHoursCurrent
       },
       { validators: scheduleSummaryFormValidator }
     );
