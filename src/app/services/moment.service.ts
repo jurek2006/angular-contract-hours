@@ -9,7 +9,24 @@ import 'moment/locale/pl';
 })
 export class MomentService {
   private monthLabelFormat = 'MMMM YYYY';
-  private months: Month[];
+  private months: Month[] | undefined;
+
+  constructor() {
+    /*
+      if there's just one moment/locale imported (e.g. moment/locale/pl)
+      it's not necessary to invoke this.setMomentLocale(language-code)
+      - imported locale will be used
+
+      if there's more than one locale imported - without using setMomentLocale()
+      - last imported will be used
+
+      before building the app (only) - imported locale file must be manually copied
+      (from node_modules/moment/locale to src/locale)
+
+      for development (only) - locale can be set with setMomentLocale() without any import
+    */
+    // this.setMomentLocale('es');
+  }
 
   public getMonths(): Month[] {
     // gets generated months for populating month picker select
@@ -30,7 +47,7 @@ export class MomentService {
     return day.format(this.monthLabelFormat);
   }
 
-  public setMomentLocale(locale: string = 'pl') {
+  public setMomentLocale(locale: string = 'pl'): void {
     /* sets locale for moment used in application */
     moment.locale(locale);
   }
@@ -41,19 +58,14 @@ export class MomentService {
     //  firstDay - moment for first day of given month
     //  monthLabel - string label
 
-    let months: Month[] = [];
+    const months: Month[] = [];
 
     const currentMonthStart = moment().startOf('month');
 
     for (let i = 0; i < amount; i++) {
-      const firstDayOfMonth = currentMonthStart.clone().subtract(i, 'months');
-      months = [
-        ...months,
-        {
-          firstDay: firstDayOfMonth,
-          monthLabel: this.getMonthLabel(firstDayOfMonth)
-        }
-      ];
+      const firstDay = currentMonthStart.clone().subtract(i, 'months');
+      const monthLabel = this.getMonthLabel(firstDay);
+      months.push({ firstDay, monthLabel });
     }
 
     this.months = months;

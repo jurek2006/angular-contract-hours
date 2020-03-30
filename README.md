@@ -149,6 +149,8 @@ Additional info for future me ;)
 - [Npm scripts](#npm-scripts)
   - [Scripts for testing bundle locally and analyze bundle size](#npm-scripts--bundle)
 - [Changing locale (date's format)](#change-locale)
+  - [IMPORTANT INFO ABOUT LOCALES in ng serve vs. build
+    ](#change-locale--important-info)
   - [Adding and using new locale](#change-locale--adding-locale)
   - [Importing locales order](#change-locale--locales-order)
 - [Getting rid of unused moment's locales](#unused-locales)
@@ -179,6 +181,19 @@ By default (if no argument passed) - locale is set to 'pl'.
 
 The method is invoked in app.component's ngOnInit() to make sure locale is set every time application starts.
 
+#### <span id="change-locale--important-info">IMPORTANT INFO ABOUT LOCALES in ng serve vs. build </span>
+
+Information about moment locales pertains to building application.
+During developmeng (ng serve) it is enough to change locales in moments.service:
+
+<pre><code>constructor() {
+    this.setMomentLocale('es');
+  }</code></pre>
+
+But it's different when building the application. And the information below is about it.
+
+(The easiest way to verify if locale works in build is to use script build-local-stats-analyzer or build-local-stats described in [Scripts for testing bundle locally and analyze bundle size](#npm-scripts--bundle)).
+
 #### <span id="change-locale--adding-locale">Adding and using new locale</span>
 
 - copy locale file
@@ -189,11 +204,13 @@ The method is invoked in app.component's ngOnInit() to make sure locale is set e
 
   Like: <pre><code>import 'moment/locale/pl';</code></pre>
 
-- change used locale in app.component.ts (ngOnInit)
+- change used locale in moment.service.ts (constructor)\*
 
   <pre><code>this.momentService.setMomentLocale('pl');</code></pre>
 
   replacing 'pl' with chosen locale abbreviation
+
+  (This step is not necessary if there's only one locale file imported. If there's more - without explicitely setting it in setMomentLocale - last importet will be used)
 
 - verify if bundle works properly
 
@@ -204,7 +221,7 @@ The method is invoked in app.component's ngOnInit() to make sure locale is set e
 **IMPORTANT! - If locale imported properly - the order doesn't matter**. It will work properly.
 Content of this paragraph is important only when facing some 'weird" locales bahavior.
 
-If we set locale e.g. for german (de) in app.component.ts <pre><code>this.momentService.setMomentLocale('de');</code></pre>
+If we set locale e.g. for german (de) in moment.service.ts (constructor) <pre><code>this.momentService.setMomentLocale('de');</code></pre>
 and also properly copied de.js from moment/locale to src/locale but **didn't imported in moment.service.ts**
 
 <pre><code>import 'moment/locale/de';</code></pre>

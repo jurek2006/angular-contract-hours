@@ -14,9 +14,8 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { ScheduleService } from 'src/app/services/schedule.service';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ScheduleDay } from '../../models/scheduleDay.model';
 import { Settings } from '../../models/settings.model';
@@ -27,19 +26,19 @@ import { Settings } from '../../models/settings.model';
   styleUrls: ['./schedule-edit.component.css']
 })
 export class ScheduleEditComponent implements OnDestroy, OnChanges {
-  public schedule: ScheduleDay[];
-  public isPrintView = false;
-  public scheduleForm: FormGroup;
-  private ngUnsubscribe = new Subject();
-  private formWatchSubscription: Subscription;
-  private formDaysSubscriptions: Subscription[] = [];
-
-  @Input() settings: Settings;
+  @Input() settings: Settings | undefined;
   @Output() isPrintViewChanged = new EventEmitter<boolean>(); // fired when isPrintView turned on/off
+
+  public schedule: ScheduleDay[] = [];
+  public isPrintView = false;
+  public scheduleForm: FormGroup | undefined;
+  private ngUnsubscribe = new Subject();
+  private formWatchSubscription: Subscription | undefined;
+  private formDaysSubscriptions: Subscription[] = [];
 
   constructor(private scheduleService: ScheduleService) {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges) {
     // reinit scheduleForm only when selectedMonth was changed or selected for the first time
     const monthHasChanged =
       this.settings.selectedMonth &&
@@ -55,7 +54,7 @@ export class ScheduleEditComponent implements OnDestroy, OnChanges {
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
@@ -73,7 +72,6 @@ export class ScheduleEditComponent implements OnDestroy, OnChanges {
 
   private formGenerateDaysFieldsArray(): FormArray {
     // create FormArray for each day in given this.schedule
-    const daysFields: FormArray = new FormArray([]);
     const getDayData = (
       value: string | number | boolean,
       disabled: boolean = false
@@ -82,22 +80,20 @@ export class ScheduleEditComponent implements OnDestroy, OnChanges {
       disabled
     });
 
-    if (this.schedule) {
-      for (const day of this.schedule) {
-        daysFields.push(
-          new FormGroup({
-            date: new FormControl(getDayData(day.date)),
-            weekday: new FormControl(getDayData(day.weekday)),
-            workingDay: new FormControl(getDayData(day.workingDay)),
-            hours: new FormControl(getDayData(day.hours, !day.workingDay), [
-              Validators.min(0),
-              Validators.max(24)
-            ])
-          })
-        );
-      }
-    }
-    return daysFields;
+    const daysFields: FormGroup[] = this.schedule.map(
+      day =>
+        new FormGroup({
+          date: new FormControl(getDayData(day.date)),
+          weekday: new FormControl(getDayData(day.weekday)),
+          workingDay: new FormControl(getDayData(day.workingDay)),
+          hours: new FormControl(getDayData(day.hours, !day.workingDay), [
+            Validators.min(0),
+            Validators.max(24)
+          ])
+        })
+    );
+
+    return new FormArray(daysFields);
   }
 
   private formSubscribeToSumHours(): void {
@@ -126,12 +122,9 @@ export class ScheduleEditComponent implements OnDestroy, OnChanges {
     // subscribe to watch 'workingDay' control (enabling/disabling day) for each day in FormArray
 
     // unsubscribe all subscriptions from FormArray (watching if day is disabled/enabled)
-    if (this.formDaysSubscriptions && this.formDaysSubscriptions.length > 0) {
-      this.formDaysSubscriptions.forEach((subscription: Subscription) => {
-        subscription.unsubscribe();
-      });
-      this.formDaysSubscriptions = [];
-    }
+    (this.formDaysSubscriptions || []).forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
 
     // subscribe to watch only 'workingDay' control for each day
     this.getDaysControls().forEach((control: FormControl, index: number) => {
